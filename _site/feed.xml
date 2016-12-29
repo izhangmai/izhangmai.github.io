@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZhangMai技术团队博客</title>
+    <description>记录技术相关的一切。</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 29 Dec 2016 17:41:32 +0800</pubDate>
+    <lastBuildDate>Thu, 29 Dec 2016 17:41:32 +0800</lastBuildDate>
+    <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>技术文章示例</title>
+        <description>&lt;h1 id=&quot;技术文章示例&quot;&gt;技术文章示例&lt;/h1&gt;
+
+&lt;p&gt;每一篇文章就写成一个&lt;code class=&quot;highlighter-rouge&quot;&gt;.markdown&lt;/code&gt;文件，该文件的命名有一定要求，例如当前文章的文件名是：&lt;code class=&quot;highlighter-rouge&quot;&gt;2016-12-25-技术文章示例.markdown&lt;/code&gt;并且放置在&lt;code class=&quot;highlighter-rouge&quot;&gt;/_posts&lt;/code&gt;下&lt;/p&gt;
+
+&lt;p&gt;完整&lt;a href=&quot;https://www.appinn.com/markdown/&quot; target=&quot;_blank&quot;&gt;Markdown&lt;/a&gt;语法支持，&lt;/p&gt;
+
+&lt;p&gt;在超链接后面添加这个&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:target=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;_blank&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;/code&gt;可以打开新页面跳转&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://daiweilai.github.io/img/post/2016-5-25-pic3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;代码高亮使用&lt;a href=&quot;https://prismjs.com/&quot; target=&quot;_blank&quot;&gt;prism&lt;/a&gt;示例&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-objectivec&quot;&gt;@property(nonatomic,getter=isExclusiveTouch) BOOL       exclusiveTouch __TVOS_PROHIBITED;         // default is NO
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+        <pubDate>Sun, 25 Dec 2016 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/12/25/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0%E7%A4%BA%E4%BE%8B/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/12/25/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0%E7%A4%BA%E4%BE%8B/</guid>
+        
+        <category>tags示例</category>
+        
+        <category>测试tags</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
