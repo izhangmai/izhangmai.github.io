@@ -59,7 +59,7 @@ duoshuo_share: true                     # set to false if you want to use Commen
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Thoughts & ideas."
-sidebar-avatar: img/common/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: https://izhangmai.github.io/img/common/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
