@@ -20,7 +20,7 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
 
 整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这个开源世界的中心学习并且回馈社会！
 
-当前的这个博客基于[Github Pages](){:target="_blank"}+[Jekyll](){:target="_blank"}搭建而成！下面是这个博客系统基本的用法说明。
+当前的这个博客基于[Github Pages](https://pages.github.com/){:target="_blank"}+[Jekyll](https://jekyllrb.com/){:target="_blank"}搭建而成！下面是这个博客系统基本的用法说明。
 
 
 
