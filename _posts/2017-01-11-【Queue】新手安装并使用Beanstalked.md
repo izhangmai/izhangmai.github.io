@@ -42,8 +42,11 @@ Beanstalkd设计里面的核心概念：
 ## 安装
 
 ###### MacOS
+    
     `brew install beanstalkd`
+    
 ###### Linux-编译
+
 1.安装libevent（[点击我](https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar)）
 
 ```
@@ -68,7 +71,9 @@ make
 make install 
 ./beanstalkd -d -l 127.0.0.1 -p 11300 
 ```
+
 ######Liunx-包安装
+
 1.centos
 
 ```
@@ -79,7 +84,9 @@ yum install beanstalkd
 ```
 apt-get install beanstalkd
 ```
+
 ###### windows
+
 windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：[点击我](https://git.oschina.net/lomox/beanstalkd-win)
 
 ## 运行
@@ -114,7 +121,9 @@ beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &
 
 ```
 <?php
+    // 引入BeanStalk客户端类
     require('BeanStalk.class.php');
+
     $beanstalk = BeanStalk::open(array(
         'servers'       => array( '127.0.0.1:11300' ),
         'select'        => 'random peek'
