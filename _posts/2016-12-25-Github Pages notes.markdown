@@ -28,11 +28,11 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
 
 [Git技术](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000){:target="_blank"}、[Github](https://help.github.com/){:target="_blank"}、仓库、以及团队协作方面的知识本文不会赘述，请自行查阅相关的资料。
 
-Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库更目录下有`index.html`，那么Github会为这个仓库自动生产Github Pages页面，其域名是`https://[用户名].github.io/[仓库命]`，如当前博客的仓库名是`izhangmai.github.io`，当前注册用户名为`izhangmai`，如下图
+Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库根目录下有`index.html`，那么Github会为这个仓库自动生成Github Pages页面，其域名是`https://[用户名].github.io/[仓库命]`，如当前博客的仓库名是`izhangmai.github.io`，当前注册用户名为`izhangmai`，如下图
 
 ![](/img/post/Github Pages notes/pic1.png)
 
-并且`izhangmai.github.io`仓库的主目录下有`index.html`文件。那么Github会自动为`izhangmai.github.io`这个项目生产Github Pages的页面，其链接地址为：`https://izhangmai.github.io/izhangmai.github.io`。
+并且`izhangmai.github.io`仓库的跟目录下有`index.html`文件。那么Github会自动为`izhangmai.github.io`这个项目生成Github Pages的页面，其链接地址为：`https://izhangmai.github.io/izhangmai.github.io`。
 
 这里Github有一个特殊的Github Pages生成规则，即是当仓库名称为`[用户名].github.io`命名的，会自动以`https://[用户名].github.io`为Github Pages的链接地址。所以最终`izhangmai(当前登录用户名)`下的一个仓库`izhangmai.github.io`的Github Pages的地址为：`https://izhangmai.github.io`。
 
