@@ -72,7 +72,7 @@ make install
 ./beanstalkd -d -l 127.0.0.1 -p 11300 
 ```
 
-######Liunx-包安装
+###### Liunx-包安装
 
 1.centos
 
@@ -85,9 +85,9 @@ yum install beanstalkd
 apt-get install beanstalkd
 ```
 
-###### windows
+###### Windows
 
-windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：[点击我](https://git.oschina.net/lomox/beanstalkd-win)
+Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：[点击我](https://git.oschina.net/lomox/beanstalkd-win)
 
 ## 运行
 
