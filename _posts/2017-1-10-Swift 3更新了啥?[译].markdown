@@ -1,0 +1,354 @@
+---
+layout:     post
+title:      "Swift 3更新了啥?[译]"
+subtitle:   "Swift 3的新特性！！"
+date:       2017-1-10 12:00:00
+author:     "戴伟来"
+header-img: "img/post/Swift 3更新了啥?[译]/2017-1-10-bg.jpg"
+tags:
+    - iOS
+    - Swift
+    - 翻译
+---
+
+
+# Swift 3更新了啥?[译]
+
+Swift 3在2016年10月13日正式发布，并且为Swift开发者带来了大量的代码更新。
+
+如果你还没有紧密的关注这个项目[Swift Evolution](https://github.com/apple/swift-evolution)(来哥注:这个是Swift的开源项目仓库，里面有所有的Swift更新动态)，那么你很可能想知道Swift3中有哪些变化？这些变化是否影响你的编码方式？以及你是否应该考虑开始使用Swift 3进行开发了。这篇文章会告诉你所有答案！:]
+
+ ## 开篇
+
+Xcode8中已经允许使用Swift 3了。
+
+为了允许开发者迁移到Swift 3版本，苹果已经在Xcode8中包含了一个Swift 2.3的升级包。对开发者来说，Swift 2.3和Swift 2.2几乎是一样的，但是对于编译的SDK和Xcode来说却是有差异的。即使你现在还没有将代码迁移至Swift 3，目前你仍然可以提交使用Swift 2.3开发的app到App Store。
+
+当然我推荐你可以使用Playground或者直接在你的项目中使用我们接下来将要讨论到的Swift 3的新特性，你会发现Swift 3的改变真的还蛮大的！
+
+## 迁移至Swift 3
+
+在转换代码到Swift 3版本的时候，你会发现几乎每一个文件都需要进行更改！这个最主要的原因是所有的Cocoa API的命名都进行了修改！或者更准确的来说，API还是和原来一样的，只不过API的命名分成了两部分，一部分是适应Objective-C另一部分是适应Swift的。这么做也是为了Swift 3在将来更加自然的书写。
+
+苹果在Xcode中内置了一个迁移助手，它可以一步到位并且很完美地将大部分代码升级至Swift 3。有些部分代码可能转换失败，那么你可以能需要手动处理一下。
+
+通过转换助手你可以瞬间将代码转换成Swift 2.3或者Swift 3。如果你想恢复已经转换的代码，你可以这样做
+
+`Edit` > `Convert` > `To Current Swfit Syntax...`。
+
+编译器现在也和迁移助手一样只能了，比如你在方法调用中使用了来的API接口，编译器会提供一个`Fix-it`的选项来帮助你修改到最新的API上。
+
+## Swift更新中已经实施了的提议
+
+在Swift开源以来，社区成员提交超过100个的建议来推动Swift的发展。其中大部分的提议在经过讨论和修正之后都被Swift接受了。而那些被拒绝的提议也在不断的讨论中产生更多的新想法。当然，所有的讨论以及提议最终由Swift的核心团队来执行。
+
+Swift在开源以来经过短短的时间就在Github斩获了超过3万个star，为此官方团队和第三方社区都极受鼓舞。有些提案每隔几周就被提交，即使苹果的工程师们已经在修仪进程中了，可见开发者对于加入Swift的革新事业中是多么的热情澎湃。
+
+在下面的几个章节中，你会看到很多连接，比如`[SE-0001]`。这些都是Swift的提议编码号。通过这些提议编号的连接地址你可以探索到所有Swift更新中变化的细节。另外你也可以查看[status of all Swift Evolution proposals](https://apple.github.io/swift-evolution/)，看看哪些提议已经被实施了。这篇文章中的代码示例主要来自 [common changes you’ll notice in Swift 3](https://www.hackingwithswift.com/swift3)。
+
+## API的变更
+
+ 在Swift 3中最大的更新便是对所有涉及到标准库的的API都采用了更加一致的命名规范。[API Design Guidleines](https://swift.org/documentation/api-design-guidelines/)含括了构建Swift 3 API的一般规则。这个规则最高的优先权重是放在可读性和可访问性上的。官方团队也指定了一般性的准则“好的API设计总是优先考虑调用端”。他们力争做到更加清晰的使用，没有混乱的调用！
+
+下面的更新很有可能对你有用！
+
+### 参数符号一致性
+
+我们直接从日常使用Swift中的一些对照的例子开始把。
+
+![](/img/post/Swift 3更新了啥?[译]/pic1.jpg)
+
+函数或者方法的第一个形参总是要求有一个参数符号！在这之前调用函数或者方法是要求你忽略掉第一个参数符号的[[SE-0046](https://github.com/apple/swift-evolution/blob/master/proposals/0046-first-label.md)]
+
+```swift
+// old way, Swift 2, followed by new way, Swift 3
+ 
+NSJSONSerialization.JSONObjectWithData(data, options: [])
+JSONSerialization.jsonObject(with: data, options: [])
+ 
+addQuadCurveToPoint(endPoint, controlPoint: controlPoint)
+addQuadCurve(to: endPoint, controlPoint: controlPoint)
+ 
+NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+ 
+panelView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor)
+panelView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+ 
+array.removeAtIndex(3)
+array.remove(at: 3)
+ 
+pngImageData.writeToURL(fileURL, atomically: false)
+pngImageData.write(to: fileURL, options: [])
+ 
+numberOfSectionsInTableView(tableView)
+numberOfSections(in: tableView)
+ 
+SCNAction.moveTo(SCNVector3Make(1, 1, 1), duration: 1)
+SCNAction.move(to: SCNVector3(1, 1, 1), duration: 1)
+```
+
+需要注意的是怎么在方法定义中的外部名称中准确地使用介词比如“of”，“to”，“with”，“in”，这将直接影响到代码的可读性。
+
+如果你的方法调用可读性强，那么你也可以不用使用参数符号，但是你要在第一个参数使用下划线。
+
+```swift
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { ... }
+override func didMoveToView(_ view: SKView) { ... }
+```
+
+在很多编程语言中，方法可以共享一个基本名称，然后通过不同的参数来区分不同的方法，Swift也是类似的，在API命名更新成更为直接的方式之后，你会更加经常地遇到方法的重载。下面是`index()`的两种形式。
+
+```swift
+let names = ["Anna", "Barbara"]
+if let annaIndex = names.index(of: "Anna") {
+  print("Barbara's position: \(names.index(after: annaIndex))")
+}
+```
+
+参数命名方法的更改使得Swift命名更加直接并且更加容易学习。
+
+### 忽略不必要的方法命名单词
+
+在之前苹果的库的迭代中，方法总是定义了这个方法期望返回的值的类型。但是因为Swift编译器拥有类型检查之后，这种命名方式就变得不那么必要了。Swift团队花了很多精力去将方法命名中冗余的字段删除，只保留重要信息因此大部分重复的命名单词被删除。
+
+![](/img/post/Swift 3更新了啥?[译]/pic2.jpg)
+
+API从Objective-C转换到原生Swift已经变得越来越智能了[[SE-0005](https://github.com/apple/swift-evolution/blob/master/proposals/0005-objective-c-name-translation.md)]
+
+```swift
+// old way, Swift 2, followed by new way, Swift 3
+ 
+helloString.stringByAppendingString("world")
+helloString.appending("world")
+ 
+UIColor.blueColor().colorWithAlphaComponent(0.5)
+UIColor.blue.withAlphaComponent(0.5)
+ 
+NSBundle.mainBundle()
+Bundle.main
+ 
+numbers.maxElement()
+numbers.max()
+ 
+animals.insert("Koala", atIndex: 0)
+animals.insert("Koala", at: 0)
+ 
+WKInterfaceDevice.currentDevice()
+WKInterfaceDevice.current()
+ 
+device.playHaptic(.success)
+device.play(.success)
+```
+
+### 更加现代的GCD以及Core Graphics
+
+谈及旧的API的改造，GCD和Core Graphics的呼声是最高的。
+
+![](/img/post/Swift 3更新了啥?[译]/pic3.jpg)
+
+GCD是用于处理多线程任务例如长计算以及服务通信，因为GCD的底层是使用C语言编写，所以GCD的API有这浓浓的C style风格，不过在Swift 3中已经被重新改装了 [[SE-0088](https://github.com/apple/swift-evolution/blob/master/proposals/0088-libdispatch-for-swift3.md)]。
+
+```swift
+// old way, Swift 2
+let queue = dispatch_queue_create("com.test.myqueue", nil)
+dispatch_async(queue) {
+    print("Hello World")
+}
+ 
+// new way, Swift 3
+let queue = DispatchQueue(label: "com.test.myqueue")
+queue.async {
+  print("Hello World")
+}
+```
+
+同样地，Core Graphics底层也使用了C编写，API也同样做了原生Swift的改造。[[SE-0044](https://github.com/apple/swift-evolution/blob/master/proposals/0044-import-as-member.md)]
+
+```swift
+// old way, Swift 2
+let context = UIGraphicsGetCurrentContext()
+let startAngle: CGFloat = 0.0
+let endAngle = CGFloat(2 * M_PI)
+let strokeWidth: CGFloat = 1.0
+let radius = self.frame.midX - strokeWidth
+let center = CGPointMake(self.frame.midX, self.frame.midY)
+CGContextSetStrokeColorWithColor(context, UIColor.redColor().CGColor)
+CGContextSetLineWidth(context, strokeWidth)
+CGContextAddArc(context, center.x, center.y, radius, startAngle, endAngle, 0)
+CGContextDrawPath(context, kCGPathStroke)
+ 
+// new way, Swift 3
+guard let context = UIGraphicsGetCurrentContext() else {
+  return
+}
+let startAngle: CGFloat = 0.0
+let endAngle = 2 * CGFloat.pi
+let strokeWidth: CGFloat = 1.0
+let center = CGPoint(x: self.frame.midX, y: self.frame.midY)
+let radius = self.frame.midX - strokeWidth
+context.setStrokeColor(UIColor.red.cgColor)
+context.setLineWidth(strokeWidth)
+context.setFillColor(UIColor.clear.cgColor)
+context.addArc(center: center,
+               radius: radius,
+               startAngle: startAngle,
+               endAngle: endAngle,
+               clockwise: false)
+context.drawPath(using: .stroke)
+```
+
+### 枚举取消大写
+
+另一个在你平常Swift编码中相反的例子便是：在枚举类的case中使用小驼峰命名代替大驼峰命名。这会使得枚举的case和一般的成员属性更加一致。[[SE-0006](https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md)]:
+
+```swift
+// old way, Swift 2, followed by new way, Swift 3
+ 
+UIStatusBarStyle.LightContent
+UIStatusBarStyle.lightContent
+ 
+SKLabelVerticalAlignmentMode.Center
+SKLabelVerticalAlignmentMode.center
+ 
+Optional<String>.None
+Optional<String>.none
+```
+
+### 方法的返回和直接修改
+
+这个也是标准库将要变得一致性的命名方式，同一个方法会根据后缀的不同会产生不同的影响，其规则如下：如果一个方法名有一个后缀“-ed”或者“-ing”，那么这个方法的命名方式是名词式的，那么这个方法会返回值(拷贝)，如果一个方法没有上述的后缀，那么这个方法极有可能是一个动词式的方法，调用这个方法会直接操作并影响内存。这个也就是很出名的`modifying in place`。下面有几对标准库中的方法是符合 名词式/动词式 命名规范的。尤其是`Array`相关的方法有这种趋势。比如：`enumerate()/enumerated()`，`reverse()/reversed()`,`sort()/sorted()`,一般的规则就是 一个动词式方法如果加上"-ed"的后缀，那么这个方法编程一个名词式方法，这个方法会有返回一个数组的拷贝。
+
+这些方法的代码片段的讨论在[[SE-0006](https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md)]:
+
+```swift
+var ages = [21, 10, 2] // variable, not constant, so you can modify it
+ages.sort() // modified in place, value now [2, 10, 21]
+ 
+for (index, age) in ages.enumerated() { // copied into a dictionarry
+  print("\(index). \(age)") // 1. 2 \n 2. 10 \n 3. 21
+}
+```
+
+### 函数类型
+
+函数的定义和调用总是需要用圆括号来包住参数：
+
+```swift
+func f(a: Int) { ... }
+ 
+f(5)
+```
+
+但是当你使用函数作为参数的时候，圆括号可以省略：
+
+```swift
+func g(a: Int -> Int) -> Int -> Int  { ... } // old way, Swift 2
+```
+
+你可能发现上面那样定义的函数是相当难阅读的。当在参数结束以及要返回一个函数类型的时候，在Swift 3中正确的做法是：[[SE-0066](https://github.com/apple/swift-evolution/blob/master/proposals/0066-standardize-function-type-syntax.md)]
+
+```swift
+func g(a: (Int) -> Int) -> (Int) -> Int  { ... } // new way, Swift 3
+```
+
+现在如果返回类型是一个函数的时候，参数必须要使用圆括号包围，这样代码就会变得更加清新，函数类型的返回也更加容易辨认，下面是更多的对方例子：
+
+```swift
+// old way, Swift 2
+Int -> Float
+String -> Int
+T -> U
+Int -> Float -> String
+ 
+// new way, Swift 3
+(Int) -> Float
+(String) -> Int
+(T) -> U
+(Int) -> (Float) -> String
+```
+
+
+
+## 附加的API
+
+Swift 3中除了将所有API进行了现代化的改造之外，也额外添加了更多有用的附加API。
+
+### 访问包含类型
+
+当你定义一个静态变量或者方法的时候，你总是需要用下面的方式来访问：
+
+```swift
+CustomStruct.staticMethod()
+```
+
+要调用一个方法的静态变量或者和静态方法，你需要使用这个静态遍历或静态方法定义所在的类型，然后使用类型的点方法来调用。现在你可以使用`Self`直接从一个对象实例直接获取到这个对象的类型。注意`Self`和`self`的区别。[[SE-0068](https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md)]:
+
+```swift
+struct CustomStruct {          
+ static func staticMethod() { ... }          
+ func instanceMethod() {          
+ Self.staticMethod() // in the body of the type          
+ }          
+}          
+let customStruct = CustomStruct()          
+customStruct.Self.staticMethod() // on an instance of the type
+```
+
+**注意**：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。
+
+### 内联序列
+
+`sequence(first:next:)`和`sequence(state:next:)`是两个可以返回无穷序列的全局函数。你传入一个初始值或者一个可变的状态然后它会在一个闭包中运行。
+
+```swift
+for view in sequence(first: someView, next: { $0.superview }) {
+    // someView, someView.superview, someView.superview.superview, ...
+}
+```
+
+你可以使用`prefix`来约束这个序列[[SE-0045](https://github.com/apple/swift-evolution/blob/master/proposals/0045-scan-takewhile-dropwhile.md)]:
+
+```swfit
+for x in sequence(first: 0.1, next: { $0 * 2 }).prefix(while: { $0 < 4 }) { 
+  // 0.1, 0.2, 0.4, 0.8, 1.6, 3.2
+}
+```
+
+**注意**：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。
+
+
+
+## 杂项
+
+- `#keyPath()`类似于`#selector()`
+- π现在可以通过`Float.pi`以及`CGFloat.pi`来获取，并且编译器大部分时间都能推断类型，如：`let circumference = 2 * .pi * radius`[[SE-0067](https://github.com/apple/swift-evolution/blob/master/proposals/0067-floating-point-protocols.md)]
+- NS开头的类全部被干掉了，如`Calendar`，`Date`来代替原来的`NSCalendar`,`NSDate`
+
+
+
+## 工具的改进
+
+- 哈希索引提速3倍
+- 堆拷贝提升24倍
+- 阿拉巴啦阿拉巴啦 不想翻译……
+
+
+
+## Swift的包管理工具
+
+[Swift Package Manager](https://github.com/apple/swift-package-manager) 定义了一个Swift代码目录的目录结构，可以很方便的分享和导入第三方的库。
+
+和Cocoapods、Carthage类似的，Swift package manager会自动下载依赖库，通过编译、链接生成库文件或者可直接文件，Swift 3第一次将Swift Package Manager集成进Swift的发布中，目前已经有1000多的第三库支持这个包管理工具了。不过目前Swift Package Manager只支持服务端项目的包管理，还不支持iOS项目。
+
+
+
+## 将来计划的特型
+
+不想翻译
+
+
+
+## 下一步
+
+不想翻译
