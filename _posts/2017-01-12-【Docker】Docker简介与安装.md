@@ -4,7 +4,7 @@ title:  "【Docker】Docker简介与安装"
 categories: 技术
 tags:  Docker 虚拟化 分布式 容器
 author: 胖纸囧
-            ---
+---
 
 * content
 {:toc}
@@ -93,8 +93,11 @@ apt-get install docker
     
 ```
 如果如下图所示的话，骚年，恭喜你，你的Docker安装成功了！！！
+![](/img/post/Docker/QQ20170112-0.png)
 
-/Users/fatjiong/Sites/izhangmai.github.io/img/post/Docker/QQ20170112-0.png
+
+
+
 
 
 
