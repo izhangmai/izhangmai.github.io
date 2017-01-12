@@ -5,31 +5,794 @@
     <description>记录技术相关的一切。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Dec 2016 14:09:03 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Dec 2016 14:09:03 +0800</lastBuildDate>
+    <pubDate>Wed, 11 Jan 2017 17:08:49 +0800</pubDate>
+    <lastBuildDate>Wed, 11 Jan 2017 17:08:49 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>【Queue】新手安装并使用Beanstalked</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#资料&quot; id=&quot;markdown-toc-资料&quot;&gt;资料&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#候选&quot; id=&quot;markdown-toc-候选&quot;&gt;候选&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#核心&quot; id=&quot;markdown-toc-核心&quot;&gt;核心&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#安装&quot; id=&quot;markdown-toc-安装&quot;&gt;安装&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#macos&quot; id=&quot;markdown-toc-macos&quot;&gt;MacOS&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#linux-编译&quot; id=&quot;markdown-toc-linux-编译&quot;&gt;Linux-编译&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#liunx-包安装&quot; id=&quot;markdown-toc-liunx-包安装&quot;&gt;Liunx-包安装&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#windows&quot; id=&quot;markdown-toc-windows&quot;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#运行&quot; id=&quot;markdown-toc-运行&quot;&gt;运行&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#demo点击我&quot; id=&quot;markdown-toc-demo点击我&quot;&gt;Demo（&lt;a href=&quot;https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php&quot;&gt;点击我&lt;/a&gt;）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。&lt;/p&gt;
+
+&lt;h2 id=&quot;资料&quot;&gt;资料&lt;/h2&gt;
+
+&lt;p&gt;在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX&quot;&gt;消息队列&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://segmentfault.com/q/1010000005780973&quot;&gt;消息队列有什么用？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.phpddt.com/php/queue.html&quot;&gt;PHP实现队列及队列原理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/shaobingj126/article/details/50585035&quot;&gt;大型网站架构之分布式消息队列&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;候选&quot;&gt;候选&lt;/h2&gt;
+
+&lt;p&gt;在当前的技术前景下，有以下几种队列选择：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K&quot;&gt;JMS&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;RabbitMQ&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.zeromq.org&quot;&gt;ZeroMQ&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://kafka.apache.org&quot;&gt;Kafka&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://kr.github.io/beanstalkd/&quot;&gt;beanstakd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;核心&quot;&gt;核心&lt;/h2&gt;
+
+&lt;p&gt;Beanstalkd设计里面的核心概念：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;job&lt;/li&gt;
+  &lt;li&gt;tube&lt;/li&gt;
+  &lt;li&gt;producer&lt;/li&gt;
+  &lt;li&gt;consumer&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;安装&quot;&gt;安装&lt;/h2&gt;
+
+&lt;h6 id=&quot;macos&quot;&gt;MacOS&lt;/h6&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;`brew install beanstalkd`
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h6 id=&quot;linux-编译&quot;&gt;Linux-编译&lt;/h6&gt;
+
+&lt;p&gt;1.安装libevent（&lt;a href=&quot;https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar&quot;&gt;点击我&lt;/a&gt;）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
+cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
+tar zxvf libevent-1.4.14b-stable.tar.gz 
+cd  libevent-1.4.14b-stable 
+./configure --prefix=/usr/local/libevent 
+make 
+make install 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;2.安装beanstalkd（&lt;a href=&quot;https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar&quot;&gt;点击我&lt;/a&gt;）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
+tar zxvf beanstalkd-1.4.6.tar.gz 
+cd  beanstalkd-1.4.6 
+./configure --prefix=/usr/local/beanstalkd 
+make 
+make install 
+./beanstalkd -d -l 127.0.0.1 -p 11300 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h6 id=&quot;liunx-包安装&quot;&gt;Liunx-包安装&lt;/h6&gt;
+
+&lt;p&gt;1.centos&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum install beanstalkd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;2.ubuntu&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install beanstalkd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h6 id=&quot;windows&quot;&gt;Windows&lt;/h6&gt;
+
+&lt;p&gt;Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：&lt;a href=&quot;https://git.oschina.net/lomox/beanstalkd-win&quot;&gt;点击我&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;运行&quot;&gt;运行&lt;/h2&gt;
+
+&lt;p&gt;1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
+2.后台启动&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+-b DIR   wal directory
+
+-f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
+-F       never fsync (default)
+-l ADDR  listen on address (default is 0.0.0.0)
+-p PORT  listen on port (default is 11300)
+-u USER  become user and group
+-z BYTES set the maximum job size in bytes (default is 65535)
+-s BYTES set the size of each wal file (default is 10485760)
+(will be rounded up to a multiple of 512 bytes)
+-c       compact the binlog (default)
+-n       do not compact the binlog
+-v       show version information
+-V       increase verbosity
+-h       show this help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;demo点击我&quot;&gt;Demo（&lt;a href=&quot;https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php&quot;&gt;点击我&lt;/a&gt;）&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;?php
+    // 引入BeanStalk客户端类
+    require('BeanStalk.class.php');
+
+    $beanstalk = BeanStalk::open(array(
+        'servers'       =&amp;gt; array( '127.0.0.1:11300' ),
+        'select'        =&amp;gt; 'random peek'
+    ));
+    
+    $beanstalk-&amp;gt;use_tube('foo');
+    
+    $beanstalk-&amp;gt;put(0, 0, 120, 'say hello world');
+     $beanstalk-&amp;gt;watch('foo'); 
+    $job = $beanstalk-&amp;gt;reserve_with_timeout(); 
+    echo $job-&amp;gt;get();
+    Beanstalk::delete($job);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 11 Jan 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/</guid>
+        
+        <category>Queue</category>
+        
+        <category>Beanstalked</category>
+        
+        
+        <category>技术</category>
+        
+      </item>
+    
+      <item>
+        <title>Swift 3更新了啥?[译]</title>
+        <description>&lt;h1 id=&quot;swift-3更新了啥译&quot;&gt;Swift 3更新了啥?[译]&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.raywenderlich.com/135655/whats-new-swift-3&quot; target=&quot;_blank&quot;&gt;原文地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Swift 3在2016年10月13日正式发布，并且为Swift开发者带来了大量的代码更新。&lt;/p&gt;
+
+&lt;p&gt;如果你还没有紧密的关注这个项目&lt;a href=&quot;https://github.com/apple/swift-evolution&quot; target=&quot;_blank&quot;&gt;Swift Evolution&lt;/a&gt;(来哥注:这个是Swift的开源项目仓库，里面有所有的Swift更新动态)，那么你很可能想知道Swift3中有哪些变化？这些变化是否影响你的编码方式？以及你是否应该考虑开始使用Swift 3进行开发了。这篇文章会告诉你所有答案！:]&lt;/p&gt;
+
+&lt;h2 id=&quot;开篇&quot;&gt;开篇&lt;/h2&gt;
+
+&lt;p&gt;Xcode8中已经允许使用Swift 3了。&lt;/p&gt;
+
+&lt;p&gt;为了允许开发者迁移到Swift 3版本，苹果已经在Xcode8中包含了一个Swift 2.3的升级包。对开发者来说，Swift 2.3和Swift 2.2几乎是一样的，但是对于编译的SDK和Xcode来说却是有差异的。即使你现在还没有将代码迁移至Swift 3，目前你仍然可以提交使用Swift 2.3开发的app到App Store。&lt;/p&gt;
+
+&lt;p&gt;当然我推荐你可以使用Playground或者直接在你的项目中使用我们接下来将要讨论到的Swift 3的新特性，你会发现Swift 3的改变真的还蛮大的！&lt;/p&gt;
+
+&lt;h2 id=&quot;迁移至swift-3&quot;&gt;迁移至Swift 3&lt;/h2&gt;
+
+&lt;p&gt;在转换代码到Swift 3版本的时候，你会发现几乎每一个文件都需要进行更改！这个最主要的原因是所有的Cocoa API的命名都进行了修改！或者更准确的来说，API还是和原来一样的，只不过API的命名分成了两部分，一部分是适应Objective-C另一部分是适应Swift的。这么做也是为了Swift 3在将来更加自然的书写。&lt;/p&gt;
+
+&lt;p&gt;苹果在Xcode中内置了一个迁移助手，它可以一步到位并且很完美地将大部分代码升级至Swift 3。有些部分代码可能转换失败，那么你可以能需要手动处理一下。&lt;/p&gt;
+
+&lt;p&gt;通过转换助手你可以瞬间将代码转换成Swift 2.3或者Swift 3。如果你想恢复已经转换的代码，你可以这样做&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Edit&lt;/code&gt; &amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Convert&lt;/code&gt; &amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;To Current Swfit Syntax...&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;编译器现在也和迁移助手一样只能了，比如你在方法调用中使用了来的API接口，编译器会提供一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Fix-it&lt;/code&gt;的选项来帮助你修改到最新的API上。&lt;/p&gt;
+
+&lt;h2 id=&quot;swift更新中已经实施了的提议&quot;&gt;Swift更新中已经实施了的提议&lt;/h2&gt;
+
+&lt;p&gt;在Swift开源以来，社区成员提交超过100个的建议来推动Swift的发展。其中大部分的提议在经过讨论和修正之后都被Swift接受了。而那些被拒绝的提议也在不断的讨论中产生更多的新想法。当然，所有的讨论以及提议最终由Swift的核心团队来执行。&lt;/p&gt;
+
+&lt;p&gt;Swift在开源以来经过短短的时间就在Github斩获了超过3万个star，为此官方团队和第三方社区都极受鼓舞。有些提案每隔几周就被提交，即使苹果的工程师们已经在修仪进程中了，可见开发者对于加入Swift的革新事业中是多么的热情澎湃。&lt;/p&gt;
+
+&lt;p&gt;在下面的几个章节中，你会看到很多连接，比如&lt;code class=&quot;highlighter-rouge&quot;&gt;[SE-0001]&lt;/code&gt;。这些都是Swift的提议编码号。通过这些提议编号的连接地址你可以探索到所有Swift更新中变化的细节。另外你也可以查看&lt;a href=&quot;https://apple.github.io/swift-evolution/&quot; target=&quot;_blank&quot;&gt;status of all Swift Evolution proposals&lt;/a&gt;，看看哪些提议已经被实施了。这篇文章中的代码示例主要来自 &lt;a href=&quot;https://www.hackingwithswift.com/swift3&quot; target=&quot;_blank&quot;&gt;common changes you’ll notice in Swift 3&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;api的变更&quot;&gt;API的变更&lt;/h2&gt;
+
+&lt;p&gt; 在Swift 3中最大的更新便是对所有涉及到标准库的的API都采用了更加一致的命名规范。&lt;a href=&quot;https://swift.org/documentation/api-design-guidelines/&quot; target=&quot;_blank&quot;&gt;API Design Guidleines&lt;/a&gt;含括了构建Swift 3 API的一般规则。这个规则最高的优先权重是放在可读性和可访问性上的。官方团队也指定了一般性的准则“好的API设计总是优先考虑调用端”。他们力争做到更加清晰的使用，没有混乱的调用！&lt;/p&gt;
+
+&lt;p&gt;下面的更新很有可能对你有用！&lt;/p&gt;
+
+&lt;h3 id=&quot;参数符号一致性&quot;&gt;参数符号一致性&lt;/h3&gt;
+
+&lt;p&gt;我们直接从日常使用Swift中的一些对照的例子开始把。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/What’s New in Swift 3/pic1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;函数或者方法的第一个形参总是要求有一个参数符号！在这之前调用函数或者方法是要求你忽略掉第一个参数符号的[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0046-first-label.md&quot; target=&quot;_blank&quot;&gt;SE-0046&lt;/a&gt;]&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2, followed by new way, Swift 3&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;NSJSONSerialization&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JSONObjectWithData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;JSONSerialization&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;jsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+ 
+&lt;span class=&quot;nf&quot;&gt;addQuadCurveToPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;endPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;controlPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controlPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;addQuadCurve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;controlPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controlPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;NSFileManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;defaultManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;URLsForDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;DocumentDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;inDomains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UserDomainMask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;FileManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;urls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;documentDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDomainMask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;panelView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerXAnchor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;constraintEqualToAnchor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerXAnchor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;panelView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerXAnchor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;constraint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;equalTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerXAnchor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;removeAtIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;pngImageData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;writeToURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fileURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atomically&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pngImageData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fileURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+ 
+&lt;span class=&quot;nf&quot;&gt;numberOfSectionsInTableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;numberOfSections&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;SCNAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;moveTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;SCNVector3Make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;SCNAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;SCNVector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;需要注意的是怎么在方法定义中的外部名称中准确地使用介词比如“of”，“to”，“with”，“in”，这将直接影响到代码的可读性。&lt;/p&gt;
+
+&lt;p&gt;如果你的方法调用可读性强，那么你也可以不用使用参数符号，但是你要在第一个参数使用下划线。&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfRowsInSection&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;didMoveToView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;SKView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在很多编程语言中，方法可以共享一个基本名称，然后通过不同的参数来区分不同的方法，Swift也是类似的，在API命名更新成更为直接的方式之后，你会更加经常地遇到方法的重载。下面是&lt;code class=&quot;highlighter-rouge&quot;&gt;index()&lt;/code&gt;的两种形式。&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Anna&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Barbara&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;annaIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Anna&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Barbara's position: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;after&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;annaIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;参数命名方法的更改使得Swift命名更加直接并且更加容易学习。&lt;/p&gt;
+
+&lt;h3 id=&quot;忽略不必要的方法命名单词&quot;&gt;忽略不必要的方法命名单词&lt;/h3&gt;
+
+&lt;p&gt;在之前苹果的库的迭代中，方法总是定义了这个方法期望返回的值的类型。但是因为Swift编译器拥有类型检查之后，这种命名方式就变得不那么必要了。Swift团队花了很多精力去将方法命名中冗余的字段删除，只保留重要信息因此大部分重复的命名单词被删除。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/What’s New in Swift 3/pic2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;API从Objective-C转换到原生Swift已经变得越来越智能了[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0005-objective-c-name-translation.md&quot; target=&quot;_blank&quot;&gt;SE-0005&lt;/a&gt;]&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2, followed by new way, Swift 3&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;helloString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;stringByAppendingString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;helloString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;appending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blueColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;colorWithAlphaComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;withAlphaComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;NSBundle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;mainBundle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;Bundle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;maxElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;animals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Koala&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;animals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Koala&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;WKInterfaceDevice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;currentDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;WKInterfaceDevice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;playHaptic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;play&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;更加现代的gcd以及core-graphics&quot;&gt;更加现代的GCD以及Core Graphics&lt;/h3&gt;
+
+&lt;p&gt;谈及旧的API的改造，GCD和Core Graphics的呼声是最高的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/What’s New in Swift 3/pic3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;GCD是用于处理多线程任务例如长计算以及服务通信，因为GCD的底层是使用C语言编写，所以GCD的API有这浓浓的C style风格，不过在Swift 3中已经被重新改装了 [&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0088-libdispatch-for-swift3.md&quot; target=&quot;_blank&quot;&gt;SE-0088&lt;/a&gt;]。&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.test.myqueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;dispatch_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ 
+&lt;span class=&quot;c1&quot;&gt;// new way, Swift 3&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.test.myqueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;同样地，Core Graphics底层也使用了C编写，API也同样做了原生Swift的改造。[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0044-import-as-member.md&quot; target=&quot;_blank&quot;&gt;SE-0044&lt;/a&gt;]&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIGraphicsGetCurrentContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;startAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;endAngle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;M_PI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;strokeWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strokeWidth&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;CGContextSetStrokeColorWithColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;CGColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;CGContextSetLineWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strokeWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;CGContextAddArc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;CGContextDrawPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kCGPathStroke&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;c1&quot;&gt;// new way, Swift 3&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIGraphicsGetCurrentContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;startAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;endAngle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;strokeWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;midX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strokeWidth&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setStrokeColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cgColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setLineWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strokeWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setFillColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cgColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;addArc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;nv&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;nv&quot;&gt;startAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;nv&quot;&gt;endAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;nv&quot;&gt;clockwise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;drawPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;using&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stroke&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;枚举取消大写&quot;&gt;枚举取消大写&lt;/h3&gt;
+
+&lt;p&gt;另一个在你平常Swift编码中相反的例子便是：在枚举类的case中使用小驼峰命名代替大驼峰命名。这会使得枚举的case和一般的成员属性更加一致。[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md&quot; target=&quot;_blank&quot;&gt;SE-0006&lt;/a&gt;]:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2, followed by new way, Swift 3&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;UIStatusBarStyle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;LightContent&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;UIStatusBarStyle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lightContent&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;SKLabelVerticalAlignmentMode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Center&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;SKLabelVerticalAlignmentMode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;
+ 
+&lt;span class=&quot;kt&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;None&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;方法的返回和直接修改&quot;&gt;方法的返回和直接修改&lt;/h3&gt;
+
+&lt;p&gt;这个也是标准库将要变得一致性的命名方式，同一个方法会根据后缀的不同会产生不同的影响，其规则如下：如果一个方法名有一个后缀“-ed”或者“-ing”，那么这个方法的命名方式是名词式的，那么这个方法会返回值(拷贝)，如果一个方法没有上述的后缀，那么这个方法极有可能是一个动词式的方法，调用这个方法会直接操作并影响内存。这个也就是很出名的&lt;code class=&quot;highlighter-rouge&quot;&gt;modifying in place&lt;/code&gt;。下面有几对标准库中的方法是符合 名词式/动词式 命名规范的。尤其是&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt;相关的方法有这种趋势。比如：&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerate()/enumerated()&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;reverse()/reversed()&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;sort()/sorted()&lt;/code&gt;,一般的规则就是 一个动词式方法如果加上”-ed”的后缀，那么这个方法编程一个名词式方法，这个方法会有返回一个数组的拷贝。&lt;/p&gt;
+
+&lt;p&gt;这些方法的代码片段的讨论在[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md&quot; target=&quot;_blank&quot;&gt;SE-0006&lt;/a&gt;]:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;21&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// variable, not constant, so you can modify it&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// modified in place, value now [2, 10, 21]&lt;/span&gt;
+ 
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;enumerated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// copied into a dictionarry&lt;/span&gt;
+  &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;. &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1. 2 \n 2. 10 \n 3. 21&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;函数类型&quot;&gt;函数类型&lt;/h3&gt;
+
+&lt;p&gt;函数的定义和调用总是需要用圆括号来包住参数：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ 
+&lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;但是当你使用函数作为参数的时候，圆括号可以省略：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// old way, Swift 2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你可能发现上面那样定义的函数是相当难阅读的。当在参数结束以及要返回一个函数类型的时候，在Swift 3中正确的做法是：[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0066-standardize-function-type-syntax.md&quot; target=&quot;_blank&quot;&gt;SE-0066&lt;/a&gt;]&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// new way, Swift 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;现在如果返回类型是一个函数的时候，参数必须要使用圆括号包围，这样代码就会变得更加清新，函数类型的返回也更加容易辨认，下面是更多的对方例子：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// old way, Swift 2&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Float&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;U&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Float&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;
+ 
+&lt;span class=&quot;c1&quot;&gt;// new way, Swift 3&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Float&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;U&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;附加的api&quot;&gt;附加的API&lt;/h2&gt;
+
+&lt;p&gt;Swift 3中除了将所有API进行了现代化的改造之外，也额外添加了更多有用的附加API。&lt;/p&gt;
+
+&lt;h3 id=&quot;访问包含类型&quot;&gt;访问包含类型&lt;/h3&gt;
+
+&lt;p&gt;当你定义一个静态变量或者方法的时候，你总是需要用下面的方式来访问：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;CustomStruct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;staticMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;要调用一个方法的静态变量或者和静态方法，你需要使用这个静态遍历或静态方法定义所在的类型，然后使用类型的点方法来调用。现在你可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt;直接从一个对象实例直接获取到这个对象的类型。注意&lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt;的区别。[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md&quot; target=&quot;_blank&quot;&gt;SE-0068&lt;/a&gt;]:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CustomStruct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;          
+ &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;staticMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;          
+ &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;instanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;          
+ &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;staticMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// in the body of the type          &lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;          
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;          
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;customStruct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CustomStruct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;          
+&lt;span class=&quot;n&quot;&gt;customStruct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;staticMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// on an instance of the type&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。&lt;/p&gt;
+
+&lt;h3 id=&quot;内联序列&quot;&gt;内联序列&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sequence(first:next:)&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;sequence(state:next:)&lt;/code&gt;是两个可以返回无穷序列的全局函数。你传入一个初始值或者一个可变的状态然后它会在一个闭包中运行。&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sequence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;superview&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// someView, someView.superview, someView.superview.superview, ...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;prefix&lt;/code&gt;来约束这个序列[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0045-scan-takewhile-dropwhile.md&quot; target=&quot;_blank&quot;&gt;SE-0045&lt;/a&gt;]:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sequence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+  &lt;span class=&quot;c1&quot;&gt;// 0.1, 0.2, 0.4, 0.8, 1.6, 3.2&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。&lt;/p&gt;
+
+&lt;h2 id=&quot;杂项&quot;&gt;杂项&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#keyPath()&lt;/code&gt;类似于&lt;code class=&quot;highlighter-rouge&quot;&gt;#selector()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;π现在可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;Float.pi&lt;/code&gt;以及&lt;code class=&quot;highlighter-rouge&quot;&gt;CGFloat.pi&lt;/code&gt;来获取，并且编译器大部分时间都能推断类型，如：&lt;code class=&quot;highlighter-rouge&quot;&gt;let circumference = 2 * .pi * radius&lt;/code&gt;[&lt;a href=&quot;https://github.com/apple/swift-evolution/blob/master/proposals/0067-floating-point-protocols.md&quot; target=&quot;_blank&quot;&gt;SE-0067&lt;/a&gt;]&lt;/li&gt;
+  &lt;li&gt;NS开头的类全部被干掉了，如&lt;code class=&quot;highlighter-rouge&quot;&gt;Calendar&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;Date&lt;/code&gt;来代替原来的&lt;code class=&quot;highlighter-rouge&quot;&gt;NSCalendar&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;NSDate&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;工具的改进&quot;&gt;工具的改进&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;哈希索引提速3倍&lt;/li&gt;
+  &lt;li&gt;堆拷贝提升24倍&lt;/li&gt;
+  &lt;li&gt;阿拉巴啦阿拉巴啦 不想翻译……&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;swift的包管理工具&quot;&gt;Swift的包管理工具&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/apple/swift-package-manager&quot; target=&quot;_blank&quot;&gt;Swift Package Manager&lt;/a&gt; 定义了一个Swift代码目录的目录结构，可以很方便的分享和导入第三方的库。&lt;/p&gt;
+
+&lt;p&gt;和Cocoapods、Carthage类似的，Swift package manager会自动下载依赖库，通过编译、链接生成库文件或者可直接文件，Swift 3第一次将Swift Package Manager集成进Swift的发布中，目前已经有1000多的第三库支持这个包管理工具了。不过目前Swift Package Manager只支持服务端项目的包管理，还不支持iOS项目。&lt;/p&gt;
+
+&lt;h2 id=&quot;将来计划的特型&quot;&gt;将来计划的特型&lt;/h2&gt;
+
+&lt;p&gt;不想翻译&lt;/p&gt;
+
+&lt;h2 id=&quot;下一步&quot;&gt;下一步&lt;/h2&gt;
+
+&lt;p&gt;不想翻译&lt;/p&gt;
+</description>
+        <pubDate>Tue, 10 Jan 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        <category>翻译</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>WWDC2016新技术盘点</title>
+        <description>&lt;h2 id=&quot;新的api&quot;&gt;新的API&lt;/h2&gt;
+
+&lt;h3 id=&quot;sfspeechrecognizer框架&quot;&gt;SFSpeechRecognizer框架&lt;/h3&gt;
+
+&lt;p&gt;全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可以实现连续的语音识别&lt;/li&gt;
+  &lt;li&gt;可以对语 音文件或者语音流进行识别&lt;/li&gt;
+  &lt;li&gt;最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;示例：读取一段语音文件输出文字内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-objectivec&quot;&gt;#import &amp;lt;Speech/Speech.h&amp;gt;
+//1.创建本地化标识符
+NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@&quot;zh_CN&quot;];
+//2.创建一个语音识别对象
+SFSpeechRecognizer *sf =[[SFSpeechRecognizer alloc] initWithLocale:local];
+//3.将bundle 中的资源文件加载出来返回一个url
+NSURL *url =[[NSBundle mainBundle] URLForResource:@&quot;掌麦企业文化.mp3&quot; withExtension:nil];
+//4.将资源包中获取的url 传递给 request 对象
+SFSpeechURLRecognitionRequest *res =[[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+//5.发送一个请求
+[sf recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        if (error!=nil) {
+            NSLog(@&quot;语音识别解析失败,%@&quot;,error);
+        }else{
+            //解析正确
+            NSLog(@“语音内容：@&quot;,result.bestTranscription.formattedString);
+    }
+}];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;sirikit&quot;&gt;SiriKit&lt;/h3&gt;
+
+&lt;p&gt;在iOS10之后，苹果希望Siri能够给用户带来更多的功能体验，基于这个出发点，新增了SiriKit框架。Siri通过语言处理系统识别与用户的对话，解析并生成用于描述对话的意图（Intent），然后通过Siri框架把该Intent分发给相应的应用程序进而获取内容或执行操作。（图片来源苹果官方文档 SiriKit Programming Guide）&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/WWDC2016/SiriKit.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;通过官方文档可以了解到SiriKit支持以下六类服务：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;语音和视频通话&lt;/li&gt;
+  &lt;li&gt;发送消息&lt;/li&gt;
+  &lt;li&gt;收款或者付款&lt;/li&gt;
+  &lt;li&gt;图片搜索&lt;/li&gt;
+  &lt;li&gt;管理锻炼&lt;/li&gt;
+  &lt;li&gt;行程预约&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;通知&quot;&gt;通知&lt;/h3&gt;
+
+&lt;p&gt;新的通知框架新增了以下功能&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;整合统一了本地通知和远程通知&lt;/li&gt;
+  &lt;li&gt;可以在通知中加入多媒体内容&lt;/li&gt;
+  &lt;li&gt;可以获取App中的应用清单，可以触发通知时间，能更新这些通知，删除旧通知&lt;/li&gt;
+  &lt;li&gt;可以通过代码获取用户的通知设置情况&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UserNotifications&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;framework&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;（iOS10+， watchOS 3.0+，tvOS10.0+）&lt;/p&gt;
+
+&lt;p&gt;支持远程推送和本地通知的接收和发送，可以使用这个框架管理通知的发送基于地理位置和时间。同时应用程序扩展也可以使用该框架进行通知管理&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UserNotificationsUI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;framework&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;（iOS10+）&lt;/p&gt;
+
+&lt;p&gt;定义展现在用户设备上的通知效果，前提是使用该框架定义一个程序扩展来接收并发送通知。&lt;/p&gt;
+
+&lt;h3 id=&quot;foundation框架&quot;&gt;Foundation框架&lt;/h3&gt;
+
+&lt;p&gt;新增NSISO8601DateFormatter类
+新增NSDateInterval类型&lt;/p&gt;
+
+&lt;h3 id=&quot;uitableview-和-uicollectionview-预加载&quot;&gt;UITableView 和 UICollectionView 预加载&lt;/h3&gt;
+
+&lt;p&gt;众所周知，TableView和CollectionView的顺滑与否能够很大程度上影响用户的使用体验。这次Apple对这两个View又进行了一次优化。
+在UITableView中新增了UITableViewDataSourcePrefetching协议并提供了下列方法（Swift）&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//此方法在TableViewCell进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefetchRowsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancelPrefetchingForRowsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在UICollectionView中新增了UICollectionViewDataSourcePrefetching协议并提供了下列方法（Swift）&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//此方法在CollectionViewItem进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务，&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UICollectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefetchItemsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UICollectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancelPrefetchingForItemsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;gcd在swift30中的彻底改写&quot;&gt;GCD在Swift3.0中的彻底改写&lt;/h3&gt;
+
+&lt;p&gt;GCD（Grand Central Dispatch）是iOS开发中的重要概念，平时开发中大多数多线程都会用到它。此次在Swift3.0的更新中彻底改了GCD的语法，我们将不再会看到类似dispatch_async，dispatch_sync这样的写法了，而是引入DispatchQueue这个类。
+例如:在全局线程中定义一个常量，在主线程中打印出来&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Swift3.0 GCD&quot;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;￼除了使用DispatchQueue之外也可以自定义DispatchWorkItem。DispatchWorkItem 定义了一个操作的内部代码，以及优先级，特性等等。 它可以直接在任何队列中执行：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Swift.queue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;workItem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchWorkItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;qos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userInitiated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assignCurrentContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//执行操作  &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;￼对dispatch_time_t也进行了改进，语法使用起来更加简单。DispatchTime.now() 是当前事前， 然后加上 .seconds(60) 代表 60秒。￼&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;uiviewpropertyanimator&quot;&gt;UIViewPropertyAnimator&lt;/h3&gt;
+
+&lt;p&gt;新的 UIViewPropertyAnimator 类可以更好地使用 UIView.animatedWithDuration API，借此可以实现很多功能，比如：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;中途中断动画，暂停，停止，恢复，逆转，控制进度&lt;/li&gt;
+  &lt;li&gt;动画开始后改变值&lt;/li&gt;
+  &lt;li&gt;改变 percentComplete 属性让动画更具交互性&lt;/li&gt;
+  &lt;li&gt;或者甚至可以把 percentComplete 和 UIGestureRecognizer 结合在一起使用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;uitabbar&quot;&gt;UITabBar&lt;/h3&gt;
+
+&lt;p&gt;能够控制一个 tab bar item 的样式，比如背景颜色和文字属性。&lt;/p&gt;
+
+&lt;h3 id=&quot;messages-api&quot;&gt;Messages API&lt;/h3&gt;
+
+&lt;p&gt;新的框架，用于创建基于 iMessage 的新应用
+能够创建 iMessage 的表情包&lt;/p&gt;
+
+&lt;h2 id=&quot;xcode-里的新工具&quot;&gt;Xcode 里的新工具&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;新的可视化调试工具（Visual Debugging Tools），特别是内存和线程工具&lt;/li&gt;
+  &lt;li&gt;新的代码签名机制&lt;/li&gt;
+  &lt;li&gt;Xcode 扩展&lt;/li&gt;
+  &lt;li&gt;在 Xcode 8 里允许你选择使用 Swift 2.3 还是 Swift 3.0&lt;/li&gt;
+  &lt;li&gt;图片名字自动补全，代码中可以对颜色和图片文字化&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 09 Jan 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>【Docker】安装并运行nginx</title>
+        <description>
+</description>
+        <pubDate>Sat, 07 Jan 2017 00:30:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/</guid>
+        
+        <category>教程</category>
+        
+        <category>Docker</category>
+        
+        <category>nginx</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>git常用功能介绍</title>
+        <description>&lt;h1 id=&quot;git常用功能介绍&quot;&gt;git常用功能介绍&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-搭建测试环境&quot;&gt;1 搭建测试环境&lt;/h2&gt;
+
+&lt;p&gt;开源中国(https://git.oschina.net/)提供了一个免费的git server服务器，可以到那里注册账号并托管自己的项目，同时也是学习git很理想的一个环境。&lt;/p&gt;
+
+&lt;h2 id=&quot;2-代码下载同步提交&quot;&gt;2 代码下载/同步/提交&lt;/h2&gt;
+
+&lt;p&gt;下载：git clone https://git.oschina.net/brc/LfListView.git
+同步：git pull
+提交：git add –all;   git commit -m “xxx”;  git push;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-基本概念与文件目录结构&quot;&gt;3 基本概念与文件目录结构&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/Github Pages notes/git_common.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;test/.git&lt;/li&gt;
+  &lt;li&gt;test/xxx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-其他常用命令&quot;&gt;4 其他常用命令&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;git reset&lt;/li&gt;
+  &lt;li&gt;git status&lt;/li&gt;
+  &lt;li&gt;git diff&lt;/li&gt;
+  &lt;li&gt;git log&lt;/li&gt;
+  &lt;li&gt;gitk xxx&lt;/li&gt;
+  &lt;li&gt;git blame&lt;/li&gt;
+  &lt;li&gt;git branch&lt;/li&gt;
+  &lt;li&gt;git checkout&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;5-git--svn的区别&quot;&gt;5 Git &amp;amp; Svn的区别&lt;/h2&gt;
+
+&lt;p&gt;http://www.cnblogs.com/somethingWithiOS/p/5636356.html&lt;/p&gt;
+</description>
+        <pubDate>Fri, 06 Jan 2017 03:35:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/</guid>
+        
+        <category>版本管理</category>
+        
+        
+      </item>
     
       <item>
         <title>Github Pages notes</title>
         <description>&lt;h1 id=&quot;github-pages-notes&quot;&gt;Github Pages notes&lt;/h1&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
 &lt;p&gt;Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、能够认识最顶尖的开发者；对于一个技术爱好者以及开发者而言，这个社区是一个结合你的兴趣以及提升能力最佳的地方！&lt;/p&gt;
 
 &lt;p&gt;整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这个开源世界的中心学习并且回馈社会！&lt;/p&gt;
 
-&lt;p&gt;当前的这个博客基于&lt;a href=&quot;&quot; target=&quot;_blank&quot;&gt;Github Pages&lt;/a&gt;+&lt;a href=&quot;&quot; target=&quot;_blank&quot;&gt;Jekyll&lt;/a&gt;搭建而成！下面是这个博客系统基本的用法说明。&lt;/p&gt;
+&lt;p&gt;当前的这个博客基于&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot;&gt;Github Pages&lt;/a&gt;+&lt;a href=&quot;https://jekyllrb.com/&quot; target=&quot;_blank&quot;&gt;Jekyll&lt;/a&gt;搭建而成！下面是这个博客系统基本的用法说明。&lt;/p&gt;
 
 &lt;h2 id=&quot;github-pages&quot;&gt;Github Pages&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000&quot; target=&quot;_blank&quot;&gt;Git技术&lt;/a&gt;、&lt;a href=&quot;https://help.github.com/&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt;、仓库、以及团队协作方面的知识本文不会赘述，请自行查阅相关的资料。&lt;/p&gt;
 
-&lt;p&gt;Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库更目录下有&lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt;，那么Github会为这个仓库自动生产Github Pages页面，其域名是&lt;code class=&quot;highlighter-rouge&quot;&gt;https://[用户名].github.io/[仓库命]&lt;/code&gt;，如当前博客的仓库名是&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;，当前注册用户名为&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai&lt;/code&gt;，如下图&lt;/p&gt;
+&lt;p&gt;Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库根目录下有&lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt;，那么Github会为这个仓库自动生成Github Pages页面，其域名是&lt;code class=&quot;highlighter-rouge&quot;&gt;https://[用户名].github.io/[仓库命]&lt;/code&gt;，如当前博客的仓库名是&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;，当前注册用户名为&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai&lt;/code&gt;，如下图&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/post/Github Pages notes/pic1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;并且&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;仓库的主目录下有&lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt;文件。那么Github会自动为&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;这个项目生产Github Pages的页面，其链接地址为：&lt;code class=&quot;highlighter-rouge&quot;&gt;https://izhangmai.github.io/izhangmai.github.io&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;并且&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;仓库的跟目录下有&lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt;文件。那么Github会自动为&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;这个项目生成Github Pages的页面，其链接地址为：&lt;code class=&quot;highlighter-rouge&quot;&gt;https://izhangmai.github.io/izhangmai.github.io&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;这里Github有一个特殊的Github Pages生成规则，即是当仓库名称为&lt;code class=&quot;highlighter-rouge&quot;&gt;[用户名].github.io&lt;/code&gt;命名的，会自动以&lt;code class=&quot;highlighter-rouge&quot;&gt;https://[用户名].github.io&lt;/code&gt;为Github Pages的链接地址。所以最终&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai(当前登录用户名)&lt;/code&gt;下的一个仓库&lt;code class=&quot;highlighter-rouge&quot;&gt;izhangmai.github.io&lt;/code&gt;的Github Pages的地址为：&lt;code class=&quot;highlighter-rouge&quot;&gt;https://izhangmai.github.io&lt;/code&gt;。&lt;/p&gt;
 
@@ -41,7 +804,7 @@
 
 &lt;p&gt;当然你也不希望发布出来的文章充满了排版bug，所以你可以在你自己的计算机安装Jekyll来对你将要发布的文章进行测试和预览，具体的方法请参阅Jekyll使用手册。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;其他说明&lt;/h2&gt;
+&lt;h2 id=&quot;其他说明&quot;&gt;其他说明&lt;/h2&gt;
 
 &lt;p&gt;当前的博客系统得到完整&lt;a href=&quot;https://www.appinn.com/markdown/&quot; target=&quot;_blank&quot;&gt;Markdown&lt;/a&gt;语法支持，所以建议你使用Markdown进行博客书写！&lt;/p&gt;
 

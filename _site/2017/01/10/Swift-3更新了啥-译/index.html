@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="记录技术相关的一切。">
+    <meta name="keyword"  content="四川掌麦科技有限公司">
+    <link rel="shortcut icon" href="img/common/favicon.ico">
+	
+	<link href="/css/prism.css" rel="stylesheet" />
+	<script src="/js/prism.js"></script>
+	
+    <title>Swift 3更新了啥?[译] - zmai掌麦技术团队博客|zmai's Blog</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">zmai掌麦技术团队博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post/What’s New in Swift 3/2017-1-10-bg.jpg" width="0" height="0"> -->
+
+	
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post/What’s New in Swift 3/2017-1-10-bg.jpg')
+    }
+	
+	/*导航*/
+	.BlogAnchor {
+	    background: #ffffff;
+	    padding: 0px;
+	    line-height: 180%;
+	}
+	.BlogAnchor p {
+	    font-size: 18px;
+	    color: #15a230;
+	    margin-bottom: 0.3em;
+	}
+	.BlogAnchor .AnchorContent {
+	    padding: 5px 0px;
+	}
+	.BlogAnchor li{
+	    text-indent: 20px;
+	    font-size: 18px;
+	}
+	#AnchorContentToggle {
+	    font-size: 18px;
+	    font-weight: normal;
+	    color: #FFF;
+	    display: inline-block;
+	    line-height: 30px;
+	    background: #5cc26f;
+	    font-style: normal;
+	    padding: 1px 20px;
+	    margin-right: 10px;
+	}
+	.BlogAnchor a:hover {
+	    color: #5cc26f;
+	}
+	.BlogAnchor a {
+	    text-decoration: none;
+	}
+	
+
+	.ScrollTop {
+		width: 50px;
+		height: 50px;
+		background: black;
+		-moz-border-radius: 25px;
+		-webkit-border-radius: 25px;
+		border-radius: 25px;
+		position:fixed;
+		    bottom:18px;
+		    right:30px; 
+			-webkit-box-shadow: #666 0px 0px 5px;  
+			   -moz-box-shadow: #666 0px 0px 5px;  
+			   box-shadow: #666 0px 0px 5px; 
+	}
+	.ScrollTop p {
+	    font-size: 15px;
+	    color: #ffffff;
+		position:fixed;
+		    bottom:0px;
+		    right:40px;
+	}
+	
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                        <a class="tag" href="/tags/#翻译" title="翻译">翻译</a>
+                        
+                    </div>
+                    <h1>Swift 3更新了啥?[译]</h1>
+                    
+                    
+                    <h2 class="subheading">Swift 3的新特性！！</h2>
+                    
+                    <span class="meta">Posted by 戴伟来 on January 10, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+
+<div class="BlogAnchor">
+    <p>
+        <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[+]</b>
+    </p>
+    <div class="AnchorContent" id="AnchorContent"> </div>
+</div>
+
+<div class="ScrollTop">
+    <p>
+        <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
+    </p>
+</div>
+				<h1 id="swift-3更新了啥译">Swift 3更新了啥?[译]</h1>
+
+<p><a href="https://www.raywenderlich.com/135655/whats-new-swift-3" target="_blank">原文地址</a></p>
+
+<p>Swift 3在2016年10月13日正式发布，并且为Swift开发者带来了大量的代码更新。</p>
+
+<p>如果你还没有紧密的关注这个项目<a href="https://github.com/apple/swift-evolution" target="_blank">Swift Evolution</a>(来哥注:这个是Swift的开源项目仓库，里面有所有的Swift更新动态)，那么你很可能想知道Swift3中有哪些变化？这些变化是否影响你的编码方式？以及你是否应该考虑开始使用Swift 3进行开发了。这篇文章会告诉你所有答案！:]</p>
+
+<h2 id="开篇">开篇</h2>
+
+<p>Xcode8中已经允许使用Swift 3了。</p>
+
+<p>为了允许开发者迁移到Swift 3版本，苹果已经在Xcode8中包含了一个Swift 2.3的升级包。对开发者来说，Swift 2.3和Swift 2.2几乎是一样的，但是对于编译的SDK和Xcode来说却是有差异的。即使你现在还没有将代码迁移至Swift 3，目前你仍然可以提交使用Swift 2.3开发的app到App Store。</p>
+
+<p>当然我推荐你可以使用Playground或者直接在你的项目中使用我们接下来将要讨论到的Swift 3的新特性，你会发现Swift 3的改变真的还蛮大的！</p>
+
+<h2 id="迁移至swift-3">迁移至Swift 3</h2>
+
+<p>在转换代码到Swift 3版本的时候，你会发现几乎每一个文件都需要进行更改！这个最主要的原因是所有的Cocoa API的命名都进行了修改！或者更准确的来说，API还是和原来一样的，只不过API的命名分成了两部分，一部分是适应Objective-C另一部分是适应Swift的。这么做也是为了Swift 3在将来更加自然的书写。</p>
+
+<p>苹果在Xcode中内置了一个迁移助手，它可以一步到位并且很完美地将大部分代码升级至Swift 3。有些部分代码可能转换失败，那么你可以能需要手动处理一下。</p>
+
+<p>通过转换助手你可以瞬间将代码转换成Swift 2.3或者Swift 3。如果你想恢复已经转换的代码，你可以这样做</p>
+
+<p><code class="highlighter-rouge">Edit</code> &gt; <code class="highlighter-rouge">Convert</code> &gt; <code class="highlighter-rouge">To Current Swfit Syntax...</code>。</p>
+
+<p>编译器现在也和迁移助手一样只能了，比如你在方法调用中使用了来的API接口，编译器会提供一个<code class="highlighter-rouge">Fix-it</code>的选项来帮助你修改到最新的API上。</p>
+
+<h2 id="swift更新中已经实施了的提议">Swift更新中已经实施了的提议</h2>
+
+<p>在Swift开源以来，社区成员提交超过100个的建议来推动Swift的发展。其中大部分的提议在经过讨论和修正之后都被Swift接受了。而那些被拒绝的提议也在不断的讨论中产生更多的新想法。当然，所有的讨论以及提议最终由Swift的核心团队来执行。</p>
+
+<p>Swift在开源以来经过短短的时间就在Github斩获了超过3万个star，为此官方团队和第三方社区都极受鼓舞。有些提案每隔几周就被提交，即使苹果的工程师们已经在修仪进程中了，可见开发者对于加入Swift的革新事业中是多么的热情澎湃。</p>
+
+<p>在下面的几个章节中，你会看到很多连接，比如<code class="highlighter-rouge">[SE-0001]</code>。这些都是Swift的提议编码号。通过这些提议编号的连接地址你可以探索到所有Swift更新中变化的细节。另外你也可以查看<a href="https://apple.github.io/swift-evolution/" target="_blank">status of all Swift Evolution proposals</a>，看看哪些提议已经被实施了。这篇文章中的代码示例主要来自 <a href="https://www.hackingwithswift.com/swift3" target="_blank">common changes you’ll notice in Swift 3</a>。</p>
+
+<h2 id="api的变更">API的变更</h2>
+
+<p> 在Swift 3中最大的更新便是对所有涉及到标准库的的API都采用了更加一致的命名规范。<a href="https://swift.org/documentation/api-design-guidelines/" target="_blank">API Design Guidleines</a>含括了构建Swift 3 API的一般规则。这个规则最高的优先权重是放在可读性和可访问性上的。官方团队也指定了一般性的准则“好的API设计总是优先考虑调用端”。他们力争做到更加清晰的使用，没有混乱的调用！</p>
+
+<p>下面的更新很有可能对你有用！</p>
+
+<h3 id="参数符号一致性">参数符号一致性</h3>
+
+<p>我们直接从日常使用Swift中的一些对照的例子开始把。</p>
+
+<p><img src="/img/post/What’s New in Swift 3/pic1.jpg" alt="" /></p>
+
+<p>函数或者方法的第一个形参总是要求有一个参数符号！在这之前调用函数或者方法是要求你忽略掉第一个参数符号的[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0046-first-label.md" target="_blank">SE-0046</a>]</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2, followed by new way, Swift 3</span>
+ 
+<span class="kt">NSJSONSerialization</span><span class="o">.</span><span class="kt">JSONObjectWithData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span>
+<span class="kt">JSONSerialization</span><span class="o">.</span><span class="nf">jsonObject</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span>
+ 
+<span class="nf">addQuadCurveToPoint</span><span class="p">(</span><span class="n">endPoint</span><span class="p">,</span> <span class="nv">controlPoint</span><span class="p">:</span> <span class="n">controlPoint</span><span class="p">)</span>
+<span class="nf">addQuadCurve</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">endPoint</span><span class="p">,</span> <span class="nv">controlPoint</span><span class="p">:</span> <span class="n">controlPoint</span><span class="p">)</span>
+ 
+<span class="kt">NSFileManager</span><span class="o">.</span><span class="nf">defaultManager</span><span class="p">()</span><span class="o">.</span><span class="kt">URLsForDirectory</span><span class="p">(</span><span class="o">.</span><span class="kt">DocumentDirectory</span><span class="p">,</span> <span class="nv">inDomains</span><span class="p">:</span> <span class="o">.</span><span class="kt">UserDomainMask</span><span class="p">)</span>
+<span class="kt">FileManager</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nf">urls</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="o">.</span><span class="n">documentDirectory</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="o">.</span><span class="n">userDomainMask</span><span class="p">)</span>
+ 
+<span class="n">panelView</span><span class="o">.</span><span class="n">centerXAnchor</span><span class="o">.</span><span class="nf">constraintEqualToAnchor</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">centerXAnchor</span><span class="p">)</span>
+<span class="n">panelView</span><span class="o">.</span><span class="n">centerXAnchor</span><span class="o">.</span><span class="nf">constraint</span><span class="p">(</span><span class="nv">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="o">.</span><span class="n">centerXAnchor</span><span class="p">)</span>
+ 
+<span class="n">array</span><span class="o">.</span><span class="nf">removeAtIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">array</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+ 
+<span class="n">pngImageData</span><span class="o">.</span><span class="nf">writeToURL</span><span class="p">(</span><span class="n">fileURL</span><span class="p">,</span> <span class="nv">atomically</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="n">pngImageData</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">fileURL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span>
+ 
+<span class="nf">numberOfSectionsInTableView</span><span class="p">(</span><span class="n">tableView</span><span class="p">)</span>
+<span class="nf">numberOfSections</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">tableView</span><span class="p">)</span>
+ 
+<span class="kt">SCNAction</span><span class="o">.</span><span class="nf">moveTo</span><span class="p">(</span><span class="kt">SCNVector3Make</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nv">duration</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kt">SCNAction</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">SCNVector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nv">duration</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>需要注意的是怎么在方法定义中的外部名称中准确地使用介词比如“of”，“to”，“with”，“in”，这将直接影响到代码的可读性。</p>
+
+<p>如果你的方法调用可读性强，那么你也可以不用使用参数符号，但是你要在第一个参数使用下划线。</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">didMoveToView</span><span class="p">(</span><span class="n">_</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在很多编程语言中，方法可以共享一个基本名称，然后通过不同的参数来区分不同的方法，Swift也是类似的，在API命名更新成更为直接的方式之后，你会更加经常地遇到方法的重载。下面是<code class="highlighter-rouge">index()</code>的两种形式。</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Anna"</span><span class="p">,</span> <span class="s">"Barbara"</span><span class="p">]</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">annaIndex</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"Anna"</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Barbara's position: </span><span class="se">\(</span><span class="n">names</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">after</span><span class="p">:</span> <span class="n">annaIndex</span><span class="p">)</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>参数命名方法的更改使得Swift命名更加直接并且更加容易学习。</p>
+
+<h3 id="忽略不必要的方法命名单词">忽略不必要的方法命名单词</h3>
+
+<p>在之前苹果的库的迭代中，方法总是定义了这个方法期望返回的值的类型。但是因为Swift编译器拥有类型检查之后，这种命名方式就变得不那么必要了。Swift团队花了很多精力去将方法命名中冗余的字段删除，只保留重要信息因此大部分重复的命名单词被删除。</p>
+
+<p><img src="/img/post/What’s New in Swift 3/pic2.jpg" alt="" /></p>
+
+<p>API从Objective-C转换到原生Swift已经变得越来越智能了[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0005-objective-c-name-translation.md" target="_blank">SE-0005</a>]</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2, followed by new way, Swift 3</span>
+ 
+<span class="n">helloString</span><span class="o">.</span><span class="nf">stringByAppendingString</span><span class="p">(</span><span class="s">"world"</span><span class="p">)</span>
+<span class="n">helloString</span><span class="o">.</span><span class="nf">appending</span><span class="p">(</span><span class="s">"world"</span><span class="p">)</span>
+ 
+<span class="kt">UIColor</span><span class="o">.</span><span class="nf">blueColor</span><span class="p">()</span><span class="o">.</span><span class="nf">colorWithAlphaComponent</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="kt">UIColor</span><span class="o">.</span><span class="n">blue</span><span class="o">.</span><span class="nf">withAlphaComponent</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+ 
+<span class="kt">NSBundle</span><span class="o">.</span><span class="nf">mainBundle</span><span class="p">()</span>
+<span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span>
+ 
+<span class="n">numbers</span><span class="o">.</span><span class="nf">maxElement</span><span class="p">()</span>
+<span class="n">numbers</span><span class="o">.</span><span class="nf">max</span><span class="p">()</span>
+ 
+<span class="n">animals</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Koala"</span><span class="p">,</span> <span class="nv">atIndex</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">animals</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="s">"Koala"</span><span class="p">,</span> <span class="nv">at</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+ 
+<span class="kt">WKInterfaceDevice</span><span class="o">.</span><span class="nf">currentDevice</span><span class="p">()</span>
+<span class="kt">WKInterfaceDevice</span><span class="o">.</span><span class="nf">current</span><span class="p">()</span>
+ 
+<span class="n">device</span><span class="o">.</span><span class="nf">playHaptic</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+<span class="n">device</span><span class="o">.</span><span class="nf">play</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="更加现代的gcd以及core-graphics">更加现代的GCD以及Core Graphics</h3>
+
+<p>谈及旧的API的改造，GCD和Core Graphics的呼声是最高的。</p>
+
+<p><img src="/img/post/What’s New in Swift 3/pic3.jpg" alt="" /></p>
+
+<p>GCD是用于处理多线程任务例如长计算以及服务通信，因为GCD的底层是使用C语言编写，所以GCD的API有这浓浓的C style风格，不过在Swift 3中已经被重新改装了 [<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0088-libdispatch-for-swift3.md" target="_blank">SE-0088</a>]。</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2</span>
+<span class="k">let</span> <span class="nv">queue</span> <span class="o">=</span> <span class="nf">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.test.myqueue"</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="nf">dispatch_async</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="p">}</span>
+ 
+<span class="c1">// new way, Swift 3</span>
+<span class="k">let</span> <span class="nv">queue</span> <span class="o">=</span> <span class="kt">DispatchQueue</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="s">"com.test.myqueue"</span><span class="p">)</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>同样地，Core Graphics底层也使用了C编写，API也同样做了原生Swift的改造。[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0044-import-as-member.md" target="_blank">SE-0044</a>]</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2</span>
+<span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">startAngle</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">let</span> <span class="nv">endAngle</span> <span class="o">=</span> <span class="kt">CGFloat</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="kt">M_PI</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">strokeWidth</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">let</span> <span class="nv">radius</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midX</span> <span class="o">-</span> <span class="n">strokeWidth</span>
+<span class="k">let</span> <span class="nv">center</span> <span class="o">=</span> <span class="kt">CGPointMake</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midX</span><span class="p">,</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midY</span><span class="p">)</span>
+<span class="kt">CGContextSetStrokeColorWithColor</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">redColor</span><span class="p">()</span><span class="o">.</span><span class="kt">CGColor</span><span class="p">)</span>
+<span class="kt">CGContextSetLineWidth</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="p">)</span>
+<span class="kt">CGContextAddArc</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">center</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">startAngle</span><span class="p">,</span> <span class="n">endAngle</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kt">CGContextDrawPath</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">kCGPathStroke</span><span class="p">)</span>
+ 
+<span class="c1">// new way, Swift 3</span>
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">startAngle</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">let</span> <span class="nv">endAngle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="n">pi</span>
+<span class="k">let</span> <span class="nv">strokeWidth</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">let</span> <span class="nv">center</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midX</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midY</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">radius</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">midX</span> <span class="o">-</span> <span class="n">strokeWidth</span>
+<span class="n">context</span><span class="o">.</span><span class="nf">setStrokeColor</span><span class="p">(</span><span class="kt">UIColor</span><span class="o">.</span><span class="n">red</span><span class="o">.</span><span class="n">cgColor</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="nf">setLineWidth</span><span class="p">(</span><span class="n">strokeWidth</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="nf">setFillColor</span><span class="p">(</span><span class="kt">UIColor</span><span class="o">.</span><span class="n">clear</span><span class="o">.</span><span class="n">cgColor</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="nf">addArc</span><span class="p">(</span><span class="nv">center</span><span class="p">:</span> <span class="n">center</span><span class="p">,</span>
+               <span class="nv">radius</span><span class="p">:</span> <span class="n">radius</span><span class="p">,</span>
+               <span class="nv">startAngle</span><span class="p">:</span> <span class="n">startAngle</span><span class="p">,</span>
+               <span class="nv">endAngle</span><span class="p">:</span> <span class="n">endAngle</span><span class="p">,</span>
+               <span class="nv">clockwise</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="nf">drawPath</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">stroke</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="枚举取消大写">枚举取消大写</h3>
+
+<p>另一个在你平常Swift编码中相反的例子便是：在枚举类的case中使用小驼峰命名代替大驼峰命名。这会使得枚举的case和一般的成员属性更加一致。[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md" target="_blank">SE-0006</a>]:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2, followed by new way, Swift 3</span>
+ 
+<span class="kt">UIStatusBarStyle</span><span class="o">.</span><span class="kt">LightContent</span>
+<span class="kt">UIStatusBarStyle</span><span class="o">.</span><span class="n">lightContent</span>
+ 
+<span class="kt">SKLabelVerticalAlignmentMode</span><span class="o">.</span><span class="kt">Center</span>
+<span class="kt">SKLabelVerticalAlignmentMode</span><span class="o">.</span><span class="n">center</span>
+ 
+<span class="kt">Optional</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;.</span><span class="kt">None</span>
+<span class="kt">Optional</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;.</span><span class="k">none</span>
+</code></pre>
+</div>
+
+<h3 id="方法的返回和直接修改">方法的返回和直接修改</h3>
+
+<p>这个也是标准库将要变得一致性的命名方式，同一个方法会根据后缀的不同会产生不同的影响，其规则如下：如果一个方法名有一个后缀“-ed”或者“-ing”，那么这个方法的命名方式是名词式的，那么这个方法会返回值(拷贝)，如果一个方法没有上述的后缀，那么这个方法极有可能是一个动词式的方法，调用这个方法会直接操作并影响内存。这个也就是很出名的<code class="highlighter-rouge">modifying in place</code>。下面有几对标准库中的方法是符合 名词式/动词式 命名规范的。尤其是<code class="highlighter-rouge">Array</code>相关的方法有这种趋势。比如：<code class="highlighter-rouge">enumerate()/enumerated()</code>，<code class="highlighter-rouge">reverse()/reversed()</code>,<code class="highlighter-rouge">sort()/sorted()</code>,一般的规则就是 一个动词式方法如果加上”-ed”的后缀，那么这个方法编程一个名词式方法，这个方法会有返回一个数组的拷贝。</p>
+
+<p>这些方法的代码片段的讨论在[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md" target="_blank">SE-0006</a>]:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">var</span> <span class="nv">ages</span> <span class="o">=</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1">// variable, not constant, so you can modify it</span>
+<span class="n">ages</span><span class="o">.</span><span class="nf">sort</span><span class="p">()</span> <span class="c1">// modified in place, value now [2, 10, 21]</span>
+ 
+<span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">in</span> <span class="n">ages</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// copied into a dictionarry</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">index</span><span class="se">)</span><span class="s">. </span><span class="se">\(</span><span class="n">age</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// 1. 2 \n 2. 10 \n 3. 21</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="函数类型">函数类型</h3>
+
+<p>函数的定义和调用总是需要用圆括号来包住参数：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">f</span><span class="p">(</span><span class="nv">a</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+ 
+<span class="nf">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>但是当你使用函数作为参数的时候，圆括号可以省略：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">g</span><span class="p">(</span><span class="nv">a</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>  <span class="p">{</span> <span class="o">...</span> <span class="p">}</span> <span class="c1">// old way, Swift 2</span>
+</code></pre>
+</div>
+
+<p>你可能发现上面那样定义的函数是相当难阅读的。当在参数结束以及要返回一个函数类型的时候，在Swift 3中正确的做法是：[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0066-standardize-function-type-syntax.md" target="_blank">SE-0066</a>]</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">g</span><span class="p">(</span><span class="nv">a</span><span class="p">:</span> <span class="p">(</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>  <span class="p">{</span> <span class="o">...</span> <span class="p">}</span> <span class="c1">// new way, Swift 3</span>
+</code></pre>
+</div>
+
+<p>现在如果返回类型是一个函数的时候，参数必须要使用圆括号包围，这样代码就会变得更加清新，函数类型的返回也更加容易辨认，下面是更多的对方例子：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// old way, Swift 2</span>
+<span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="kt">T</span> <span class="o">-&gt;</span> <span class="kt">U</span>
+<span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+ 
+<span class="c1">// new way, Swift 3</span>
+<span class="p">(</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">U</span>
+<span class="p">(</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">Float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+</code></pre>
+</div>
+
+<h2 id="附加的api">附加的API</h2>
+
+<p>Swift 3中除了将所有API进行了现代化的改造之外，也额外添加了更多有用的附加API。</p>
+
+<h3 id="访问包含类型">访问包含类型</h3>
+
+<p>当你定义一个静态变量或者方法的时候，你总是需要用下面的方式来访问：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">CustomStruct</span><span class="o">.</span><span class="nf">staticMethod</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>要调用一个方法的静态变量或者和静态方法，你需要使用这个静态遍历或静态方法定义所在的类型，然后使用类型的点方法来调用。现在你可以使用<code class="highlighter-rouge">Self</code>直接从一个对象实例直接获取到这个对象的类型。注意<code class="highlighter-rouge">Self</code>和<code class="highlighter-rouge">self</code>的区别。[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md" target="_blank">SE-0068</a>]:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">CustomStruct</span> <span class="p">{</span>          
+ <span class="kd">static</span> <span class="kd">func</span> <span class="nf">staticMethod</span><span class="p">()</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>          
+ <span class="kd">func</span> <span class="nf">instanceMethod</span><span class="p">()</span> <span class="p">{</span>          
+ <span class="k">Self</span><span class="o">.</span><span class="nf">staticMethod</span><span class="p">()</span> <span class="c1">// in the body of the type          </span>
+ <span class="p">}</span>          
+<span class="p">}</span>          
+<span class="k">let</span> <span class="nv">customStruct</span> <span class="o">=</span> <span class="kt">CustomStruct</span><span class="p">()</span>          
+<span class="n">customStruct</span><span class="o">.</span><span class="k">Self</span><span class="o">.</span><span class="nf">staticMethod</span><span class="p">()</span> <span class="c1">// on an instance of the type</span>
+</code></pre>
+</div>
+
+<p><strong>注意</strong>：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。</p>
+
+<h3 id="内联序列">内联序列</h3>
+
+<p><code class="highlighter-rouge">sequence(first:next:)</code>和<code class="highlighter-rouge">sequence(state:next:)</code>是两个可以返回无穷序列的全局函数。你传入一个初始值或者一个可变的状态然后它会在一个闭包中运行。</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">view</span> <span class="k">in</span> <span class="nf">sequence</span><span class="p">(</span><span class="nv">first</span><span class="p">:</span> <span class="n">someView</span><span class="p">,</span> <span class="nv">next</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">superview</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="c1">// someView, someView.superview, someView.superview.superview, ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>你可以使用<code class="highlighter-rouge">prefix</code>来约束这个序列[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0045-scan-takewhile-dropwhile.md" target="_blank">SE-0045</a>]:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="nf">sequence</span><span class="p">(</span><span class="nv">first</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="nv">next</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">})</span><span class="o">.</span><span class="nf">prefix</span><span class="p">(</span><span class="nv">while</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="p">})</span> <span class="p">{</span> 
+  <span class="c1">// 0.1, 0.2, 0.4, 0.8, 1.6, 3.2</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>注意</strong>：这个特性会在Swift 3.1之后加入，并不适用当前的Xcode 8。</p>
+
+<h2 id="杂项">杂项</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">#keyPath()</code>类似于<code class="highlighter-rouge">#selector()</code></li>
+  <li>π现在可以通过<code class="highlighter-rouge">Float.pi</code>以及<code class="highlighter-rouge">CGFloat.pi</code>来获取，并且编译器大部分时间都能推断类型，如：<code class="highlighter-rouge">let circumference = 2 * .pi * radius</code>[<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0067-floating-point-protocols.md" target="_blank">SE-0067</a>]</li>
+  <li>NS开头的类全部被干掉了，如<code class="highlighter-rouge">Calendar</code>，<code class="highlighter-rouge">Date</code>来代替原来的<code class="highlighter-rouge">NSCalendar</code>,<code class="highlighter-rouge">NSDate</code></li>
+</ul>
+
+<h2 id="工具的改进">工具的改进</h2>
+
+<ul>
+  <li>哈希索引提速3倍</li>
+  <li>堆拷贝提升24倍</li>
+  <li>阿拉巴啦阿拉巴啦 不想翻译……</li>
+</ul>
+
+<h2 id="swift的包管理工具">Swift的包管理工具</h2>
+
+<p><a href="https://github.com/apple/swift-package-manager" target="_blank">Swift Package Manager</a> 定义了一个Swift代码目录的目录结构，可以很方便的分享和导入第三方的库。</p>
+
+<p>和Cocoapods、Carthage类似的，Swift package manager会自动下载依赖库，通过编译、链接生成库文件或者可直接文件，Swift 3第一次将Swift Package Manager集成进Swift的发布中，目前已经有1000多的第三库支持这个包管理工具了。不过目前Swift Package Manager只支持服务端项目的包管理，还不支持iOS项目。</p>
+
+<h2 id="将来计划的特型">将来计划的特型</h2>
+
+<p>不想翻译</p>
+
+<h2 id="下一步">下一步</h2>
+
+<p>不想翻译</p>
+
+				
+<!--协议说明 -->
+				<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+				<center>本<span xmlns:dct="https://purl.org/dc/terms/" href="https://purl.org/dc/dcmitype/Text" rel="dct:type">文章</span>由<span xmlns:cc="https://creativecommons.org/ns#" property="cc:attributionName">四川掌麦科技有限公司</span>创作，采用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>进行许可。</center>
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2017/01/10/Swift 3更新了啥?[译]"
+                    data-title="Swift 3更新了啥?[译]"
+                    data-url="http://localhost:4000/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/"
+                    data-images="http://localhost:4000/img/post/What’s New in Swift 3/2017-1-10-bg.jpg"
+                    data-content="Swift 3更新了啥?[译]
+
+原文地址
+
+Swift 3在2016年10月13日正式发布，并且为Swift开发者带来了大量的代码更新。
+
+如果你还没有... | zmai掌麦技术团队博客|zmai's Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="WWDC2016新技术盘点">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" data-toggle="tooltip" data-placement="top" title="【Queue】新手安装并使用Beanstalked">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="/2017/01/10/Swift 3更新了啥?[译]"
+                        data-title="Swift 3更新了啥?[译]"
+                        data-url="http://localhost:4000/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#教程" title="教程" rel="2">
+                                    教程
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#说明" title="说明" rel="1">
+                                    说明
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#版本管理" title="版本管理" rel="1">
+                                    版本管理
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Docker" title="Docker" rel="1">
+                                    Docker
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#nginx" title="nginx" rel="1">
+                                    nginx
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="2">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="1">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#翻译" title="翻译" rel="1">
+                                    翻译
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Queue" title="Queue" rel="1">
+                                    Queue
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Beanstalked" title="Beanstalked" rel="1">
+                                    Beanstalked
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+<script src="//cdn.bootcss.com/jquery/3.0.0-alpha1/jquery.js"></script>
+ <script src="https://izhangmai.github.io/js/lightbox-plus-jquery.min.js"></script>
+ <link rel="stylesheet" href="https://izhangmai.github.io/css/lightbox.css">
+<script>
+$(".container").find("h2,h3,h4,h5,h6").each(function(i,item){
+    var tag = $(item).get(0).localName;
+    $(item).attr("id","wow"+i);
+    $("#AnchorContent").append('<li><a class="new'+tag+' anchor-link" onclick="return false;" href="#" link="#wow'+i+'">'+$(this).text()+'</a></li>');
+    $(".newh2").css("margin-left",0);
+    $(".newh3").css("margin-left",20);
+    $(".newh4").css("margin-left",40);
+    $(".newh5").css("margin-left",60);
+    $(".newh6").css("margin-left",80);
+});
+$("#AnchorContent").toggle();
+$("#AnchorContentToggle").click(function(){
+    var text = $(this).html();
+    if(text=="目录[-]"){
+        $(this).html("目录[+]");
+        $(this).attr({"title":"展开"});
+    }else{
+        $(this).html("目录[-]");
+        $(this).attr({"title":"收起"});
+    }
+    $("#AnchorContent").toggle();
+});
+
+$(".anchor-link").click(function(){
+    $("html,body").animate({scrollTop: $($(this).attr("link")).offset().top}, 1000);
+});
+
+$('.ScrollTop').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
+//给图片添加点击放大事件
+$(".container").find("img").each(function(i,item){
+    var tag = $(item).get(0);
+	tag.parentNode.innerHTML = "<div>" + "<a href="+tag.src+' data-lightbox="aaa"'+ " >"+ "<img src=" + tag.src + " />" +"</a>" + "</div>"
+	  
+});
+</script>
+
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'zhangmai';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/izhangmai">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zmai掌麦技术团队博客 2017
+                    <br>
+                    Star our <a href="https://github.com/orgs/izhangmai" target="_blank">blog</a> 
+					<iframe
+					                        style="margin-left: 2px; margin-bottom:-5px;"
+					                        frameborder="0" scrolling="0" width="91px" height="20px"
+					                        src="https://ghbtns.com/github-btn.html?user=izhangmai&repo=izhangmai.github.io&type=star&count=true" >
+					                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- Highlight.js -->
+<script>
+    // async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+//         hljs.initHighlightingOnLoad();
+//     })
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+<link href="https://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/common/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

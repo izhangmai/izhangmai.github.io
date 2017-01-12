@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>Github Pages notes - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>【Docker】安装并运行nginx - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/12/29/Github-Pages-notes/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -206,15 +206,17 @@
                         
                         <a class="tag" href="/tags/#教程" title="教程">教程</a>
                         
-                        <a class="tag" href="/tags/#说明" title="说明">说明</a>
+                        <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                        
+                        <a class="tag" href="/tags/#nginx" title="nginx">nginx</a>
                         
                     </div>
-                    <h1>Github Pages notes</h1>
+                    <h1>【Docker】安装并运行nginx</h1>
                     
                     
-                    <h2 class="subheading">技术文章编撰的相关说明</h2>
+                    <h2 class="subheading">在docker容器中初步搭建和运行nginx服务器</h2>
                     
-                    <span class="meta">Posted by 戴伟来 on December 29, 2016</span>
+                    <span class="meta">Posted by 胖纸囧 on January 7, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,69 +247,7 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<h1 id="github-pages-notes">Github Pages notes</h1>
-
-<h2 id="前言">前言</h2>
-
-<p>Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、能够认识最顶尖的开发者；对于一个技术爱好者以及开发者而言，这个社区是一个结合你的兴趣以及提升能力最佳的地方！</p>
-
-<p>整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这个开源世界的中心学习并且回馈社会！</p>
-
-<p>当前的这个博客基于<a href="https://pages.github.com/" target="_blank">Github Pages</a>+<a href="https://jekyllrb.com/" target="_blank">Jekyll</a>搭建而成！下面是这个博客系统基本的用法说明。</p>
-
-<h2 id="github-pages">Github Pages</h2>
-
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank">Git技术</a>、<a href="https://help.github.com/" target="_blank">Github</a>、仓库、以及团队协作方面的知识本文不会赘述，请自行查阅相关的资料。</p>
-
-<p>Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库根目录下有<code class="highlighter-rouge">index.html</code>，那么Github会为这个仓库自动生成Github Pages页面，其域名是<code class="highlighter-rouge">https://[用户名].github.io/[仓库命]</code>，如当前博客的仓库名是<code class="highlighter-rouge">izhangmai.github.io</code>，当前注册用户名为<code class="highlighter-rouge">izhangmai</code>，如下图</p>
-
-<p><img src="/img/post/Github Pages notes/pic1.png" alt="" /></p>
-
-<p>并且<code class="highlighter-rouge">izhangmai.github.io</code>仓库的跟目录下有<code class="highlighter-rouge">index.html</code>文件。那么Github会自动为<code class="highlighter-rouge">izhangmai.github.io</code>这个项目生成Github Pages的页面，其链接地址为：<code class="highlighter-rouge">https://izhangmai.github.io/izhangmai.github.io</code>。</p>
-
-<p>这里Github有一个特殊的Github Pages生成规则，即是当仓库名称为<code class="highlighter-rouge">[用户名].github.io</code>命名的，会自动以<code class="highlighter-rouge">https://[用户名].github.io</code>为Github Pages的链接地址。所以最终<code class="highlighter-rouge">izhangmai(当前登录用户名)</code>下的一个仓库<code class="highlighter-rouge">izhangmai.github.io</code>的Github Pages的地址为：<code class="highlighter-rouge">https://izhangmai.github.io</code>。</p>
-
-<p>当前Github Pages已经默认是Enforce Https通信协议了。</p>
-
-<h2 id="jekyll">Jekyll</h2>
-
-<p><a href="" target="_blank">Jekyll</a>是一个博客构建工具，Github已经自带这个构建工具了，所以你不需要怎么特殊处理，只要你的仓库说明符合Jekyll的配置以及语法要求，Github会自动使用Jekyll来构建你仓库的Github Pages。</p>
-
-<p>当然你也不希望发布出来的文章充满了排版bug，所以你可以在你自己的计算机安装Jekyll来对你将要发布的文章进行测试和预览，具体的方法请参阅Jekyll使用手册。</p>
-
-<h2 id="其他说明">其他说明</h2>
-
-<p>当前的博客系统得到完整<a href="https://www.appinn.com/markdown/" target="_blank">Markdown</a>语法支持，所以建议你使用Markdown进行博客书写！</p>
-
-<p>每一篇文章就写成一个<code class="highlighter-rouge">.markdown</code>文件，<strong>该文件的命名有一定要求，例如当前文章的文件名是：<code class="highlighter-rouge">2016-12-30-Github Pages notes.markdown</code>，其格式要求为：<code class="highlighter-rouge">年-月-日-文章标题.markdown</code> 并且必须放置在<code class="highlighter-rouge">/_posts</code>下才能正确被解析。</strong></p>
-
-<p>其他资源文件(不支持视频！)的放置位置默认是没有限制的，但是为了项目的整洁，希望将所有资源放置的相应的位置！如图片资源请放置到<code class="highlighter-rouge">/img</code>目录下！</p>
-
-<p>代码高亮使用<a href="https://prismjs.com/" target="_blank">prism</a>，示例如下</p>
-
-<pre><code class="language-objectivec">#import &lt;Foundation/Foundation.h&gt;  
-int main()  {  
-    NSLog(@"Hello World.");  
-    return 0;  
-}
-</code></pre>
-
-<p>每一篇文章都有头部<code class="highlighter-rouge">元数据</code>，其格式和说明如下：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>layout:     布局样式，技术文章的话默认是post
-title:      "文章标题，和文件名无关"
-subtitle:   "文章副标题"
-date:       日期，格式需严格要求
-author:     "作者"
-header-img: "当前文章的顶部封面资源"
-tags: 标签
-    - 教程
-    - 测试tags
-    
-更多详情请参阅当前文章的头部元数据   
-</code></pre>
-</div>
-
+				
 
 				
 <!--协议说明 -->
@@ -321,15 +261,12 @@ tags: 标签
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/2016/12/29/Github Pages notes"
-                    data-title="Github Pages notes"
-                    data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/"
+                    data-thread-key="/2017/01/07/【Docker】安装并运行nginx"
+                    data-title="【Docker】安装并运行nginx"
+                    data-url="http://localhost:4000/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/"
                     data-images="http://localhost:4000/img/post/Github Pages notes/2016-12-29-bg.jpg"
-                    data-content="Github Pages notes
-
-前言
-
-Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="
+ | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -348,9 +285,13 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" data-toggle="tooltip" data-placement="top" title="git常用功能介绍">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" data-toggle="tooltip" data-placement="top" title="git常用功能介绍">Next Post &rarr;</a>
+                        <a href="/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="WWDC2016新技术盘点">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -360,9 +301,9 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/2016/12/29/Github Pages notes"
-                        data-title="Github Pages notes"
-                        data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/" >
+                        data-thread-key="/2017/01/07/【Docker】安装并运行nginx"
+                        data-title="【Docker】安装并运行nginx"
+                        data-url="http://localhost:4000/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

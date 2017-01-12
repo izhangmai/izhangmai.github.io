@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>Github Pages notes - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/12/29/Github-Pages-notes/">
+    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post/Github Pages notes/2016-12-29-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post/Github Pages notes/2016-12-29-bg.jpg')
+        background-image: url('/img/common/home-bg.jpg')
     }
 	
 	/*导航*/
@@ -204,17 +204,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#教程" title="教程">教程</a>
+                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
                         
-                        <a class="tag" href="/tags/#说明" title="说明">说明</a>
+                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
                         
                     </div>
-                    <h1>Github Pages notes</h1>
+                    <h1>【Queue】新手安装并使用Beanstalked</h1>
                     
                     
-                    <h2 class="subheading">技术文章编撰的相关说明</h2>
+                    <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 戴伟来 on December 29, 2016</span>
+                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,66 +245,155 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<h1 id="github-pages-notes">Github Pages notes</h1>
+				<ul id="markdown-toc">
+  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
+  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
+  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
+      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
+      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
+      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
+    </ul>
+  </li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
+</ul>
 
-<h2 id="前言">前言</h2>
+<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
 
-<p>Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、能够认识最顶尖的开发者；对于一个技术爱好者以及开发者而言，这个社区是一个结合你的兴趣以及提升能力最佳的地方！</p>
+<h2 id="资料">资料</h2>
 
-<p>整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这个开源世界的中心学习并且回馈社会！</p>
+<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
 
-<p>当前的这个博客基于<a href="https://pages.github.com/" target="_blank">Github Pages</a>+<a href="https://jekyllrb.com/" target="_blank">Jekyll</a>搭建而成！下面是这个博客系统基本的用法说明。</p>
+<ul>
+  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
+  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
+  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
+  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+</ul>
 
-<h2 id="github-pages">Github Pages</h2>
+<h2 id="候选">候选</h2>
 
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank">Git技术</a>、<a href="https://help.github.com/" target="_blank">Github</a>、仓库、以及团队协作方面的知识本文不会赘述，请自行查阅相关的资料。</p>
+<p>在当前的技术前景下，有以下几种队列选择：</p>
 
-<p>Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库根目录下有<code class="highlighter-rouge">index.html</code>，那么Github会为这个仓库自动生成Github Pages页面，其域名是<code class="highlighter-rouge">https://[用户名].github.io/[仓库命]</code>，如当前博客的仓库名是<code class="highlighter-rouge">izhangmai.github.io</code>，当前注册用户名为<code class="highlighter-rouge">izhangmai</code>，如下图</p>
+<ul>
+  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
+  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
+  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
+  <li><a href="http://kafka.apache.org">Kafka</a></li>
+  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
+</ul>
 
-<p><img src="/img/post/Github Pages notes/pic1.png" alt="" /></p>
+<h2 id="核心">核心</h2>
 
-<p>并且<code class="highlighter-rouge">izhangmai.github.io</code>仓库的跟目录下有<code class="highlighter-rouge">index.html</code>文件。那么Github会自动为<code class="highlighter-rouge">izhangmai.github.io</code>这个项目生成Github Pages的页面，其链接地址为：<code class="highlighter-rouge">https://izhangmai.github.io/izhangmai.github.io</code>。</p>
+<p>Beanstalkd设计里面的核心概念：</p>
 
-<p>这里Github有一个特殊的Github Pages生成规则，即是当仓库名称为<code class="highlighter-rouge">[用户名].github.io</code>命名的，会自动以<code class="highlighter-rouge">https://[用户名].github.io</code>为Github Pages的链接地址。所以最终<code class="highlighter-rouge">izhangmai(当前登录用户名)</code>下的一个仓库<code class="highlighter-rouge">izhangmai.github.io</code>的Github Pages的地址为：<code class="highlighter-rouge">https://izhangmai.github.io</code>。</p>
+<ul>
+  <li>job</li>
+  <li>tube</li>
+  <li>producer</li>
+  <li>consumer</li>
+</ul>
 
-<p>当前Github Pages已经默认是Enforce Https通信协议了。</p>
+<h2 id="安装">安装</h2>
 
-<h2 id="jekyll">Jekyll</h2>
+<h6 id="macos">MacOS</h6>
 
-<p><a href="" target="_blank">Jekyll</a>是一个博客构建工具，Github已经自带这个构建工具了，所以你不需要怎么特殊处理，只要你的仓库说明符合Jekyll的配置以及语法要求，Github会自动使用Jekyll来构建你仓库的Github Pages。</p>
-
-<p>当然你也不希望发布出来的文章充满了排版bug，所以你可以在你自己的计算机安装Jekyll来对你将要发布的文章进行测试和预览，具体的方法请参阅Jekyll使用手册。</p>
-
-<h2 id="其他说明">其他说明</h2>
-
-<p>当前的博客系统得到完整<a href="https://www.appinn.com/markdown/" target="_blank">Markdown</a>语法支持，所以建议你使用Markdown进行博客书写！</p>
-
-<p>每一篇文章就写成一个<code class="highlighter-rouge">.markdown</code>文件，<strong>该文件的命名有一定要求，例如当前文章的文件名是：<code class="highlighter-rouge">2016-12-30-Github Pages notes.markdown</code>，其格式要求为：<code class="highlighter-rouge">年-月-日-文章标题.markdown</code> 并且必须放置在<code class="highlighter-rouge">/_posts</code>下才能正确被解析。</strong></p>
-
-<p>其他资源文件(不支持视频！)的放置位置默认是没有限制的，但是为了项目的整洁，希望将所有资源放置的相应的位置！如图片资源请放置到<code class="highlighter-rouge">/img</code>目录下！</p>
-
-<p>代码高亮使用<a href="https://prismjs.com/" target="_blank">prism</a>，示例如下</p>
-
-<pre><code class="language-objectivec">#import &lt;Foundation/Foundation.h&gt;  
-int main()  {  
-    NSLog(@"Hello World.");  
-    return 0;  
-}
+<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
 </code></pre>
+</div>
 
-<p>每一篇文章都有头部<code class="highlighter-rouge">元数据</code>，其格式和说明如下：</p>
+<h6 id="linux-编译">Linux-编译</h6>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>layout:     布局样式，技术文章的话默认是post
-title:      "文章标题，和文件名无关"
-subtitle:   "文章副标题"
-date:       日期，格式需严格要求
-author:     "作者"
-header-img: "当前文章的顶部封面资源"
-tags: 标签
-    - 教程
-    - 测试tags
+<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
+cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
+tar zxvf libevent-1.4.14b-stable.tar.gz 
+cd  libevent-1.4.14b-stable 
+./configure --prefix=/usr/local/libevent 
+make 
+make install 
+</code></pre>
+</div>
+
+<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
+tar zxvf beanstalkd-1.4.6.tar.gz 
+cd  beanstalkd-1.4.6 
+./configure --prefix=/usr/local/beanstalkd 
+make 
+make install 
+./beanstalkd -d -l 127.0.0.1 -p 11300 
+</code></pre>
+</div>
+
+<h6 id="liunx-包安装">Liunx-包安装</h6>
+
+<p>1.centos</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
+</code></pre>
+</div>
+<p>2.ubuntu</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
+</code></pre>
+</div>
+
+<h6 id="windows">Windows</h6>
+
+<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+
+<h2 id="运行">运行</h2>
+
+<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
+2.后台启动</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+-b DIR   wal directory
+
+-f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
+-F       never fsync (default)
+-l ADDR  listen on address (default is 0.0.0.0)
+-p PORT  listen on port (default is 11300)
+-u USER  become user and group
+-z BYTES set the maximum job size in bytes (default is 65535)
+-s BYTES set the size of each wal file (default is 10485760)
+(will be rounded up to a multiple of 512 bytes)
+-c       compact the binlog (default)
+-n       do not compact the binlog
+-v       show version information
+-V       increase verbosity
+-h       show this help
+</code></pre>
+</div>
+
+<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
+    // 引入BeanStalk客户端类
+    require('BeanStalk.class.php');
+
+    $beanstalk = BeanStalk::open(array(
+        'servers'       =&gt; array( '127.0.0.1:11300' ),
+        'select'        =&gt; 'random peek'
+    ));
     
-更多详情请参阅当前文章的头部元数据   
+    $beanstalk-&gt;use_tube('foo');
+    
+    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
+     $beanstalk-&gt;watch('foo'); 
+    $job = $beanstalk-&gt;reserve_with_timeout(); 
+    echo $job-&gt;get();
+    Beanstalk::delete($job);
+
 </code></pre>
 </div>
 
@@ -321,15 +410,19 @@ tags: 标签
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/2016/12/29/Github Pages notes"
-                    data-title="Github Pages notes"
-                    data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/"
-                    data-images="http://localhost:4000/img/post/Github Pages notes/2016-12-29-bg.jpg"
-                    data-content="Github Pages notes
-
-前言
-
-Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
+                    data-title="【Queue】新手安装并使用Beanstalked"
+                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-images="http://localhost:4000/img/common/home-bg.jpg"
+                    data-content="
+  资料
+  候选
+  核心
+  安装    
+      MacOS
+      Linux-编译
+      Liunx-包安装
+      Win... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -348,10 +441,10 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
 
                 <ul class="pager">
                     
-                    
-                    <li class="next">
-                        <a href="/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" data-toggle="tooltip" data-placement="top" title="git常用功能介绍">Next Post &rarr;</a>
+                    <li class="previous">
+                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">&larr; Previous Post</a>
                     </li>
+                    
                     
                 </ul>
 
@@ -360,9 +453,9 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/2016/12/29/Github Pages notes"
-                        data-title="Github Pages notes"
-                        data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/" >
+                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
+                        data-title="【Queue】新手安装并使用Beanstalked"
+                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

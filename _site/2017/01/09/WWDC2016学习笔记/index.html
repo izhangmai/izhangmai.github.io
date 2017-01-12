@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>Github Pages notes - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>WWDC2016新技术盘点 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/12/29/Github-Pages-notes/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post/Github Pages notes/2016-12-29-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post/Github Pages notes/2016-12-29-bg.jpg')
+        background-image: url('/img/common/home-bg.jpg')
     }
 	
 	/*导航*/
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#教程" title="教程">教程</a>
-                        
-                        <a class="tag" href="/tags/#说明" title="说明">说明</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>Github Pages notes</h1>
+                    <h1>WWDC2016新技术盘点</h1>
                     
                     
-                    <h2 class="subheading">技术文章编撰的相关说明</h2>
+                    <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 戴伟来 on December 29, 2016</span>
+                    <span class="meta">Posted by 李清发 on January 9, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,69 +243,173 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<h1 id="github-pages-notes">Github Pages notes</h1>
+				<h2 id="新的api">新的API</h2>
 
-<h2 id="前言">前言</h2>
+<h3 id="sfspeechrecognizer框架">SFSpeechRecognizer框架</h3>
 
-<p>Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、能够认识最顶尖的开发者；对于一个技术爱好者以及开发者而言，这个社区是一个结合你的兴趣以及提升能力最佳的地方！</p>
+<p>全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况</p>
 
-<p>整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这个开源世界的中心学习并且回馈社会！</p>
+<ul>
+  <li>可以实现连续的语音识别</li>
+  <li>可以对语 音文件或者语音流进行识别</li>
+  <li>最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串</li>
+</ul>
 
-<p>当前的这个博客基于<a href="https://pages.github.com/" target="_blank">Github Pages</a>+<a href="https://jekyllrb.com/" target="_blank">Jekyll</a>搭建而成！下面是这个博客系统基本的用法说明。</p>
+<p>示例：读取一段语音文件输出文字内容</p>
 
-<h2 id="github-pages">Github Pages</h2>
-
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank">Git技术</a>、<a href="https://help.github.com/" target="_blank">Github</a>、仓库、以及团队协作方面的知识本文不会赘述，请自行查阅相关的资料。</p>
-
-<p>Github Pages可以理解为Github上一个仓库的说明文档，只要这个仓库中符合特定条件：如仓库根目录下有<code class="highlighter-rouge">index.html</code>，那么Github会为这个仓库自动生成Github Pages页面，其域名是<code class="highlighter-rouge">https://[用户名].github.io/[仓库命]</code>，如当前博客的仓库名是<code class="highlighter-rouge">izhangmai.github.io</code>，当前注册用户名为<code class="highlighter-rouge">izhangmai</code>，如下图</p>
-
-<p><img src="/img/post/Github Pages notes/pic1.png" alt="" /></p>
-
-<p>并且<code class="highlighter-rouge">izhangmai.github.io</code>仓库的跟目录下有<code class="highlighter-rouge">index.html</code>文件。那么Github会自动为<code class="highlighter-rouge">izhangmai.github.io</code>这个项目生成Github Pages的页面，其链接地址为：<code class="highlighter-rouge">https://izhangmai.github.io/izhangmai.github.io</code>。</p>
-
-<p>这里Github有一个特殊的Github Pages生成规则，即是当仓库名称为<code class="highlighter-rouge">[用户名].github.io</code>命名的，会自动以<code class="highlighter-rouge">https://[用户名].github.io</code>为Github Pages的链接地址。所以最终<code class="highlighter-rouge">izhangmai(当前登录用户名)</code>下的一个仓库<code class="highlighter-rouge">izhangmai.github.io</code>的Github Pages的地址为：<code class="highlighter-rouge">https://izhangmai.github.io</code>。</p>
-
-<p>当前Github Pages已经默认是Enforce Https通信协议了。</p>
-
-<h2 id="jekyll">Jekyll</h2>
-
-<p><a href="" target="_blank">Jekyll</a>是一个博客构建工具，Github已经自带这个构建工具了，所以你不需要怎么特殊处理，只要你的仓库说明符合Jekyll的配置以及语法要求，Github会自动使用Jekyll来构建你仓库的Github Pages。</p>
-
-<p>当然你也不希望发布出来的文章充满了排版bug，所以你可以在你自己的计算机安装Jekyll来对你将要发布的文章进行测试和预览，具体的方法请参阅Jekyll使用手册。</p>
-
-<h2 id="其他说明">其他说明</h2>
-
-<p>当前的博客系统得到完整<a href="https://www.appinn.com/markdown/" target="_blank">Markdown</a>语法支持，所以建议你使用Markdown进行博客书写！</p>
-
-<p>每一篇文章就写成一个<code class="highlighter-rouge">.markdown</code>文件，<strong>该文件的命名有一定要求，例如当前文章的文件名是：<code class="highlighter-rouge">2016-12-30-Github Pages notes.markdown</code>，其格式要求为：<code class="highlighter-rouge">年-月-日-文章标题.markdown</code> 并且必须放置在<code class="highlighter-rouge">/_posts</code>下才能正确被解析。</strong></p>
-
-<p>其他资源文件(不支持视频！)的放置位置默认是没有限制的，但是为了项目的整洁，希望将所有资源放置的相应的位置！如图片资源请放置到<code class="highlighter-rouge">/img</code>目录下！</p>
-
-<p>代码高亮使用<a href="https://prismjs.com/" target="_blank">prism</a>，示例如下</p>
-
-<pre><code class="language-objectivec">#import &lt;Foundation/Foundation.h&gt;  
-int main()  {  
-    NSLog(@"Hello World.");  
-    return 0;  
-}
+<pre><code class="language-objectivec">#import &lt;Speech/Speech.h&gt;
+//1.创建本地化标识符
+NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+//2.创建一个语音识别对象
+SFSpeechRecognizer *sf =[[SFSpeechRecognizer alloc] initWithLocale:local];
+//3.将bundle 中的资源文件加载出来返回一个url
+NSURL *url =[[NSBundle mainBundle] URLForResource:@"掌麦企业文化.mp3" withExtension:nil];
+//4.将资源包中获取的url 传递给 request 对象
+SFSpeechURLRecognitionRequest *res =[[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+//5.发送一个请求
+[sf recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        if (error!=nil) {
+            NSLog(@"语音识别解析失败,%@",error);
+        }else{
+            //解析正确
+            NSLog(@“语音内容：@",result.bestTranscription.formattedString);
+    }
+}];
 </code></pre>
 
-<p>每一篇文章都有头部<code class="highlighter-rouge">元数据</code>，其格式和说明如下：</p>
+<h3 id="sirikit">SiriKit</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>layout:     布局样式，技术文章的话默认是post
-title:      "文章标题，和文件名无关"
-subtitle:   "文章副标题"
-date:       日期，格式需严格要求
-author:     "作者"
-header-img: "当前文章的顶部封面资源"
-tags: 标签
-    - 教程
-    - 测试tags
-    
-更多详情请参阅当前文章的头部元数据   
+<p>在iOS10之后，苹果希望Siri能够给用户带来更多的功能体验，基于这个出发点，新增了SiriKit框架。Siri通过语言处理系统识别与用户的对话，解析并生成用于描述对话的意图（Intent），然后通过Siri框架把该Intent分发给相应的应用程序进而获取内容或执行操作。（图片来源苹果官方文档 SiriKit Programming Guide）</p>
+
+<p><img src="/img/post/WWDC2016/SiriKit.jpg" alt="" /></p>
+
+<p>通过官方文档可以了解到SiriKit支持以下六类服务：</p>
+
+<ul>
+  <li>语音和视频通话</li>
+  <li>发送消息</li>
+  <li>收款或者付款</li>
+  <li>图片搜索</li>
+  <li>管理锻炼</li>
+  <li>行程预约</li>
+</ul>
+
+<h3 id="通知">通知</h3>
+
+<p>新的通知框架新增了以下功能</p>
+
+<ul>
+  <li>整合统一了本地通知和远程通知</li>
+  <li>可以在通知中加入多媒体内容</li>
+  <li>可以获取App中的应用清单，可以触发通知时间，能更新这些通知，删除旧通知</li>
+  <li>可以通过代码获取用户的通知设置情况</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">UserNotifications</span><span class="o">.</span><span class="n">framework</span>
 </code></pre>
 </div>
 
+<p>（iOS10+， watchOS 3.0+，tvOS10.0+）</p>
+
+<p>支持远程推送和本地通知的接收和发送，可以使用这个框架管理通知的发送基于地理位置和时间。同时应用程序扩展也可以使用该框架进行通知管理</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">UserNotificationsUI</span><span class="o">.</span><span class="n">framework</span>
+</code></pre>
+</div>
+
+<p>（iOS10+）</p>
+
+<p>定义展现在用户设备上的通知效果，前提是使用该框架定义一个程序扩展来接收并发送通知。</p>
+
+<h3 id="foundation框架">Foundation框架</h3>
+
+<p>新增NSISO8601DateFormatter类
+新增NSDateInterval类型</p>
+
+<h3 id="uitableview-和-uicollectionview-预加载">UITableView 和 UICollectionView 预加载</h3>
+
+<p>众所周知，TableView和CollectionView的顺滑与否能够很大程度上影响用户的使用体验。这次Apple对这两个View又进行了一次优化。
+在UITableView中新增了UITableViewDataSourcePrefetching协议并提供了下列方法（Swift）</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//此方法在TableViewCell进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务</span>
+<span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">prefetchRowsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>  
+<span class="p">}</span>
+<span class="c1">//在用户快速滑动，突然停下，反向滑动时停止预加载</span>
+<span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">cancelPrefetchingForRowsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在UICollectionView中新增了UICollectionViewDataSourcePrefetching协议并提供了下列方法（Swift）</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//此方法在CollectionViewItem进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务，</span>
+<span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span><span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="n">prefetchItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="c1">//在用户快速滑动，突然停下，反向滑动时停止预加载</span>
+<span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span><span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="n">cancelPrefetchingForItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="gcd在swift30中的彻底改写">GCD在Swift3.0中的彻底改写</h3>
+
+<p>GCD（Grand Central Dispatch）是iOS开发中的重要概念，平时开发中大多数多线程都会用到它。此次在Swift3.0的更新中彻底改了GCD的语法，我们将不再会看到类似dispatch_async，dispatch_sync这样的写法了，而是引入DispatchQueue这个类。
+例如:在全局线程中定义一个常量，在主线程中打印出来</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">()</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+<span class="k">let</span> <span class="nv">test</span> <span class="o">=</span> <span class="s">"Swift3.0 GCD"</span>
+<span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+   <span class="nf">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>￼除了使用DispatchQueue之外也可以自定义DispatchWorkItem。DispatchWorkItem 定义了一个操作的内部代码，以及优先级，特性等等。 它可以直接在任何队列中执行：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">queue</span> <span class="o">=</span> <span class="kt">DispatchQueue</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="s">"Swift.queue"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">workItem</span> <span class="o">=</span> <span class="kt">DispatchWorkItem</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">userInitiated</span><span class="p">,</span> <span class="nv">flags</span><span class="p">:</span> <span class="o">.</span><span class="n">assignCurrentContext</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//执行操作  </span>
+<span class="p">}</span>
+<span class="n">queue</span><span class="o">.</span><span class="nf">async</span><span class="p">(</span><span class="nv">execute</span><span class="p">:</span> <span class="n">workItem</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>￼对dispatch_time_t也进行了改进，语法使用起来更加简单。DispatchTime.now() 是当前事前， 然后加上 .seconds(60) 代表 60秒。￼</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">delay</span> <span class="o">=</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="o">.</span><span class="nf">seconds</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="uiviewpropertyanimator">UIViewPropertyAnimator</h3>
+
+<p>新的 UIViewPropertyAnimator 类可以更好地使用 UIView.animatedWithDuration API，借此可以实现很多功能，比如：</p>
+
+<ul>
+  <li>中途中断动画，暂停，停止，恢复，逆转，控制进度</li>
+  <li>动画开始后改变值</li>
+  <li>改变 percentComplete 属性让动画更具交互性</li>
+  <li>或者甚至可以把 percentComplete 和 UIGestureRecognizer 结合在一起使用</li>
+</ul>
+
+<h3 id="uitabbar">UITabBar</h3>
+
+<p>能够控制一个 tab bar item 的样式，比如背景颜色和文字属性。</p>
+
+<h3 id="messages-api">Messages API</h3>
+
+<p>新的框架，用于创建基于 iMessage 的新应用
+能够创建 iMessage 的表情包</p>
+
+<h2 id="xcode-里的新工具">Xcode 里的新工具</h2>
+
+<ul>
+  <li>新的可视化调试工具（Visual Debugging Tools），特别是内存和线程工具</li>
+  <li>新的代码签名机制</li>
+  <li>Xcode 扩展</li>
+  <li>在 Xcode 8 里允许你选择使用 Swift 2.3 还是 Swift 3.0</li>
+  <li>图片名字自动补全，代码中可以对颜色和图片文字化</li>
+</ul>
 
 				
 <!--协议说明 -->
@@ -321,15 +423,15 @@ tags: 标签
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/2016/12/29/Github Pages notes"
-                    data-title="Github Pages notes"
-                    data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/"
-                    data-images="http://localhost:4000/img/post/Github Pages notes/2016-12-29-bg.jpg"
-                    data-content="Github Pages notes
+                    data-thread-key="/2017/01/09/WWDC2016学习笔记"
+                    data-title="WWDC2016新技术盘点"
+                    data-url="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                    data-images="http://localhost:4000/img/common/home-bg.jpg"
+                    data-content="新的API
 
-前言
+SFSpeechRecognizer框架
 
-Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、... | zmai掌麦技术团队博客|zmai's Blog " >
+全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -348,9 +450,13 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/" data-toggle="tooltip" data-placement="top" title="【Docker】安装并运行nginx">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" data-toggle="tooltip" data-placement="top" title="git常用功能介绍">Next Post &rarr;</a>
+                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -360,9 +466,9 @@ Github是目前(2016年12月30日)世界上最大的开源项目托管中心，�
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/2016/12/29/Github Pages notes"
-                        data-title="Github Pages notes"
-                        data-url="http://localhost:4000/2016/12/29/Github-Pages-notes/" >
+                        data-thread-key="/2017/01/09/WWDC2016学习笔记"
+                        data-title="WWDC2016新技术盘点"
+                        data-url="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
