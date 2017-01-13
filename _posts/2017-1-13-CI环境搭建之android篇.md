@@ -29,11 +29,12 @@ jdk环境变量配置：
 `vim /etc/profile` 
 2. 添加环境变量  
 `  
-	JAVA_HOME=/此处为jdk目录路径/jdk1.8.0_111  
+    JAVA_HOME=/此处为jdk目录路径/jdk1.8.0_111  
     JRE_HOME=/此处为jdk目录路径/jdk1.8.0_111/jre  
     CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib  
     PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin  
-    export JAVA_HOME JRE_HOME CLASS_PATH PATH  `   
+    export JAVA_HOME JRE_HOME CLASS_PATH PATH
+`   
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
 `source /etc/profile`
