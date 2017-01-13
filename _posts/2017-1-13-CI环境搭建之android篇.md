@@ -71,8 +71,8 @@ sdk环境变量配置：
 1. 编辑文件 
 `vim /etc/profile`  
 2. 添加环境变量  
-`export ANDROID_HOME=/此处为sdk目录路径/sdk`
-`1export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH` 
+`export ANDROID_HOME=/此处为sdk目录路径/sdk`  
+`export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH`   
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
 `source /etc/profile`
@@ -87,7 +87,7 @@ gradle环境变量配置：
 1. 编辑文件 
 `vim /etc/profile`  
 2. 添加环境变量  
-`export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1`
+`export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1`  
 `export PATH=$GRADLE_HOME/bin:$PATH`  
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
