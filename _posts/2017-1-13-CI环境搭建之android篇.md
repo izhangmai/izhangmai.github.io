@@ -108,8 +108,8 @@ fir-cli 使用 Ruby 构建，只要安装相应 ruby gem 即可:
 
 ![](/img/post/Jenkins_android/jenkins_create.png)
 
-2.配置项目版本环境
-创建项目成功后，进入项目配置页面，配置项目版本参数
+2.配置项目源码管理
+创建项目成功后，进入项目配置页面，配置项目源码管理参数
 
 ![](/img/post/Jenkins_android/jenkins_svn.png)
 
