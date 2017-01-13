@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [linux]CI环境搭建之android篇
+title: "[linux]CI环境搭建之android篇"
 date: 2017-1-13 16:00:00
 author: 李勇
 tags: android
