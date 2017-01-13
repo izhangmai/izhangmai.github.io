@@ -29,8 +29,8 @@ jdk环境变量配置：
 `vim /etc/profile`  
 2. 添加环境变量  
 `JAVA_HOME=/此处为jdk目录路径/jdk1.8.0_111`  
-`JRE_HOME=/此处为jdk目录路径/jdk1.8.0_111/jre  `
-`CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib ` 
+`JRE_HOME=/此处为jdk目录路径/jdk1.8.0_111/jre`  
+`CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib`  
 `PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin`  
 `export JAVA_HOME JRE_HOME CLASS_PATH PATH`  
 3. 退出（ESC）,并保存（：wq+Enter）  
@@ -71,10 +71,8 @@ sdk环境变量配置：
 1. 编辑文件 
 `vim /etc/profile`  
 2. 添加环境变量  
-```
-    export ANDROID_HOME=/此处为sdk目录路径/sdk
-	export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
-``` 
+`export ANDROID_HOME=/此处为sdk目录路径/sdk`
+`1export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH` 
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
 `source /etc/profile`
@@ -89,10 +87,8 @@ gradle环境变量配置：
 1. 编辑文件 
 `vim /etc/profile`  
 2. 添加环境变量  
-```
-    export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1
-	export PATH=$GRADLE_HOME/bin:$PATH
-```  
+`export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1`
+`export PATH=$GRADLE_HOME/bin:$PATH`  
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
 `source /etc/profile`
