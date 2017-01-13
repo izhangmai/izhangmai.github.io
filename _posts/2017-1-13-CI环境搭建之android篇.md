@@ -26,7 +26,7 @@ CI环境采用jenkins+svn+jdk+sdk+gradle+fir搭建
 #### 配置
 jdk环境变量配置：  
 1. 编辑文件  
-```vim /etc/profile```  
+`vim /etc/profile` 
 2. 添加环境变量  
 `  
 	JAVA_HOME=/此处为jdk目录路径/jdk1.8.0_111  
@@ -36,25 +36,25 @@ jdk环境变量配置：
     export JAVA_HOME JRE_HOME CLASS_PATH PATH  `   
 3. 退出（ESC）,并保存（：wq+Enter）  
 4. 将配置文件刷入内存  
-```source /etc/profile```
+`source /etc/profile`
 
 ### jenkins
   
 #### 安装
 从 Jenkins 的主页上下载最新的 jenkins.war 下载，命令：
-```wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war```
+`wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war`
   
 #### 配置
 Jenkins默认端口为8080，易与其他服务端口冲突，此处改为8000作为jenkins访问端口（具体由情况而定），访问该端口，需要打开8000端口防火墙  
-```
+`
 iptables -I INPUT -p tcp --dport 8000 -j ACCEPT
-```  
+` 
 
 #### 启动jenkins
 进入jenkins.war目录下，输入命令  
-```
+`
 java -jar jenkins.war  --httpPort=8000
-```  
+`  
 
 #### 访问jenkins
 http://locahost:8000,若非本机则将locahost替换为jenkins所在主机ip地址，效果如图
@@ -74,7 +74,7 @@ http://locahost:8000,若非本机则将locahost替换为jenkins所在主机ip地
 #### 配置
 sdk环境变量配置：  
 1. 编辑文件 
-```vim /etc/profile```  
+`vim /etc/profile`  
 2. 添加环境变量  
 `
     export ANDROID_HOME=/此处为sdk目录路径/sdk
@@ -92,7 +92,7 @@ sdk环境变量配置：
 #### 配置
 gradle环境变量配置：  
 1. 编辑文件 
-```vim /etc/profile```  
+`vim /etc/profile`  
 2. 添加环境变量  
 `
     export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1
