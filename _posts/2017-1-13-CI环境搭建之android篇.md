@@ -39,19 +39,23 @@ jdk环境变量配置：
 ```source /etc/profile```
 
 ### jenkins
+  
 #### 安装
 从 Jenkins 的主页上下载最新的 jenkins.war 下载，命令：
 ```wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war```
+  
 #### 配置
 Jenkins默认端口为8080，易与其他服务端口冲突，此处改为8000作为jenkins访问端口（具体由情况而定），访问该端口，需要打开8000端口防火墙  
 ```
 iptables -I INPUT -p tcp --dport 8000 -j ACCEPT
-```
+```  
+
 #### 启动jenkins
 进入jenkins.war目录下，输入命令  
 ```
 java -jar jenkins.war  --httpPort=8000
-```
+```  
+
 #### 访问jenkins
 http://locahost:8000,若非本机则将locahost替换为jenkins所在主机ip地址，效果如图
 
@@ -62,9 +66,11 @@ http://locahost:8000,若非本机则将locahost替换为jenkins所在主机ip地
 ### svn
 登录jenkins，安装插件Subversion Plug-in
 
-### sdk 
+### sdk  
+ 
 #### 安装
 通过官方下载安装[sdk](https://developer.android.com/index.html)  
+  
 #### 配置
 sdk环境变量配置：  
 1. 编辑文件 
@@ -78,9 +84,11 @@ sdk环境变量配置：
 4. 将配置文件刷入内存  
 `source /etc/profile`
 
-### gradle
+### gradle  
+
 #### 安装
-通过官方下载安装[gradle](https://gradle.org/gradle-download/),此处选择gradle-2.14.1
+通过官方下载安装[gradle](https://gradle.org/gradle-download/),此处选择gradle-2.14.1  
+
 #### 配置
 gradle环境变量配置：  
 1. 编辑文件 
@@ -95,7 +103,8 @@ gradle环境变量配置：
 `source /etc/profile`
 
 ### fir
-通过 fir-cli 命令行的指令查看、上传、编译应用
+通过 fir-cli 命令行的指令查看、上传、编译应用  
+
 #### 安装  
 fir-cli 使用 Ruby 构建，只要安装相应 ruby gem 即可:  
 `sudo gem install fir-cli --no-ri --no-rdoc`
