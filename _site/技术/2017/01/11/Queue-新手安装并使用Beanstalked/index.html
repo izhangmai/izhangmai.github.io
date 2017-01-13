@@ -251,7 +251,9 @@
   <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
   <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
       <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">windows</a></li>
+      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
+      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
+      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
     </ul>
   </li>
   <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
@@ -297,9 +299,14 @@
 <h2 id="安装">安装</h2>
 
 <h6 id="macos">MacOS</h6>
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd` ###### Linux-编译 1.安装libevent（[点击我](https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar)）
+
+<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
 </code></pre>
 </div>
+
+<h6 id="linux-编译">Linux-编译</h6>
+
+<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
 cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
@@ -322,8 +329,10 @@ make install
 ./beanstalkd -d -l 127.0.0.1 -p 11300 
 </code></pre>
 </div>
-<p>######Liunx-包安装
-1.centos</p>
+
+<h6 id="liunx-包安装">Liunx-包安装</h6>
+
+<p>1.centos</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
 </code></pre>
@@ -333,8 +342,10 @@ make install
 <div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
 </code></pre>
 </div>
-<h6 id="windows">windows</h6>
-<p>windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+
+<h6 id="windows">Windows</h6>
+
+<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
 
 <h2 id="运行">运行</h2>
 
@@ -367,7 +378,9 @@ make install
 <h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
+    // 引入BeanStalk客户端类
     require('BeanStalk.class.php');
+
     $beanstalk = BeanStalk::open(array(
         'servers'       =&gt; array( '127.0.0.1:11300' ),
         'select'        =&gt; 'random peek'
@@ -407,13 +420,9 @@ make install
   核心
   安装    
       MacOS
-      windows
-    
-  
-  运行
-  Demo（点击我）
-
-... | zmai掌麦技术团队博客|zmai's Blog " >
+      Linux-编译
+      Liunx-包安装
+      Win... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -436,6 +445,10 @@ make install
                         <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="我的程序猿生存手册">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -524,6 +537,12 @@ make install
                             
                 				<a href="/tags/#Beanstalked" title="Beanstalked" rel="1">
                                     Beanstalked
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="1">
+                                    生活
                                 </a>
                             
         				
