@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>WWDC2016新技术盘点 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>WWDC2016新技术盘点</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 李清发 on January 9, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,158 +243,173 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
-  </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
-</ul>
+				<h2 id="新的api">新的API</h2>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h3 id="sfspeechrecognizer框架">SFSpeechRecognizer框架</h3>
 
-<h2 id="资料">资料</h2>
-
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<p>全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况</p>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+  <li>可以实现连续的语音识别</li>
+  <li>可以对语 音文件或者语音流进行识别</li>
+  <li>最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串</li>
 </ul>
 
-<h2 id="候选">候选</h2>
+<p>示例：读取一段语音文件输出文字内容</p>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<pre><code class="language-objectivec">#import &lt;Speech/Speech.h&gt;
+//1.创建本地化标识符
+NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+//2.创建一个语音识别对象
+SFSpeechRecognizer *sf =[[SFSpeechRecognizer alloc] initWithLocale:local];
+//3.将bundle 中的资源文件加载出来返回一个url
+NSURL *url =[[NSBundle mainBundle] URLForResource:@"掌麦企业文化.mp3" withExtension:nil];
+//4.将资源包中获取的url 传递给 request 对象
+SFSpeechURLRecognitionRequest *res =[[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+//5.发送一个请求
+[sf recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        if (error!=nil) {
+            NSLog(@"语音识别解析失败,%@",error);
+        }else{
+            //解析正确
+            NSLog(@“语音内容：@",result.bestTranscription.formattedString);
+    }
+}];
+</code></pre>
+
+<h3 id="sirikit">SiriKit</h3>
+
+<p>在iOS10之后，苹果希望Siri能够给用户带来更多的功能体验，基于这个出发点，新增了SiriKit框架。Siri通过语言处理系统识别与用户的对话，解析并生成用于描述对话的意图（Intent），然后通过Siri框架把该Intent分发给相应的应用程序进而获取内容或执行操作。（图片来源苹果官方文档 SiriKit Programming Guide）</p>
+
+<p><img src="/img/post/WWDC2016/SiriKit.jpg" alt="" /></p>
+
+<p>通过官方文档可以了解到SiriKit支持以下六类服务：</p>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
+  <li>语音和视频通话</li>
+  <li>发送消息</li>
+  <li>收款或者付款</li>
+  <li>图片搜索</li>
+  <li>管理锻炼</li>
+  <li>行程预约</li>
 </ul>
 
-<h2 id="核心">核心</h2>
+<h3 id="通知">通知</h3>
 
-<p>Beanstalkd设计里面的核心概念：</p>
+<p>新的通知框架新增了以下功能</p>
 
 <ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
+  <li>整合统一了本地通知和远程通知</li>
+  <li>可以在通知中加入多媒体内容</li>
+  <li>可以获取App中的应用清单，可以触发通知时间，能更新这些通知，删除旧通知</li>
+  <li>可以通过代码获取用户的通知设置情况</li>
 </ul>
 
-<h2 id="安装">安装</h2>
-
-<h6 id="macos">MacOS</h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">UserNotifications</span><span class="o">.</span><span class="n">framework</span>
 </code></pre>
 </div>
 
-<h6 id="linux-编译">Linux-编译</h6>
+<p>（iOS10+， watchOS 3.0+，tvOS10.0+）</p>
 
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p>支持远程推送和本地通知的接收和发送，可以使用这个框架管理通知的发送基于地理位置和时间。同时应用程序扩展也可以使用该框架进行通知管理</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">UserNotificationsUI</span><span class="o">.</span><span class="n">framework</span>
 </code></pre>
 </div>
 
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p>（iOS10+）</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
+<p>定义展现在用户设备上的通知效果，前提是使用该框架定义一个程序扩展来接收并发送通知。</p>
+
+<h3 id="foundation框架">Foundation框架</h3>
+
+<p>新增NSISO8601DateFormatter类
+新增NSDateInterval类型</p>
+
+<h3 id="uitableview-和-uicollectionview-预加载">UITableView 和 UICollectionView 预加载</h3>
+
+<p>众所周知，TableView和CollectionView的顺滑与否能够很大程度上影响用户的使用体验。这次Apple对这两个View又进行了一次优化。
+在UITableView中新增了UITableViewDataSourcePrefetching协议并提供了下列方法（Swift）</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//此方法在TableViewCell进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务</span>
+<span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">prefetchRowsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>  
+<span class="p">}</span>
+<span class="c1">//在用户快速滑动，突然停下，反向滑动时停止预加载</span>
+<span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">cancelPrefetchingForRowsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<h6 id="liunx-包安装">Liunx-包安装</h6>
+<p>在UICollectionView中新增了UICollectionViewDataSourcePrefetching协议并提供了下列方法（Swift）</p>
 
-<p>1.centos</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
-
-<h6 id="windows">Windows</h6>
-
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
-
-<h2 id="运行">运行</h2>
-
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//此方法在CollectionViewItem进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务，</span>
+<span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span><span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="n">prefetchItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="c1">//在用户快速滑动，突然停下，反向滑动时停止预加载</span>
+<span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span><span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="n">cancelPrefetchingForItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span> <span class="p">{</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
+<h3 id="gcd在swift30中的彻底改写">GCD在Swift3.0中的彻底改写</h3>
 
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
+<p>GCD（Grand Central Dispatch）是iOS开发中的重要概念，平时开发中大多数多线程都会用到它。此次在Swift3.0的更新中彻底改了GCD的语法，我们将不再会看到类似dispatch_async，dispatch_sync这样的写法了，而是引入DispatchQueue这个类。
+例如:在全局线程中定义一个常量，在主线程中打印出来</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">()</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+<span class="k">let</span> <span class="nv">test</span> <span class="o">=</span> <span class="s">"Swift3.0 GCD"</span>
+<span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+   <span class="nf">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
+<p>￼除了使用DispatchQueue之外也可以自定义DispatchWorkItem。DispatchWorkItem 定义了一个操作的内部代码，以及优先级，特性等等。 它可以直接在任何队列中执行：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">queue</span> <span class="o">=</span> <span class="kt">DispatchQueue</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="s">"Swift.queue"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">workItem</span> <span class="o">=</span> <span class="kt">DispatchWorkItem</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">userInitiated</span><span class="p">,</span> <span class="nv">flags</span><span class="p">:</span> <span class="o">.</span><span class="n">assignCurrentContext</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//执行操作  </span>
+<span class="p">}</span>
+<span class="n">queue</span><span class="o">.</span><span class="nf">async</span><span class="p">(</span><span class="nv">execute</span><span class="p">:</span> <span class="n">workItem</span><span class="p">)</span>
 </code></pre>
 </div>
 
+<p>￼对dispatch_time_t也进行了改进，语法使用起来更加简单。DispatchTime.now() 是当前事前， 然后加上 .seconds(60) 代表 60秒。￼</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">delay</span> <span class="o">=</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="o">.</span><span class="nf">seconds</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="uiviewpropertyanimator">UIViewPropertyAnimator</h3>
+
+<p>新的 UIViewPropertyAnimator 类可以更好地使用 UIView.animatedWithDuration API，借此可以实现很多功能，比如：</p>
+
+<ul>
+  <li>中途中断动画，暂停，停止，恢复，逆转，控制进度</li>
+  <li>动画开始后改变值</li>
+  <li>改变 percentComplete 属性让动画更具交互性</li>
+  <li>或者甚至可以把 percentComplete 和 UIGestureRecognizer 结合在一起使用</li>
+</ul>
+
+<h3 id="uitabbar">UITabBar</h3>
+
+<p>能够控制一个 tab bar item 的样式，比如背景颜色和文字属性。</p>
+
+<h3 id="messages-api">Messages API</h3>
+
+<p>新的框架，用于创建基于 iMessage 的新应用
+能够创建 iMessage 的表情包</p>
+
+<h2 id="xcode-里的新工具">Xcode 里的新工具</h2>
+
+<ul>
+  <li>新的可视化调试工具（Visual Debugging Tools），特别是内存和线程工具</li>
+  <li>新的代码签名机制</li>
+  <li>Xcode 扩展</li>
+  <li>在 Xcode 8 里允许你选择使用 Swift 2.3 还是 Swift 3.0</li>
+  <li>图片名字自动补全，代码中可以对颜色和图片文字化</li>
+</ul>
 
 				
 <!--协议说明 -->
@@ -410,19 +423,15 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/2017/01/09/WWDC2016学习笔记"
+                    data-title="WWDC2016新技术盘点"
+                    data-url="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="新的API
+
+SFSpeechRecognizer框架
+
+全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +451,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/" data-toggle="tooltip" data-placement="top" title="【Docker】安装并运行nginx">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="我的程序猿生存手册">Next Post &rarr;</a>
+                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +466,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/01/09/WWDC2016学习笔记"
+                        data-title="WWDC2016新技术盘点"
+                        data-url="http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -537,12 +546,6 @@ make install
                             
                 				<a href="/tags/#Beanstalked" title="Beanstalked" rel="1">
                                     Beanstalked
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#生活" title="生活" rel="1">
-                                    生活
                                 </a>
                             
         				

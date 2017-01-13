@@ -5,8 +5,13 @@
     <description>记录技术相关的一切。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+<<<<<<< HEAD
     <pubDate>Fri, 13 Jan 2017 10:59:44 +0800</pubDate>
     <lastBuildDate>Fri, 13 Jan 2017 10:59:44 +0800</lastBuildDate>
+=======
+    <pubDate>Wed, 11 Jan 2017 17:08:49 +0800</pubDate>
+    <lastBuildDate>Wed, 11 Jan 2017 17:08:49 +0800</lastBuildDate>
+>>>>>>> 5ad04ce1697c3493c45e91bc97d401f8464c6634
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -798,6 +803,185 @@ make install
         <category>Swift</category>
         
         <category>翻译</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>WWDC2016新技术盘点</title>
+        <description>&lt;h2 id=&quot;新的api&quot;&gt;新的API&lt;/h2&gt;
+
+&lt;h3 id=&quot;sfspeechrecognizer框架&quot;&gt;SFSpeechRecognizer框架&lt;/h3&gt;
+
+&lt;p&gt;全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可以实现连续的语音识别&lt;/li&gt;
+  &lt;li&gt;可以对语 音文件或者语音流进行识别&lt;/li&gt;
+  &lt;li&gt;最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;示例：读取一段语音文件输出文字内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-objectivec&quot;&gt;#import &amp;lt;Speech/Speech.h&amp;gt;
+//1.创建本地化标识符
+NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@&quot;zh_CN&quot;];
+//2.创建一个语音识别对象
+SFSpeechRecognizer *sf =[[SFSpeechRecognizer alloc] initWithLocale:local];
+//3.将bundle 中的资源文件加载出来返回一个url
+NSURL *url =[[NSBundle mainBundle] URLForResource:@&quot;掌麦企业文化.mp3&quot; withExtension:nil];
+//4.将资源包中获取的url 传递给 request 对象
+SFSpeechURLRecognitionRequest *res =[[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+//5.发送一个请求
+[sf recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        if (error!=nil) {
+            NSLog(@&quot;语音识别解析失败,%@&quot;,error);
+        }else{
+            //解析正确
+            NSLog(@“语音内容：@&quot;,result.bestTranscription.formattedString);
+    }
+}];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;sirikit&quot;&gt;SiriKit&lt;/h3&gt;
+
+&lt;p&gt;在iOS10之后，苹果希望Siri能够给用户带来更多的功能体验，基于这个出发点，新增了SiriKit框架。Siri通过语言处理系统识别与用户的对话，解析并生成用于描述对话的意图（Intent），然后通过Siri框架把该Intent分发给相应的应用程序进而获取内容或执行操作。（图片来源苹果官方文档 SiriKit Programming Guide）&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/post/WWDC2016/SiriKit.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;通过官方文档可以了解到SiriKit支持以下六类服务：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;语音和视频通话&lt;/li&gt;
+  &lt;li&gt;发送消息&lt;/li&gt;
+  &lt;li&gt;收款或者付款&lt;/li&gt;
+  &lt;li&gt;图片搜索&lt;/li&gt;
+  &lt;li&gt;管理锻炼&lt;/li&gt;
+  &lt;li&gt;行程预约&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;通知&quot;&gt;通知&lt;/h3&gt;
+
+&lt;p&gt;新的通知框架新增了以下功能&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;整合统一了本地通知和远程通知&lt;/li&gt;
+  &lt;li&gt;可以在通知中加入多媒体内容&lt;/li&gt;
+  &lt;li&gt;可以获取App中的应用清单，可以触发通知时间，能更新这些通知，删除旧通知&lt;/li&gt;
+  &lt;li&gt;可以通过代码获取用户的通知设置情况&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UserNotifications&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;framework&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;（iOS10+， watchOS 3.0+，tvOS10.0+）&lt;/p&gt;
+
+&lt;p&gt;支持远程推送和本地通知的接收和发送，可以使用这个框架管理通知的发送基于地理位置和时间。同时应用程序扩展也可以使用该框架进行通知管理&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UserNotificationsUI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;framework&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;（iOS10+）&lt;/p&gt;
+
+&lt;p&gt;定义展现在用户设备上的通知效果，前提是使用该框架定义一个程序扩展来接收并发送通知。&lt;/p&gt;
+
+&lt;h3 id=&quot;foundation框架&quot;&gt;Foundation框架&lt;/h3&gt;
+
+&lt;p&gt;新增NSISO8601DateFormatter类
+新增NSDateInterval类型&lt;/p&gt;
+
+&lt;h3 id=&quot;uitableview-和-uicollectionview-预加载&quot;&gt;UITableView 和 UICollectionView 预加载&lt;/h3&gt;
+
+&lt;p&gt;众所周知，TableView和CollectionView的顺滑与否能够很大程度上影响用户的使用体验。这次Apple对这两个View又进行了一次优化。
+在UITableView中新增了UITableViewDataSourcePrefetching协议并提供了下列方法（Swift）&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//此方法在TableViewCell进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefetchRowsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancelPrefetchingForRowsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在UICollectionView中新增了UICollectionViewDataSourcePrefetching协议并提供了下列方法（Swift）&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//此方法在CollectionViewItem进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务，&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UICollectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefetchItemsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UICollectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancelPrefetchingForItemsAt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;indexPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;IndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;gcd在swift30中的彻底改写&quot;&gt;GCD在Swift3.0中的彻底改写&lt;/h3&gt;
+
+&lt;p&gt;GCD（Grand Central Dispatch）是iOS开发中的重要概念，平时开发中大多数多线程都会用到它。此次在Swift3.0的更新中彻底改了GCD的语法，我们将不再会看到类似dispatch_async，dispatch_sync这样的写法了，而是引入DispatchQueue这个类。
+例如:在全局线程中定义一个常量，在主线程中打印出来&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Swift3.0 GCD&quot;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;￼除了使用DispatchQueue之外也可以自定义DispatchWorkItem。DispatchWorkItem 定义了一个操作的内部代码，以及优先级，特性等等。 它可以直接在任何队列中执行：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Swift.queue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;workItem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchWorkItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;qos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userInitiated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assignCurrentContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//执行操作  &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;￼对dispatch_time_t也进行了改进，语法使用起来更加简单。DispatchTime.now() 是当前事前， 然后加上 .seconds(60) 代表 60秒。￼&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DispatchTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;uiviewpropertyanimator&quot;&gt;UIViewPropertyAnimator&lt;/h3&gt;
+
+&lt;p&gt;新的 UIViewPropertyAnimator 类可以更好地使用 UIView.animatedWithDuration API，借此可以实现很多功能，比如：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;中途中断动画，暂停，停止，恢复，逆转，控制进度&lt;/li&gt;
+  &lt;li&gt;动画开始后改变值&lt;/li&gt;
+  &lt;li&gt;改变 percentComplete 属性让动画更具交互性&lt;/li&gt;
+  &lt;li&gt;或者甚至可以把 percentComplete 和 UIGestureRecognizer 结合在一起使用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;uitabbar&quot;&gt;UITabBar&lt;/h3&gt;
+
+&lt;p&gt;能够控制一个 tab bar item 的样式，比如背景颜色和文字属性。&lt;/p&gt;
+
+&lt;h3 id=&quot;messages-api&quot;&gt;Messages API&lt;/h3&gt;
+
+&lt;p&gt;新的框架，用于创建基于 iMessage 的新应用
+能够创建 iMessage 的表情包&lt;/p&gt;
+
+&lt;h2 id=&quot;xcode-里的新工具&quot;&gt;Xcode 里的新工具&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;新的可视化调试工具（Visual Debugging Tools），特别是内存和线程工具&lt;/li&gt;
+  &lt;li&gt;新的代码签名机制&lt;/li&gt;
+  &lt;li&gt;Xcode 扩展&lt;/li&gt;
+  &lt;li&gt;在 Xcode 8 里允许你选择使用 Swift 2.3 还是 Swift 3.0&lt;/li&gt;
+  &lt;li&gt;图片名字自动补全，代码中可以对颜色和图片文字化&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 09 Jan 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        
+        <category>iOS</category>
         
         
       </item>
