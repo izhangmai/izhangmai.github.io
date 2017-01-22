@@ -5,9 +5,289 @@
     <description>记录技术相关的一切。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+<<<<<<< HEAD
+    <pubDate>Fri, 13 Jan 2017 10:59:44 +0800</pubDate>
+    <lastBuildDate>Fri, 13 Jan 2017 10:59:44 +0800</lastBuildDate>
+=======
     <pubDate>Wed, 11 Jan 2017 17:08:49 +0800</pubDate>
     <lastBuildDate>Wed, 11 Jan 2017 17:08:49 +0800</lastBuildDate>
+>>>>>>> 5ad04ce1697c3493c45e91bc97d401f8464c6634
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title></title>
+        <description>&lt;h1 id=&quot;新的api&quot;&gt;新的API&lt;/h1&gt;
+&lt;h2 id=&quot;sfspeechrecognizer框架&quot;&gt;SFSpeechRecognizer框架&lt;/h2&gt;
+&lt;p&gt;全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;可以实现连续的语音识别
+    &lt;ol&gt;
+      &lt;li&gt;可以对语 音文件或者语音流进行识别&lt;/li&gt;
+      &lt;li&gt;最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串
+示例：读取一段语音文件输出文字内容
+￼￼&lt;code class=&quot;highlighter-rouge&quot;&gt;#import &amp;lt;Speech/Speech.h&amp;gt;&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;//1.创建本地化标识符
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	NSLocale local =[NSLocale alloc initWithLocaleIdentifier:@&quot;zhCN&quot;];
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//2.创建一个语音识别对象
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	SFSpeechRecognizer sf =[SFSpeechRecognizer alloc initWithLocale:local];
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//3.将bundle 中的资源文件加载出来返回一个url
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	NSURL url =[NSBundle mainBundle URLForResource:@&quot;掌麦企业文化.mp3&quot; withExtension:nil];
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//4.将资源包中获取的url 传递给 request 对象
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	SFSpeechURLRecognitionRequest res =[SFSpeechURLRecognitionRequest alloc initWithURL:url];
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//5.发送一个请求
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	sf recognitionTaskWithRequest:res resultHandler:^(SFSpeechRecognitionResult  Nullable result, NSError  Nullable error) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;		if (error!=nil) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;			NSLog(@&quot;语音识别解析失败,%@&quot;,error);
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;		}else
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;			//解析正确
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;			NSLog(@“语音内容：@&quot;,result.bestTranscription.formattedString);
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;		}
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	}];
+&lt;/code&gt;
+        &lt;h2 id=&quot;sirikit&quot;&gt;SiriKit&lt;/h2&gt;
+        &lt;p&gt;在iOS10之后，苹果希望Siri能够给用户带来更多的功能体验，基于这个出发点，新增了SiriKit框架。Siri通过语言处理系统识别与用户的对话，解析并生成用于描述对话的意图（Intent），然后通过Siri框架把该Intent分发给相应的应用程序进而获取内容或执行操作。（图片来源苹果官方文档 SiriKit Programming Guide） 
+&lt;a href=&quot;#&quot;&gt;&lt;img src=&quot;http://obon901vh.bkt.clouddn.com/411AEAFA-2980-4DE9-BCB7-D274A3CFCD76.png&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;
+通过官方文档可以了解到SiriKit支持以下六类服务：&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;语音和视频通话
+    &lt;ol&gt;
+      &lt;li&gt;发送消息&lt;/li&gt;
+      &lt;li&gt;收款或者付款&lt;/li&gt;
+      &lt;li&gt;图片搜索&lt;/li&gt;
+      &lt;li&gt;管理锻炼&lt;/li&gt;
+      &lt;li&gt;行程预约&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;通知&quot;&gt;通知&lt;/h2&gt;
+&lt;p&gt;新的通知框架新增了以下功能&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;整合统一了本地通知和远程通知
+    &lt;ol&gt;
+      &lt;li&gt;可以在通知中加入多媒体内容&lt;/li&gt;
+      &lt;li&gt;可以获取App中的应用清单，可以触发通知时间，能更新这些通知，删除旧通知&lt;/li&gt;
+      &lt;li&gt;可以通过代码获取用户的通知设置情况
+￼&lt;code class=&quot;highlighter-rouge&quot;&gt;UserNotifications.framework&lt;/code&gt;
+（iOS10+， watchOS 3.0+，tvOS10.0+）
+支持远程推送和本地通知的接收和发送，可以使用这个框架管理通知的发送基于地理位置和时间。同时应用程序扩展也可以使用该框架进行通知管理
+&lt;code class=&quot;highlighter-rouge&quot;&gt;UserNotificationsUI.framework&lt;/code&gt;
+￼（iOS10+）
+自定义展现在用户设备上的通知效果，前提是使用该框架定义一个程序扩展来接收并发送通知。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;foundation框架&quot;&gt;Foundation框架&lt;/h2&gt;
+&lt;p&gt;新增NSISO8601DateFormatter类
+新增NSDateInterval类型&lt;/p&gt;
+
+&lt;h2 id=&quot;uitableview-和-uicollectionview-预加载&quot;&gt;UITableView 和 UICollectionView 预加载&lt;/h2&gt;
+&lt;p&gt;众所周知，TableView和CollectionView的顺滑与否能够很大程度上影响用户的使用体验。这次Apple对这两个View又进行了一次优化。
+在UITableView中新增了UITableViewDataSourcePrefetching协议并提供了下列方法（Swift）
+&lt;code class=&quot;highlighter-rouge&quot;&gt;//此方法在TableViewCell进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;func tableView( tableView: UITableView, prefetchRowsAt indexPaths: IndexPath) 	
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;func tableView( tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: IndexPath) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;在UICollectionView中新增了UICollectionViewDataSourcePrefetching协议并提供了下列方法（Swift）
+￼&lt;code class=&quot;highlighter-rouge&quot;&gt;//此方法在CollectionViewItem进入屏幕前执行，完成网络请求或者复杂任务处理等耗时任务，
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;func collectionView( collectionView: UICollectionView, prefetchItemsAt indexPaths: IndexPath) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//在用户快速滑动，突然停下，反向滑动时停止预加载
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;func collectionView( collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: IndexPath) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&quot;gcd在swift30中的彻底改写&quot;&gt;GCD在Swift3.0中的彻底改写&lt;/h2&gt;
+&lt;p&gt;GCD（Grand Central Dispatch）是iOS开发中的重要概念，平时开发中大多数多线程都会用到它。此次在Swift3.0的更新中彻底改了GCD的语法，我们将不再会看到类似dispatch_async，dispatch_sync这样的写法了，而是引入DispatchQueue这个类。
+例如:在全局线程中定义一个常量，在主线程中打印出来
+&lt;code class=&quot;highlighter-rouge&quot;&gt;DispatchQueue.global().async 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;  let test = &quot;Swift3.0 GCD&quot;
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; DispatchQueue.main.async 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;	   print(test)
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;  }
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;￼除了使用DispatchQueue之外也可以自定义DispatchWorkItem。DispatchWorkItem 定义了一个操作的内部代码，以及优先级，特性等等。 它可以直接在任何队列中执行：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;let queue = DispatchQueue(label: &quot;Swift.queue&quot;)
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;let workItem = DispatchWorkItem(qos: .userInitiated, flags: .assignCurrentContext) 
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; //执行操作  
+&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;}
+&lt;/code&gt;queue.async(execute: workItem)
+￼对dispatch_time_t也进行了改进，语法使用起来更加简单。DispatchTime.now() 是当前事前， 然后加上 .seconds(60) 代表 60秒。￼
+&lt;code class=&quot;highlighter-rouge&quot;&gt;let delay = DispatchTime.now() + .seconds(60)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;uiviewpropertyanimator&quot;&gt;UIViewPropertyAnimator&lt;/h2&gt;
+&lt;p&gt;新的 UIViewPropertyAnimator 类可以更好地使用 UIView.animatedWithDuration API，借此可以实现很多功能，比如：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;中途中断动画，暂停，停止，恢复，逆转，控制进度
+    &lt;ol&gt;
+      &lt;li&gt;动画开始后改变值&lt;/li&gt;
+      &lt;li&gt;改变 percentComplete 属性让动画更具交互性&lt;/li&gt;
+      &lt;li&gt;或者甚至可以把 percentComplete 和 UIGestureRecognizer 结合在一起使用&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;uitabbar&quot;&gt;UITabBar&lt;/h2&gt;
+&lt;p&gt;能够控制一个 tab bar item 的样式，比如背景颜色和文字属性。&lt;/p&gt;
+
+&lt;h2 id=&quot;messages-api&quot;&gt;Messages API&lt;/h2&gt;
+&lt;p&gt;新的框架，用于创建基于 iMessage 的新应用
+能够创建 iMessage 的表情包&lt;/p&gt;
+
+&lt;h1 id=&quot;xcode-里的新工具&quot;&gt;Xcode 里的新工具&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;新的可视化调试工具（Visual Debugging Tools），特别是内存和线程工具
+    &lt;ol&gt;
+      &lt;li&gt;新的代码签名机制&lt;/li&gt;
+      &lt;li&gt;Xcode 扩展&lt;/li&gt;
+      &lt;li&gt;在 Xcode 8 里允许你选择使用 Swift 2.3 还是 Swift 3.0&lt;/li&gt;
+      &lt;li&gt;图片名字自动补全，代码中可以对颜色和图片文字化&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Fri, 13 Jan 2017 10:59:44 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/13/2017-1-9-WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/13/2017-1-9-WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>我的程序猿生存手册</title>
+        <description>&lt;h1 id=&quot;我的程序猿生存手册&quot;&gt;我的程序猿生存手册&lt;/h1&gt;
+
+&lt;p&gt;在高考大军中拼杀过，也在大学校园中荒芜过，曾经低迷消沉，也常满怀壮志…… 但是最多的还是被称为小伙子以及自称为iOS工程师！博主就是这种喜闻乐见的这类人，实习一年后在毕业季顺利拿到了我们公司的offer，也许相比很多毕业季的同学职场上顺利许多，但当深夜来临，显示器熄灭后望着荧幕出神的时候，毕业季我错过了很多也许一辈子都不会再相见的同学们的合影。这两年里真正领略到了企业项目的开发的艰辛，以及团队协作的魅力，有太多太多的要说，终将其汇成一句话：我还活着。&lt;/p&gt;
+
+&lt;p&gt;图1&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://daiweilai.github.io/img/post/2015-11-11-pic1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;两年时间，反正撸啊撸段位已经是万劫不复了，iOS10一发布加班的觉悟早有了，潜伏的XCodeGhost也被拎出来了，各种被脱裤的同行大佬们也是尿了一地，哥也被吓了一哆嗦，赶忙修改了1024的账号密码…… 2015、2016年就是伴随这些琐事发展着，但是博主作为一个初入职场工作总结当然不会是简单地流水账。&lt;/p&gt;
+
+&lt;p&gt;我知道你们都惦记着什么是1024，1024就是，呵呵，就是一款妈妈都说好玩的游戏啊~。&lt;/p&gt;
+
+&lt;h2 id=&quot;学习&quot;&gt;学习&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;干挨踢的学会学习远比你死背一个功能的代码来的有用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;PS：举的都是iOS开发中的栗子&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;在iOS学习中去尝试体会Cocoa模式，多留意Cocoa中的框架的类，他们的命名都有规范，相似抽象的对象会有相似的方法或者写法，比如：&lt;code class=&quot;highlighter-rouge&quot;&gt;Mutable&lt;/code&gt;的类可能都有&lt;code class=&quot;highlighter-rouge&quot;&gt;addXX&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;appendXX&lt;/code&gt;方法，&lt;code class=&quot;highlighter-rouge&quot;&gt;Set&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt;类型的类可能都会有&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerateXX&lt;/code&gt;的遍历方法……，又比如一个类的功能如果注重过程的话，苹果会选择使用&lt;code class=&quot;highlighter-rouge&quot;&gt;delegate&lt;/code&gt;的方式，注重结果的话则会使用&lt;code class=&quot;highlighter-rouge&quot;&gt;block&lt;/code&gt; ，学会总结比较、触类旁通、举一反三！&lt;/p&gt;
+
+&lt;p&gt;如果你能做到对Cocoa模式很熟悉的话，那么最新的3DTouch功能直接看类的头文件就会用了。&lt;/p&gt;
+
+&lt;p&gt;并且，第三方优秀的、热门的库都会遵循这一套编写规范，所以使用起来或者修改起来也才能够游刃有余！除了&lt;a href=&quot;https://github.com/ReactiveCocoa/ReactiveCocoa&quot; target=&quot;_blank&quot;&gt;ReactiveCocoa&lt;/a&gt;之流除外。。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;学习时候看一本书远没有敲一个项目来的有效果。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;看书的时候总是会犯一个毛病，就是一看就懂，一写就懵。所以学习技术，我更推荐的是实践检真知！敲出来的代码才是学习到的，因为你在电脑前，你遇到不懂的你可以立刻Google，看到感兴趣的新类可以直接&lt;code class=&quot;highlighter-rouge&quot;&gt;option&lt;/code&gt;+&lt;code class=&quot;highlighter-rouge&quot;&gt;左键&lt;/code&gt;查看文档或者&lt;code class=&quot;highlighter-rouge&quot;&gt;command&lt;/code&gt;+&lt;code class=&quot;highlighter-rouge&quot;&gt;左键&lt;/code&gt;直接摆出头文件一览无遗！&lt;/p&gt;
+
+&lt;p&gt;当然&lt;a href=&quot;https://developer.apple.com/wwdc/&quot; target=&quot;_blank&quot;&gt;WWDC&lt;/a&gt;别忘了看看，这是iOS最前沿的技术教学，即使听不懂也没关系，把音频外放，同事问你：哇，你听得懂呀。你微微一笑答道：听不懂。留下认真聆听却似享受的一道背影给同事，那可是满满的逼格。。呵呵，其实不然，视频中有大量PPT，有关键字，拿出来Google一番，再敲打一番，肯定你心中会觉得不虚此举哈，这样也锻炼了英文水平，这样的一波绝逼不亏呀。&lt;/p&gt;
+
+&lt;p&gt;说到英文，这个是技术进阶的基础，不要畏惧，刚开始看一篇英文文档可能花费你一天的时间，但是这才是第一手资料！国内译者的水平毕竟参差不齐，谬误在所难免，而且二手的资料，对于充满处女情结的你能接受么？能忍么？所以百度还是用来搜搜绯闻、床照之流就好，技术索引真不是它的强项，搜出来的东西都是&lt;code class=&quot;highlighter-rouge&quot;&gt;deprecated&lt;/code&gt;的，实在浪费感情。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://nshipster.com/&quot; target=&quot;_blank&quot;&gt;NSHipster&lt;/a&gt;、&lt;a href=&quot;https://www.objc.io/&quot; target=&quot;_blank&quot;&gt;Objc.io&lt;/a&gt; ……都是不错的去处，大量的紧巴巴的干货，他们都有中文版，但是最新的资料的中文版还是会相对滞后。&lt;/p&gt;
+
+&lt;p&gt;再一个就是大婶们的博客，一天不读都浑身难受！&lt;/p&gt;
+
+&lt;p&gt;之前拜阅&lt;a href=&quot;http://blog.devtang.com/&quot; target=&quot;_blank&quot;&gt;唐巧Boy&lt;/a&gt;的新书的时候，有一个博客列表非常不错，强势插入我的&lt;a href=&quot;http://feedly.com/&quot; target=&quot;_blank&quot;&gt;Feedly&lt;/a&gt;列表，我自己也有一些关注的大婶也加入了列表当中，这里给出分享OPML&lt;a href=&quot;https://daiweilai.github.io/attach/feedly.opml&quot;&gt;拿去玩&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;沙龙、研讨什么的可以适当参加，看看荧幕外的世界，不要老说没有搞iOS的姑娘。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PS. Feedly是一个RSS订阅平台&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;团队&quot;&gt;团队&lt;/h2&gt;
+
+&lt;p&gt;讲一个故事：从前有个产品经理，他修改了3次需求，第二天他死了。&lt;/p&gt;
+
+&lt;p&gt;博主只想说的是，若不是博主心慈，我想我公司的产品经理已经死完后投胎又死一百次了。&lt;/p&gt;
+
+&lt;p&gt;我们都知道项目完成的水平直接由团队中是否有高效的协作而决定，也许有很多程序员长期的孤高冷艳惯了，他们说自己不需要团队！自己一个人就可以搞定一切，自己是UI、UE、产品、编码、测试甚至后端一条龙拿下，但是你将没有女朋友！！！&lt;/p&gt;
+
+&lt;p&gt;团队协作远比个人的英雄主义更有魅力，个人认为！&lt;/p&gt;
+
+&lt;p&gt;当下的快速迭代的大环境下，企业级开发下英雄主义是不太可取也不太可行的，所以融入团队，学会交流是工作顺利进展的保证；&lt;/p&gt;
+
+&lt;p&gt;当然团队协作中是否高效是否愉快就需要交流技巧了，每个人都有自恋的情节，即使是自己的工作技能也是如此，所以世界上存在着各种鄙视链&lt;/p&gt;
+
+&lt;p&gt;图2&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://daiweilai.github.io/img/post/2015-11-11-pic2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;举一个简单地例子吧&lt;/p&gt;
+
+&lt;p&gt;公司常见撕逼的三个部门：研发部、产品部、市场部&lt;/p&gt;
+
+&lt;p&gt;研发的看不起产品、市场，觉得他们都不懂技术，只是天马行空，遇到Bug还大惊小怪……&lt;/p&gt;
+
+&lt;p&gt;产品的觉得自己的设计是天才的设定，参考了社会伦理学，色彩心理学，严格的人体工学设计……反驳自己的都是傻逼……&lt;/p&gt;
+
+&lt;p&gt;市场的觉得自己深入客户，自己才是最了解这个产品市场的，所产品应该按自己的市场为导向，颜色不对，字体客户肯定不喜欢，改改改……&lt;/p&gt;
+
+&lt;p&gt;在排除消极因素，投机倒把的极个别人存在，团队中的成员还是希望共同的目标能够完美的实现的，也就是说其实我们的“争吵”也是为了更好的产品，但是“争吵”的度确实很难把握，难免就因为工作却伤了私下的感情，这也是离职中众多原因之一，频繁的离职却会使得你的职业生涯成长增加时间成本，所以更好的工作方式是“学会交流”。&lt;/p&gt;
+
+&lt;p&gt;“学会交流”不单单是工作中用到，这也是我们的一生的学问！&lt;/p&gt;
+
+&lt;p&gt;例如有时候，产品部门不是很负责任的频繁变更需求，这可苦了研发的成员，你便可以玩笑似的给他讲一个故事：从前有个产品经理，他修改了3次需求……，我想这样的诙谐即会是的工作氛围愉悦许多也可能让产品的同事知道自己不负责任行为的影响。&lt;/p&gt;
+
+&lt;p&gt;但是需求变更，这个是研发一直要面对课题，所以你必须学会“预置性开发”，预置性包括使用一些优秀的设计模式的使用降低模块间的耦合，增加系统维护的灵活性，也可以有类似&lt;code class=&quot;highlighter-rouge&quot;&gt;Placeholder&lt;/code&gt;的编码技巧，来随时应对不期而遇的需求变更，具体的做法，这也许需要另开一篇博文来讲述。&lt;/p&gt;
+
+&lt;h2 id=&quot;健康&quot;&gt;健康&lt;/h2&gt;
+
+&lt;p&gt;如果还没有升职加薪，当上总经理，出任CTO，迎娶白富美，走向人生巅峰。却出师未捷身先死，这个都不太好玩，身边的同事以及博主自己都有或多或少的职业病产生了，博主躬亲力行地验证了一个道理：樯橹灰飞烟灭！别说撸代码还真的很带感，根本停不下来，所以最后颈椎，肩膀就是各种不适。说多都是泪，不过后来博主秉承了国人”先污染后治理”的方针，总算把身子调过来了，秘笈如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;练此功，不强制自宫&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;好吧，这才是第一条，”不可久坐”x循环3次！！很重要，久坐流入脑子的血液会增加，从而造成下肢浮肿。由于久坐只限于局部肌肉活动，缺乏全身较大肌群动作，时间一长，久不动作的肌肉会逐步萎缩，机能衰退，还会使心、肺的后备能力降低，不能适应肌肉活动对血液循环和氧气供应的要求，一动就会心跳气急。肌肉长期不活动，热量消耗少，会加重脂肪和糖的代谢障碍，导致身体过分肥胖、动脉硬化及糖尿病。而且久坐一般皮肤质量较差，长时间静坐，受压血液流通不畅，易引起臂部瘙痒和隐痛，伏案工作者更甚，长期下去易导致颈椎炎，肩周炎，腰椎突出，脊柱变弯……我编不下去了，就问你怕不怕！！！所以多起身活动往非技术部走走，不然就会生病的哟(认不出雌性生物了)。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;坐姿&lt;/p&gt;
+
+    &lt;p&gt;图2&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://daiweilai.github.io/img/post/2015-11-11-pic3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;尝试全键盘操作，多记记几个快捷键世界就安静了，反正博主的magic mouse干电池已扣，什么你的是最新款的鼠标没干电池？那为了你的健康着想拿给博主用吧，可减少手腕以及肩膀劳损的风险。这里分享一个Mac屏幕效率工具&lt;a href=&quot;http://www.irradiatedsoftware.com/&quot; target=&quot;_blank&quot;&gt;SizeUp&lt;/a&gt; 可减少鼠标的使用！&lt;/li&gt;
+  &lt;li&gt;运动运动运动！不要在被人黑了，老是被黑码农，油头垢面，肾虚患者……有意思么？我们是改变世界的工程师！不要再穿拖鞋上班了！！大家薪水都不低，穿得体面点吧。你可以和博主一样帅的。&lt;/li&gt;
+  &lt;li&gt;努力陪伴回你身边一直陪伴着你的人，那使你的精神最远是最佳的状态！什么，还单身？那就多打打电话给你妈妈吧，那是最美的人。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;追求&quot;&gt;追求&lt;/h2&gt;
+
+&lt;p&gt;不要担心30岁要转行，不要认为30K就是终点，不要一天工作30个小时。保持初心。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;O ever youthful,O ever weeping.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;我的个人博客也托管在了Github.io上，喜闻乐见的Jekll加借鉴&lt;del&gt;(抄袭)&lt;/del&gt;的精美主题构建而成，反正样子应该还看得过去，如果大家有兴趣想了解iOS程序员为何日撸万行代码？数百奇巧淫技如何施展？无数干货为何频频送出？究竟编译器背后又隐藏着什么？这一切的背后是技术与生活的碰撞还是高效与投机的权衡？我真TM编不下去了，欢迎前往 &lt;a href=&quot;https://daiweilai.github.io&quot; target=&quot;_blank&quot;&gt;[任意门]&lt;/a&gt;围观。&lt;/p&gt;
+
+&lt;p&gt;严肃地，如果你刚开始学习iOS开发或许可以从我这里得到一些半干货。&lt;/p&gt;
+
+&lt;p&gt;祝大家生活愉快！&lt;/p&gt;
+</description>
+        <pubDate>Thu, 12 Jan 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/</guid>
+        
+        <category>生活</category>
+        
+        
+      </item>
     
       <item>
         <title>【Queue】新手安装并使用Beanstalked</title>

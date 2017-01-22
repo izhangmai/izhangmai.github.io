@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Swift 3更新了啥?[译]"
+title:      "Swift 3 更新了啥?[译]"
 subtitle:   "Swift 3的新特性！！"
 date:       2017-1-10 12:00:00
 author:     "戴伟来"

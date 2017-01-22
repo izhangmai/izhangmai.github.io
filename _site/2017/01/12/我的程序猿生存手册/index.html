@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>我的程序猿生存手册 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post/code life/2017-1-12-bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/common/home-bg.jpg')
+        background-image: url('/img/post/code life/2017-1-12-bg.jpg')
     }
 	
 	/*导航*/
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>我的程序猿生存手册</h1>
                     
                     
-                    <h2 class="subheading"></h2>
+                    <h2 class="subheading">代码与生活</h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 戴伟来 on January 12, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,158 +243,126 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
+				<h1 id="我的程序猿生存手册">我的程序猿生存手册</h1>
+
+<p>在高考大军中拼杀过，也在大学校园中荒芜过，曾经低迷消沉，也常满怀壮志…… 但是最多的还是被称为小伙子以及自称为iOS工程师！博主就是这种喜闻乐见的这类人，实习一年后在毕业季顺利拿到了我们公司的offer，也许相比很多毕业季的同学职场上顺利许多，但当深夜来临，显示器熄灭后望着荧幕出神的时候，毕业季我错过了很多也许一辈子都不会再相见的同学们的合影。这两年里真正领略到了企业项目的开发的艰辛，以及团队协作的魅力，有太多太多的要说，终将其汇成一句话：我还活着。</p>
+
+<p>图1</p>
+
+<p><img src="https://daiweilai.github.io/img/post/2015-11-11-pic1.png" alt="" /></p>
+
+<p>两年时间，反正撸啊撸段位已经是万劫不复了，iOS10一发布加班的觉悟早有了，潜伏的XCodeGhost也被拎出来了，各种被脱裤的同行大佬们也是尿了一地，哥也被吓了一哆嗦，赶忙修改了1024的账号密码…… 2015、2016年就是伴随这些琐事发展着，但是博主作为一个初入职场工作总结当然不会是简单地流水账。</p>
+
+<p>我知道你们都惦记着什么是1024，1024就是，呵呵，就是一款妈妈都说好玩的游戏啊~。</p>
+
+<h2 id="学习">学习</h2>
+
+<blockquote>
+  <p>干挨踢的学会学习远比你死背一个功能的代码来的有用。</p>
+</blockquote>
+
+<p><strong>PS：举的都是iOS开发中的栗子</strong></p>
+
+<p>在iOS学习中去尝试体会Cocoa模式，多留意Cocoa中的框架的类，他们的命名都有规范，相似抽象的对象会有相似的方法或者写法，比如：<code class="highlighter-rouge">Mutable</code>的类可能都有<code class="highlighter-rouge">addXX</code>、<code class="highlighter-rouge">appendXX</code>方法，<code class="highlighter-rouge">Set</code>、<code class="highlighter-rouge">Array</code>类型的类可能都会有<code class="highlighter-rouge">enumerateXX</code>的遍历方法……，又比如一个类的功能如果注重过程的话，苹果会选择使用<code class="highlighter-rouge">delegate</code>的方式，注重结果的话则会使用<code class="highlighter-rouge">block</code> ，学会总结比较、触类旁通、举一反三！</p>
+
+<p>如果你能做到对Cocoa模式很熟悉的话，那么最新的3DTouch功能直接看类的头文件就会用了。</p>
+
+<p>并且，第三方优秀的、热门的库都会遵循这一套编写规范，所以使用起来或者修改起来也才能够游刃有余！除了<a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank">ReactiveCocoa</a>之流除外。。</p>
+
+<blockquote>
+  <p>学习时候看一本书远没有敲一个项目来的有效果。</p>
+</blockquote>
+
+<p>看书的时候总是会犯一个毛病，就是一看就懂，一写就懵。所以学习技术，我更推荐的是实践检真知！敲出来的代码才是学习到的，因为你在电脑前，你遇到不懂的你可以立刻Google，看到感兴趣的新类可以直接<code class="highlighter-rouge">option</code>+<code class="highlighter-rouge">左键</code>查看文档或者<code class="highlighter-rouge">command</code>+<code class="highlighter-rouge">左键</code>直接摆出头文件一览无遗！</p>
+
+<p>当然<a href="https://developer.apple.com/wwdc/" target="_blank">WWDC</a>别忘了看看，这是iOS最前沿的技术教学，即使听不懂也没关系，把音频外放，同事问你：哇，你听得懂呀。你微微一笑答道：听不懂。留下认真聆听却似享受的一道背影给同事，那可是满满的逼格。。呵呵，其实不然，视频中有大量PPT，有关键字，拿出来Google一番，再敲打一番，肯定你心中会觉得不虚此举哈，这样也锻炼了英文水平，这样的一波绝逼不亏呀。</p>
+
+<p>说到英文，这个是技术进阶的基础，不要畏惧，刚开始看一篇英文文档可能花费你一天的时间，但是这才是第一手资料！国内译者的水平毕竟参差不齐，谬误在所难免，而且二手的资料，对于充满处女情结的你能接受么？能忍么？所以百度还是用来搜搜绯闻、床照之流就好，技术索引真不是它的强项，搜出来的东西都是<code class="highlighter-rouge">deprecated</code>的，实在浪费感情。</p>
+
+<p><a href="http://nshipster.com/" target="_blank">NSHipster</a>、<a href="https://www.objc.io/" target="_blank">Objc.io</a> ……都是不错的去处，大量的紧巴巴的干货，他们都有中文版，但是最新的资料的中文版还是会相对滞后。</p>
+
+<p>再一个就是大婶们的博客，一天不读都浑身难受！</p>
+
+<p>之前拜阅<a href="http://blog.devtang.com/" target="_blank">唐巧Boy</a>的新书的时候，有一个博客列表非常不错，强势插入我的<a href="http://feedly.com/" target="_blank">Feedly</a>列表，我自己也有一些关注的大婶也加入了列表当中，这里给出分享OPML<a href="https://daiweilai.github.io/attach/feedly.opml">拿去玩</a>。</p>
+
+<p>沙龙、研讨什么的可以适当参加，看看荧幕外的世界，不要老说没有搞iOS的姑娘。</p>
+
+<p><strong>PS. Feedly是一个RSS订阅平台</strong></p>
+
+<h2 id="团队">团队</h2>
+
+<p>讲一个故事：从前有个产品经理，他修改了3次需求，第二天他死了。</p>
+
+<p>博主只想说的是，若不是博主心慈，我想我公司的产品经理已经死完后投胎又死一百次了。</p>
+
+<p>我们都知道项目完成的水平直接由团队中是否有高效的协作而决定，也许有很多程序员长期的孤高冷艳惯了，他们说自己不需要团队！自己一个人就可以搞定一切，自己是UI、UE、产品、编码、测试甚至后端一条龙拿下，但是你将没有女朋友！！！</p>
+
+<p>团队协作远比个人的英雄主义更有魅力，个人认为！</p>
+
+<p>当下的快速迭代的大环境下，企业级开发下英雄主义是不太可取也不太可行的，所以融入团队，学会交流是工作顺利进展的保证；</p>
+
+<p>当然团队协作中是否高效是否愉快就需要交流技巧了，每个人都有自恋的情节，即使是自己的工作技能也是如此，所以世界上存在着各种鄙视链</p>
+
+<p>图2</p>
+
+<p><img src="https://daiweilai.github.io/img/post/2015-11-11-pic2.jpg" alt="" /></p>
+
+<p>举一个简单地例子吧</p>
+
+<p>公司常见撕逼的三个部门：研发部、产品部、市场部</p>
+
+<p>研发的看不起产品、市场，觉得他们都不懂技术，只是天马行空，遇到Bug还大惊小怪……</p>
+
+<p>产品的觉得自己的设计是天才的设定，参考了社会伦理学，色彩心理学，严格的人体工学设计……反驳自己的都是傻逼……</p>
+
+<p>市场的觉得自己深入客户，自己才是最了解这个产品市场的，所产品应该按自己的市场为导向，颜色不对，字体客户肯定不喜欢，改改改……</p>
+
+<p>在排除消极因素，投机倒把的极个别人存在，团队中的成员还是希望共同的目标能够完美的实现的，也就是说其实我们的“争吵”也是为了更好的产品，但是“争吵”的度确实很难把握，难免就因为工作却伤了私下的感情，这也是离职中众多原因之一，频繁的离职却会使得你的职业生涯成长增加时间成本，所以更好的工作方式是“学会交流”。</p>
+
+<p>“学会交流”不单单是工作中用到，这也是我们的一生的学问！</p>
+
+<p>例如有时候，产品部门不是很负责任的频繁变更需求，这可苦了研发的成员，你便可以玩笑似的给他讲一个故事：从前有个产品经理，他修改了3次需求……，我想这样的诙谐即会是的工作氛围愉悦许多也可能让产品的同事知道自己不负责任行为的影响。</p>
+
+<p>但是需求变更，这个是研发一直要面对课题，所以你必须学会“预置性开发”，预置性包括使用一些优秀的设计模式的使用降低模块间的耦合，增加系统维护的灵活性，也可以有类似<code class="highlighter-rouge">Placeholder</code>的编码技巧，来随时应对不期而遇的需求变更，具体的做法，这也许需要另开一篇博文来讲述。</p>
+
+<h2 id="健康">健康</h2>
+
+<p>如果还没有升职加薪，当上总经理，出任CTO，迎娶白富美，走向人生巅峰。却出师未捷身先死，这个都不太好玩，身边的同事以及博主自己都有或多或少的职业病产生了，博主躬亲力行地验证了一个道理：樯橹灰飞烟灭！别说撸代码还真的很带感，根本停不下来，所以最后颈椎，肩膀就是各种不适。说多都是泪，不过后来博主秉承了国人”先污染后治理”的方针，总算把身子调过来了，秘笈如下：</p>
+
+<ul>
+  <li>
+    <p>练此功，不强制自宫</p>
   </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
+  <li>
+    <p>好吧，这才是第一条，”不可久坐”x循环3次！！很重要，久坐流入脑子的血液会增加，从而造成下肢浮肿。由于久坐只限于局部肌肉活动，缺乏全身较大肌群动作，时间一长，久不动作的肌肉会逐步萎缩，机能衰退，还会使心、肺的后备能力降低，不能适应肌肉活动对血液循环和氧气供应的要求，一动就会心跳气急。肌肉长期不活动，热量消耗少，会加重脂肪和糖的代谢障碍，导致身体过分肥胖、动脉硬化及糖尿病。而且久坐一般皮肤质量较差，长时间静坐，受压血液流通不畅，易引起臂部瘙痒和隐痛，伏案工作者更甚，长期下去易导致颈椎炎，肩周炎，腰椎突出，脊柱变弯……我编不下去了，就问你怕不怕！！！所以多起身活动往非技术部走走，不然就会生病的哟(认不出雌性生物了)。</p>
+  </li>
+  <li>
+    <p>坐姿</p>
+
+    <p>图2</p>
+
+    <p><img src="https://daiweilai.github.io/img/post/2015-11-11-pic3.jpg" alt="" /></p>
+  </li>
+  <li>尝试全键盘操作，多记记几个快捷键世界就安静了，反正博主的magic mouse干电池已扣，什么你的是最新款的鼠标没干电池？那为了你的健康着想拿给博主用吧，可减少手腕以及肩膀劳损的风险。这里分享一个Mac屏幕效率工具<a href="http://www.irradiatedsoftware.com/" target="_blank">SizeUp</a> 可减少鼠标的使用！</li>
+  <li>运动运动运动！不要在被人黑了，老是被黑码农，油头垢面，肾虚患者……有意思么？我们是改变世界的工程师！不要再穿拖鞋上班了！！大家薪水都不低，穿得体面点吧。你可以和博主一样帅的。</li>
+  <li>努力陪伴回你身边一直陪伴着你的人，那使你的精神最远是最佳的状态！什么，还单身？那就多打打电话给你妈妈吧，那是最美的人。</li>
 </ul>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h2 id="追求">追求</h2>
 
-<h2 id="资料">资料</h2>
+<p>不要担心30岁要转行，不要认为30K就是终点，不要一天工作30个小时。保持初心。</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<blockquote>
+  <p>O ever youthful,O ever weeping.</p>
+</blockquote>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
-</ul>
+<h2 id="后记">后记</h2>
 
-<h2 id="候选">候选</h2>
+<p>我的个人博客也托管在了Github.io上，喜闻乐见的Jekll加借鉴<del>(抄袭)</del>的精美主题构建而成，反正样子应该还看得过去，如果大家有兴趣想了解iOS程序员为何日撸万行代码？数百奇巧淫技如何施展？无数干货为何频频送出？究竟编译器背后又隐藏着什么？这一切的背后是技术与生活的碰撞还是高效与投机的权衡？我真TM编不下去了，欢迎前往 <a href="https://daiweilai.github.io" target="_blank">[任意门]</a>围观。</p>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<p>严肃地，如果你刚开始学习iOS开发或许可以从我这里得到一些半干货。</p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
-
-<h2 id="核心">核心</h2>
-
-<p>Beanstalkd设计里面的核心概念：</p>
-
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
-
-<h2 id="安装">安装</h2>
-
-<h6 id="macos">MacOS</h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
-
-<h6 id="linux-编译">Linux-编译</h6>
-
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
-
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
-
-<h6 id="liunx-包安装">Liunx-包安装</h6>
-
-<p>1.centos</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
-
-<h6 id="windows">Windows</h6>
-
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
-
-<h2 id="运行">运行</h2>
-
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
-
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
-
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
-</code></pre>
-</div>
-
+<p>祝大家生活愉快！</p>
 
 				
 <!--协议说明 -->
@@ -410,19 +376,13 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
-                    data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-thread-key="/2017/01/12/我的程序猿生存手册"
+                    data-title="我的程序猿生存手册"
+                    data-url="http://localhost:4000/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/"
+                    data-images="http://localhost:4000/img/post/code life/2017-1-12-bg.jpg"
+                    data-content="我的程序猿生存手册
+
+在高考大军中拼杀过，也在大学校园中荒芜过，曾经低迷消沉，也常满怀壮志…… 但是最多的还是被称为小伙子以及自称为iOS工程师！博主就是... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +402,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" data-toggle="tooltip" data-placement="top" title="【Queue】新手安装并使用Beanstalked">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="我的程序猿生存手册">Next Post &rarr;</a>
+                        <a href="/2017/01/13/2017-1-9-WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +417,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/01/12/我的程序猿生存手册"
+                        data-title="我的程序猿生存手册"
+                        data-url="http://localhost:4000/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -511,7 +471,7 @@ make install
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="2">
+                				<a href="/tags/#iOS" title="iOS" rel="1">
                                     iOS
                                 </a>
                             
