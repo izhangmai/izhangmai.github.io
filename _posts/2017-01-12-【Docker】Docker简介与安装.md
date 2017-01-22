@@ -93,7 +93,6 @@ apt-get install docker
    
 ```
     service docker start
-
 ```
 
 ###### windows
@@ -104,7 +103,6 @@ apt-get install docker
 
 ```
     docker info
-    
 ```
 如果如下图所示的话，骚年，恭喜你，你的Docker安装成功了！！！
 ![](/img/post/Docker/QQ20170112-0.png)
