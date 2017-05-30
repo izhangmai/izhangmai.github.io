@@ -4,7 +4,7 @@ title:      "iOS库的那些事"
 subtitle:   "库的封装与使用"
 date:       2017-5-30 12:00:00
 author:     "戴伟来，李清发"
-header-img: "img/post/code life/2017-5-30-bg.jpg"
+header-img: "img/post/iOS Framework/2017-5-30-bg.jpg"
 tags:
     - 技术
 ---
