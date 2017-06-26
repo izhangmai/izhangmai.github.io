@@ -9,8 +9,18 @@ author: 胖纸囧
 * content
 {:toc}
 
-    记得2015年的某个夏天，那时候我还是个胖屌丝，拉着屌丝基友去参加开源中国的成都源创汇，碰到了张小龙，哦不，是张海龙大哥来推广Docker，那时候我怀着一颗敬畏的心满怀激情满脑懵逼的跟着海龙哥徜徉在Docker的海洋中，虽然直到听完我都不晓得Docker是个撒子。
-    结果17年开头的胖屌丝就不得不入Docker的坑了，开始了苦逼的Docker踩坑之旅。
+记得2015年的某个夏天，那时候我还是个胖屌丝，拉着屌丝基友去参加开源中国的成都源创汇，碰到了张小龙，哦不，是张海龙大哥来推广Docker，那时候我怀着一颗敬畏的心满怀激情满脑懵逼的跟着海龙哥徜徉在Docker的海洋中，虽然直到听完我都不晓得Docker是个撒子。
+结果17年开头的胖屌丝就不得不入Docker的坑了，开始了苦逼的Docker踩坑之旅。
+
+
+
+
+
+
+
+
+
+
 
 ## 简介
 
@@ -80,7 +90,10 @@ apt-get install docker
    
 ###### Liunx
    
-   service docker start
+   
+```
+    service docker start
+```
 
 ###### windows
   
@@ -90,7 +103,6 @@ apt-get install docker
 
 ```
     docker info
-    
 ```
 如果如下图所示的话，骚年，恭喜你，你的Docker安装成功了！！！
 ![](/img/post/Docker/QQ20170112-0.png)
