@@ -13,7 +13,7 @@ tags:
 
 
 
-##前言
+## 前言
 
 
 
@@ -40,9 +40,7 @@ ARKit需要iOS10以上的操作系统，A9处理器以上的设备(也就是iPho
 
 
 
-
-
-##官方demo体验
+## 官方demo体验
 [ARKit Demo App: Placing Objects in Augmented Reality](https://developer.apple.com/sample-code/wwdc/2017/PlacingObjects.zip) 是官方放出的ARKit的demo，需要使用Xcode9以上的IDE才能玩！
 
 1、下载Xcode 9(截至文章完成，Xcode 9已经放出了beta2)
@@ -56,7 +54,7 @@ iPad上的演示效果
 
 
 
-##ARKit原理
+## ARKit原理
 
 
 
@@ -92,7 +90,7 @@ ARCamera
 
 
 
-## 结语
+##  结语
 
 
 
