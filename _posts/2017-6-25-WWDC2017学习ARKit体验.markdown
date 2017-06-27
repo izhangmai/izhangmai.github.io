@@ -3,15 +3,20 @@ layout:     post
 title:      "WWDC2017学习ARKit体验"
 subtitle:   "iOS增强现实技术实践"
 date:       2017-6-25 12:00:00
-author:     "戴伟来"
-header-img: "img/post/iOS Framework/2017-5-30-bg.jpg"
+author:     "戴伟来，李清发"
+header-img: "img/post/arkit/bg.jpg"
 tags:
     - 技术
 ---
 
 # WWDC2017学习ARKit体验
 
+
+
 ##前言
+
+
+
 增强现实技术（Augmented Reality，简称 AR），就想Pokeman go的游戏那样，目标就是在屏幕上把虚拟世界整进现实世界中，并进行互动！
 
 一般AR场景的实现一般有以下：
@@ -52,6 +57,9 @@ iPad上的演示效果
 
 
 ##ARKit原理
+
+
+
 上面说到ARKit需要SceneKit和SpriteKit的支持！所以ARKit的原理可以概括为：
 1、相机捕获现实世界，并实时给这个现实世界建模(ARKit实现)
 2、在捕获的图像中展示模型(SceneKit和SpriteKit实现)
@@ -82,7 +90,11 @@ ARCamera
 
 
 
+
+
 ## 结语
+
+
 
 这篇文章只是对于ARKit初体验的一点点感悟，深入使用的话还涉及到建模、材质渲染等设计方面的知识，游戏开发的各种坐标的转换与计算(难点！)，当然还有就是创意了！
 
