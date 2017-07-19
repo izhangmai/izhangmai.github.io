@@ -2,7 +2,7 @@ _Store
 ## Build generated
 build/
 DerivedData/
-
+*.Ds_Store
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -24,3 +24,4 @@ xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+_site/.DS_Store
