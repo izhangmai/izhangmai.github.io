@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>iOS库的那些事 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post/iOS Framework/2017-5-30-bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/common/home-bg.jpg')
+        background-image: url('/img/post/iOS Framework/2017-5-30-bg.jpg')
     }
 	
 	/*导航*/
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>iOS库的那些事</h1>
                     
                     
-                    <h2 class="subheading"></h2>
+                    <h2 class="subheading">库的封装与使用</h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 戴伟来，李清发 on May 30, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,157 +243,220 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
-  </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
-</ul>
+				<h1 id="ios库的那些事">iOS库的那些事</h1>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h2 id="前言">前言</h2>
 
-<h2 id="资料">资料</h2>
+<p>1、减少编译时间</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<p>2、模块封装，项目结构优化</p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
-</ul>
+<p>3、保护源码</p>
 
-<h2 id="候选">候选</h2>
+<p>4、提供轮子</p>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<p>5、……</p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
+<p>所以我们需要学习库的使用和封装的技术！！</p>
 
-<h2 id="核心">核心</h2>
+<p><strong>iOS开发中库分两种：</strong></p>
 
-<p>Beanstalkd设计里面的核心概念：</p>
+<blockquote>
+  <p>静态库：以<code class="highlighter-rouge">.a</code> 和 <code class="highlighter-rouge">.framework</code>为文件后缀名。
+动态库：以<code class="highlighter-rouge">.tbd</code>(之前叫<code class="highlighter-rouge">.dylib</code>) 和 <code class="highlighter-rouge">.framework</code> 为文件后缀名。</p>
+</blockquote>
 
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
+<p><strong>静态库与动态库的区别</strong></p>
 
-<h2 id="安装">安装</h2>
+<blockquote>
+  <p>静态库：链接时会被完整的复制到可执行文件中，被多次使用就有多份拷贝。
+动态库：链接时不复制，程序运行时由系统动态加载到内存，系统只加载一次，多个程序共用（如系统的<code class="highlighter-rouge">UIKit.framework</code>等），节省内存。</p>
 
-<h6 id="macos">MacOS</h6>
+  <p>但是苹果不让使用自己的动态库，否则审核就无法通过。</p>
+</blockquote>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
+<p><strong>关于编译</strong></p>
 
-<h6 id="linux-编译">Linux-编译</h6>
+<p>静态库就是在目标程序编译的时候已经存在了编译好了的二进制代码，所以说目标程序编译的时候不需要对这段代码进行改变，而且还减少了编译时间。
+动态库就是在目标程序编译的时候不去链接，而是创建了引用，在运行的时候，进行对动态库的链接和编译。</p>
 
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p><strong>优缺点</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
+<p>静态库的好处很明显，编译完成之后，库文件实际上就没有作用了。目标程序没有外部依赖，直接就可以运行。当然其缺点也很明显，就是会使用目标程序的体积增大。</p>
 
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p>动态库的优点，不需要拷贝到目标程序中，不会影响目标程序的体积，而且同一份库可以被多个程序使用（因为这个原因，动态库也被称作共享库）。同时，编译时才载入的特性，也可以让我们随时对库进行替换，而不需要重新编译代码，这样就可以实现动态更新。动态库带来的问题主要是，动态载入会带来一部分性能损失，使用动态库也会使得程序依赖于外部环境。如果环境缺少动态库或者库的版本不正确，就会导致程序无法运行。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
+<h2 id="使用框架">使用框架</h2>
 
-<h6 id="liunx-包安装">Liunx-包安装</h6>
+<p>使用包依赖管理工具是最简单粗暴的方式</p>
 
-<p>1.centos</p>
+<p>如掌麦的iOS项目就是用了<a href="http://cocoapods.org">CocoaPods</a></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
+<p>当然还是<a href="https://github.com/Carthage/Carthage">Carthage</a>、<a href="https://swift.org/package-manager/">Swift Package Manager</a>。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
+<p>由于此文章不是工具使用教程，这里不再赘述上述工具。</p>
 
-<h6 id="windows">Windows</h6>
+<p>我们也会遇到手动使用框架的情况，.a和framework最为常见，这些都是静态库；</p>
 
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+<p>使用流程一般是：</p>
 
-<h2 id="运行">运行</h2>
+<p>1、拖入项目</p>
 
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
+<p>2、buildsetting的library search paths 正确设置即可</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
+<p>如果使用的框架进行了category的操作则需要在other link flag 加上-Objc</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
+<p>就酱紫！</p>
 
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
+<h2 id="制作框架">制作框架</h2>
 
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
+<p>一下步骤转载自http://www.jianshu.com/p/90f5ec723175</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
+<h3 id="a静态库制作">.a静态库制作</h3>
 
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
+<p>1、先创建一个新的Xcode工程Test，需要选择下面这个模板：</p>
 
-</code></pre>
-</div>
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/8aa6f5a0650b943eaf2bc70c1206838f.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/8aa6f5a0650b943eaf2bc70c1206838f.png" alt="111608265-f8f309461eadf0fc" /></a>选择模板</p>
+
+<p>创建完成后是这个样子的：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/02888cb0553c6fb5a0bad0c92b016f9d.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/02888cb0553c6fb5a0bad0c92b016f9d.png" alt="121608265-9fbbdb7c25721b33" /></a>创建工程</p>
+
+<p>2、我们把默认生成的Test.h和Test.m删掉，重新创建一个类PrintString，在这个类里面添加一个单纯打印字符串的简单方法:</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/0a3c8e121848b91e1324f5fc6680316f.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/0a3c8e121848b91e1324f5fc6680316f.png" alt="131608265-2a3c78a381b5278c" /></a>PrintString.h</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/57337d75e1b1f6631b181d3968691aa9.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/57337d75e1b1f6631b181d3968691aa9.png" alt="141608265-47e2d7c130863f6d" /></a>PrintString.m</p>
+
+<p>3、选择添加公开头文件
+为了让使用者知道有哪些方法可以用，我们需要公开头文件，这里我们公开PrintString.h：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/60cb4b31b5250402392b3086d37ae83b.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/60cb4b31b5250402392b3086d37ae83b.gif" alt="151608265-85e2a208770188e6" /></a>选择添加公开头文件</p>
+
+<p>4、修改配置
+我们需要把<code class="highlighter-rouge">Build Active Architecture Only</code>修改为NO，否则生成的静态库就只支持当前选择设备的架构。</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/38b1dc445015e7dbcdd71d6d9f40e2db.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/38b1dc445015e7dbcdd71d6d9f40e2db.gif" alt="161608265-b8b14a2b4ef6f78b" /></a>修改配置</p>
+
+<p>5、然后编译
+我们分别选择<code class="highlighter-rouge">Generic iOS Device</code>和<code class="highlighter-rouge">任意一个模拟器</code>各编译一次，编译完后，我们会看到工程中Products文件夹下的libTest.a由红色变成了黑色，然后<code class="highlighter-rouge">show in finder</code>，看看生成的文件：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/e34958602bd231e167e4c686a1f26d12.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/e34958602bd231e167e4c686a1f26d12.gif" alt="171608265-1c79cd8e8a108af4" /></a>Untitled.gif</p>
+
+<p>我们看到它为真机和模拟器都生成了.a静态库。里面都包含我们选择公开的头文件。</p>
+
+<p>我们来看看静态库支持的框架：命令为<code class="highlighter-rouge">lipo -info 静态库名字</code></p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/c2589262d8c92cc99bc271187eb5e6fd.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/c2589262d8c92cc99bc271187eb5e6fd.gif" alt="181608265-12282289b9b59f2b" /></a>查看静态库支持的框架</p>
+
+<p>我们看到，<code class="highlighter-rouge">Debug-iphoneos</code>里面的静态库支持的架构有<code class="highlighter-rouge">armv7</code>和<code class="highlighter-rouge">arm64</code>所以它只能用于真机，在模拟器上会报错。<code class="highlighter-rouge">Debug-iphonesimulator</code>里面的静态库支持的架构有<code class="highlighter-rouge">i386</code>和<code class="highlighter-rouge">x86_64</code>，所以它只能用于模拟器，在真机上会报错。</p>
+
+<p>如果想要让模拟器和真机通用一个静态库，我们可以使用终端命令来实现。命令格式：<code class="highlighter-rouge">lipo -create 第一个.a文件的绝对路径 第二个.a文件的绝对路径 -output 最终的.a文件路径</code>:</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/2795e14248b73715d62bace9a665d2b3.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/2795e14248b73715d62bace9a665d2b3.gif" alt="191608265-c4472265e6c2be4b" /></a>生成通用静态库</p>
+
+<p>我们看到生成了一个新的<code class="highlighter-rouge">libTest.a</code>文件。这个静态库就支持所有模拟器和所有真机了。然后我们创建一个文件夹，把.a和头文件都放进去，我们最终需要使用的就是这个文件夹：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/7f2ba27b652fafce40aed049ce1bc901.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/7f2ba27b652fafce40aed049ce1bc901.gif" alt="201608265-8497f7c22f2a3729" /></a>新建文件夹</p>
+
+<p>注意：为了开发方便，我们可以使用生成的通用静态库，但是最终上线的使用我们可以只导入真机的，这样工程的体积也会小一些。</p>
+
+<h5 id="使用生成的a静态库">使用生成的.a静态库</h5>
+
+<p>新建一个工程，将上面的通用静态库拖进去，导入头文件，就可以使用里面的方法了。经过试验，我们生成的静态库在真机上和模拟器上都能成功打印字符串：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/ecc4ac31bf456c36beccfcf136b5e090.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/ecc4ac31bf456c36beccfcf136b5e090.png" alt="211608265-3b374fe4aeb0712a" /></a>Paste_Image.png</p>
+
+<h3 id="frameworke静态库的制作">.frameworke静态库的制作</h3>
+
+<p>1、先创建一个新的Xcode工程LibTest，需要选择下面这个模板：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/40571bf9ba8580f75140d41a86589978.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/40571bf9ba8580f75140d41a86589978.png" alt="221608265-ecfa937ad49c0767" /></a>选择模板</p>
+
+<p>创建完成后是这个样子的：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/9259b0a7a57f449b0da4112636a27c77.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/9259b0a7a57f449b0da4112636a27c77.png" alt="231608265-18f4b924be05fa55" /></a>创建完成</p>
+
+<p>创建完成后我们可以看到，工程本身自带一个<code class="highlighter-rouge">LibTest.h</code>文件和一个<code class="highlighter-rouge">Info.plist</code>文件。</p>
+
+<p>2、我们创建一个类<code class="highlighter-rouge">PrintString</code>，添加一个单纯打印字符串的简单方法:</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/7560efebea4de981f630f53e0e3c593b.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/7560efebea4de981f630f53e0e3c593b.png" alt="241608265-c3ea26c5d04b8481" /></a>PrintString.h</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/cf9c13d17d71e14ed9b713b332f90f03.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/cf9c13d17d71e14ed9b713b332f90f03.png" alt="251608265-633ec0acf041c1d7" /></a>PrintString</p>
+
+<p>3、选择添加公开头文件
+为了让使用者知道有哪些方法可以用，我们需要公开头文件，我们需要在 并且将<code class="highlighter-rouge">Target-&gt;Build Phases-&gt;Headers</code>中的<code class="highlighter-rouge">Projec</code>t中要暴露的头文件拖拽到<code class="highlighter-rouge">Pulic</code>里面，这里我们公开<code class="highlighter-rouge">PrintString.h</code>：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/e02d3dbfb98a4e53a65a28a73bae64a2.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/e02d3dbfb98a4e53a65a28a73bae64a2.gif" alt="261608265-9065d3303dfd7fba" /></a>选择添加公开头文件</p>
+
+<p>注意：暴露出来的头文件中import的其他类也得添加到public中暴露出来。如果不想将import的类暴露出来，那么在头文件中用@class 然后在对应的.m文件中再import。</p>
+
+<p>4、设置支持所有架构（和.a制作一样）
+5、修改生成的<code class="highlighter-rouge">Mach-O</code>格式，因为动态库也可以是以framework形式存在，所以需要设置，否则默认打出来的是动态库。将<code class="highlighter-rouge">target-&gt;BuildSetting-&gt;Mach-o Type</code> 设为<code class="highlighter-rouge">Static Library</code>（默认为<code class="highlighter-rouge">Dynamic Library</code>）:</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/8b5a54f8488227956977ee8a2eec7aa5.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/8b5a54f8488227956977ee8a2eec7aa5.png" alt="271608265-9ac2a72c69317964" /></a>修改生成的Mach-O格式</p>
+
+<p>6、编译
+我们分别选择<code class="highlighter-rouge">Generic iOS Device</code>和<code class="highlighter-rouge">任意一个模拟器</code>各编译一次，编译完后，我们会看到工程中Products文件夹下的LibTest.framework由红色变成了黑色，然后<code class="highlighter-rouge">show in finder</code>，看看生成的文件：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/9ac9e99bf137c436d409bae9410ef584.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/9ac9e99bf137c436d409bae9410ef584.gif" alt="281608265-1398e58020675a44" /></a>编译</p>
+
+<p>我们看到它为真机和模拟器都生成了LibTest.framework静态库。</p>
+
+<p>我们来查看静态库支持的框架：与上面不同，命令为<code class="highlighter-rouge">lipo -info framework下的二进制文件名字</code></p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/35987f34012e6d12e252ea47f61b9926.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/35987f34012e6d12e252ea47f61b9926.gif" alt="291608265-71c93893b2b4787e" /></a>查看静态库支持的框架</p>
+
+<p>如果想要让模拟器和真机通用一个静态库，我们可以使用终端命令来实现。合并的命令与上面不同的是：framework静态库合并的不是framework,而是framework下的二进制文件，命令为：
+<code class="highlighter-rouge">lipo -create 第一个framework下二进制文件的绝对路径 第二个framework下二进制文件的绝对路径 -output 最终的二进制文件路径</code>：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/84d0cda594a6c618a134a81f5004a582.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/84d0cda594a6c618a134a81f5004a582.gif" alt="301608265-2dfc39f53cf5d8b4" /></a>合并二进制文件</p>
+
+<p>然后将任何一个framework中的二进制文件替换成合并后的二进制文件,然后把framework添加到要使用的项目中即可使用。</p>
+
+<h5 id="使用生成的framework静态库">使用生成的.framework静态库</h5>
+
+<p>新建一个工程，将静态库拖进去，导入头文件，就可以使用里面的方法了。经过试验，我们生成的静态库在真机上和模拟器上都能成功打印字符串：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/5296b2dd443d0c0a677886c4be9bbb1b.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/5296b2dd443d0c0a677886c4be9bbb1b.png" alt="311608265-19407ac12a2506a3" /></a>Paste_Image.png</p>
+
+<p>注意：
+如果静态库中有category类，则在使用静态库的项目配置中<code class="highlighter-rouge">Other Linker Flags</code>需要添加参数<code class="highlighter-rouge">-ObjC</code>或者<code class="highlighter-rouge">-all_load</code>。
+如果创建的framework类中使用了<code class="highlighter-rouge">.tbd</code>，则需要在实际项目中导入<code class="highlighter-rouge">.tbd</code>动态库。</p>
+
+<h5 id="运行调试静态库">运行调试静态库</h5>
+
+<p>如果你是开发静态库的人，你会发现上面的方法只是制作静态库，并没有办法运行看效果和调试bug，这时候我们可以这样：
+1、新建一个专门用来开发静态库的正常工程Test：</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/64940afb5bfc9c843d2dea470b0470a4.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/64940afb5bfc9c843d2dea470b0470a4.png" alt="321608265-1c5fbe82bb1c897e" /></a>新建工程</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/c1ce99aa15fdaf2297146649d8704196.png"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/c1ce99aa15fdaf2297146649d8704196.png" alt="331608265-0e64cd5eb6268d74" /></a>建好的工程</p>
+
+<p>2、添加一个静态库的target</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/cc6ec1edacbe7fd2a7625d408ff1d299.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/cc6ec1edacbe7fd2a7625d408ff1d299.gif" alt="341608265-d78a7606a7b2d70b" /></a>添加一个静态库的target</p>
+
+<p>我们看到它生成了几样东西:</p>
+
+<blockquote>
+  <p>一个framework的target：在这里面修改静态库的配置们，例如支持的架构、要暴露的头文件们和Mach-O的配置。
+一个LibTest文件夹：静态库里面的类们都放在这里面。
+product文件夹下面的LibTest.framework：在这里show in finder找到编译后生成的静态库。</p>
+</blockquote>
+
+<p>3、开发调试代码</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/8681b9395cad7d5172766f9a190548b3.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/8681b9395cad7d5172766f9a190548b3.gif" alt="351608265-f4ac760cb598db22" /></a>开发调试代码</p>
+
+<p>我们看到程序可以正常运行，并可以在动态库里面蹲点运行。方便我们调试。</p>
+
+<p>4、确保代码没问题后，选择对应的target编译生成。</p>
+
+<p><a href="http://jbcdn2.b0.upaiyun.com/2016/11/15e60615d437927d00a4e14d6eef0b45.gif"><img src="http://jbcdn2.b0.upaiyun.com/2016/11/15e60615d437927d00a4e14d6eef0b45.gif" alt="361608265-51d077bb2bd12c60" /></a>编译生成</p>
+
+<p>5、后面的过程就与上面一样了。</p>
 
 
 				
@@ -410,19 +471,25 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
-                    data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-thread-key="/2017/05/30/iOS库的那些事"
+                    data-title="iOS库的那些事"
+                    data-url="http://localhost:4000/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"
+                    data-images="http://localhost:4000/img/post/iOS Framework/2017-5-30-bg.jpg"
+                    data-content="iOS库的那些事
+
+前言
+
+1、减少编译时间
+
+2、模块封装，项目结构优化
+
+3、保护源码
+
+4、提供轮子
+
+5、……
+
+所以我们需要学习库的使用和封装的... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +509,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/02/05/git%E6%A6%82%E8%BF%B0/" data-toggle="tooltip" data-placement="top" title="git概述">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/" data-toggle="tooltip" data-placement="top" title="WWDC2017学习ARKit体验">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +524,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/05/30/iOS库的那些事"
+                        data-title="iOS库的那些事"
+                        data-url="http://localhost:4000/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

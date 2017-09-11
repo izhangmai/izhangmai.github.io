@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>WWDC2017之Core ML - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/26/WWDC2017%E4%B9%8BCore-ML/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>WWDC2017之Core ML</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 李清发 & 戴伟来 on June 26, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,158 +243,107 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
+				<h2 id="什么是core-ml">什么是Core ML</h2>
+
+<p>​	Core ML是苹果新推出的，面向开发者的机器学习框架。开发者能够轻松实现实时物体识别、人脸特征点识别、跟踪运动中的物体、文本分析等。</p>
+
+<p><img src="/img/post/WWDC2017/coreml.png" alt="" /></p>
+
+<p>​	Core ML 让你将很多机器学习模型集成到你的app中。除了支持层数超过30层的深度学习之外，还支持决策树的融合，SVM（支持向量机），线性模型。由于其底层建立在<em>Metal</em> 和<em>Accelerate</em>等技术上，所以可以最大限度的发挥 CPU 和 GPU 的优势。你可以在移动设备上运行机器学习模型，数据可以不离开设备直接被分析，在一定程度上可以为开发者节省购买服务器的成本。而且该框架让所有的机器学习计算都在iOS设备本地进行,这一点依旧体现出苹果对用户隐私很看重。</p>
+
+<p><img src="/img/post/WWDC2017/frame.png" alt="" title="Core ML底层框架" /></p>
+
+<p><em> </em>Vision<em>：高性能的图像分析和图像识别。这部分应用于人脸追踪,人脸识别,文本识别,区域识别，二维码识别,物体追踪,图像识别等。
+* </em>Nattural Language processing<em>：自然语言处理。用于语言识别，分词，词性还原，词性判定等。
+* </em>GamePlayKit*：游戏制作,构建游戏。用于常见的游戏行为如随机数生成、人工智能、寻路、和代理行为。</p>
+
+<h2 id="如何使用core-ml">如何使用Core ML</h2>
+
+<p>​	不得不提的是CoreML使用起来非常方便。苹果很聪明的定义了一个标准的模型格式（.mlmodel），提供了流行的框架模型到该格式的<a href="https://pypi.python.org/pypi/coremltools">转换工具</a>， 比如你可以将你的<a href="http://caffe.berkeleyvision.org/">Caffe</a>模型转换成CoreML的模型格式。这样就可以利用各个模型的训练阶段，而不像TensorflowLite只能使用<em>Tensorflow</em>模型。模型训练好了之后，只要拖放到Xcode中就可以使用，苹果甚至把接口的Swift代码都给你生成好了，非常方便。</p>
+
+<h5 id="step1">Step1</h5>
+
+<p>​	准备好你的模型（.mlmodel）,可以按照上面的方法制作你所需的模型，也可以直接在Apple开发者网站上<a href="https://developer.apple.com/machine-learning/">下载</a>现成的模型：</p>
+
+<p><img src="/img/post/WWDC2017/mlmodels.png" alt="" /></p>
+
+<h5 id="step2">Step2</h5>
+
+<p>​	新建Project，把格式化的模型文件拖入到项目当中，这里下载的是<em>Places205-GoogLeNet.mlmodel</em>，然后点击该model，可以看到：</p>
+
+<p><img src="/img/post/WWDC2017/baseinfo.png" alt="" /></p>
+
+<p>从上图可以看到 CoreML Model 分成三部分,第一部分算是基本的描述，第二部分 ModelClass 是对应 Model 生成的 Source 点击 <em>GoogLeNetPlaces (Swift generated source)</em> 末尾的小箭头进入<em>GoogLeNetPlaces.Swift</em> 文件 可以看到对应 Model的类和方法如下：</p>
+
+<ul>
+  <li>
+    <p>GoogLeNetPlacesInput：识别输入参数</p>
+
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">GoogLeNetPlacesInput</span> <span class="p">:</span> <span class="kt">MLFeatureProvider</span>
+</code></pre>
+    </div>
   </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
+  <li>
+    <p>GoogLeNetPlacesOutput：输出鉴定结果</p>
+
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">GoogLeNetPlacesOutput</span> <span class="p">:</span> <span class="kt">MLFeatureProvider</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>GoogLeNetPlaces：封装输入输出</p>
+
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">@objc</span> <span class="kd">class</span> <span class="kt">GoogLeNetPlaces</span><span class="p">:</span><span class="kt">NSObject</span>
+</code></pre>
+    </div>
+
+    <p>​</p>
+  </li>
 </ul>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h5 id="step3">Step3</h5>
 
-<h2 id="资料">资料</h2>
+<p>使用Xcode自动生成的类及方法</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">leNetPlaces</span> <span class="o">=</span> <span class="kt">GoogLeNetPlaces</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"timg"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">vnCoreModel</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">VNCoreMLModel</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">leNetPlaces</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">vnCoreMLRequest</span> <span class="o">=</span> <span class="kt">VNCoreMLRequest</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">model</span><span class="p">:</span> <span class="n">vnCoreModel</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">request</span><span class="p">:</span><span class="kt">VNRequest</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span><span class="kt">Error</span><span class="p">?)</span> <span class="k">in</span>
+            <span class="k">guard</span> <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">results</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">VNClassificationObservation</span><span class="p">]</span> <span class="k">else</span><span class="p">{</span>
+                <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Requset Error"</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">classification</span> <span class="k">in</span> <span class="n">result</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="n">classification</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.8</span> <span class="p">{</span>
+                <span class="c1">//confidence 识别率,值越高越接近</span>
+				<span class="c1">//identifier 识别结果</span>
+                    <span class="nf">print</span><span class="p">(</span><span class="n">classification</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+                    <span class="nf">print</span><span class="p">(</span><span class="n">classification</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="k">let</span> <span class="nv">vnImageRequestHandler</span> <span class="o">=</span> <span class="kt">VNImageRequestHandler</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">cgImage</span><span class="p">:</span> <span class="p">(</span><span class="n">image</span><span class="p">?</span><span class="o">.</span><span class="n">cgImage</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+<span class="nf">guard</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">vnImageRequestHandler</span><span class="o">.</span><span class="nf">perform</span><span class="p">([</span><span class="n">vnCoreMLRequest</span><span class="p">]))</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Error!"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这里使用了<a href="https://developer.apple.com/documentation/vision">Vision</a>库中的VNCoreMLModel , VNCoreMLRequest , VNImageRequestHandler。</p>
+
+<p><em>Vison是苹果在WWDC2017上推出的另一个全新框架，其具有高性能的图像分析和计算机视觉能力，应用于图像和视频分类的场景中识别面孔和检测功能。</em></p>
+
+<p>下面来看一下识别结果如何：</p>
+
+<p><img src="/img/post/WWDC2017/result.png" alt="" /></p>
+
+<h2 id="一些疑问">一些疑问</h2>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+  <li>在模型训练阶段，在尽可能不收集用户数据的前提下，如何优化模型？既使像苹果在去年的 WWDC 上宣称的「我们不需要收集所有用户拍的照片，才知道山长什么样子」，也依然不能回避的事实是，在模型的调优方面，少不了大量的数据支撑。想从 95% 的水平提升到 99% 的水平，数据还是不可缺少的一环。</li>
+  <li>在模型应用阶段，如何做到尽可能在设备本地完成处理？早期受限于设备的性能和功耗，特别是移动设备的电量问题，许多公司选择将数据上传至云端后，由云端服务器来进行运算，只将结果返回给终端设备。</li>
 </ul>
 
-<h2 id="候选">候选</h2>
-
-<p>在当前的技术前景下，有以下几种队列选择：</p>
-
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
-
-<h2 id="核心">核心</h2>
-
-<p>Beanstalkd设计里面的核心概念：</p>
-
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
-
-<h2 id="安装">安装</h2>
-
-<h6 id="macos">MacOS</h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
-
-<h6 id="linux-编译">Linux-编译</h6>
-
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
-
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
-
-<h6 id="liunx-包安装">Liunx-包安装</h6>
-
-<p>1.centos</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
-
-<h6 id="windows">Windows</h6>
-
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
-
-<h2 id="运行">运行</h2>
-
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
-
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
-
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
-</code></pre>
-</div>
-
+<p>总结下来，苹果的目标，就是在尽可能不收集用户数据的基础上，也能调校出足够好用的模型，同时尽可能只在消费者的设备本地运用模型进行计算处理。而对从业者来说，如何利用好这一优秀条件创造出更好的应用也至关重要。</p>
 
 				
 <!--协议说明 -->
@@ -410,19 +357,13 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/2017/06/26/WWDC2017之Core ML"
+                    data-title="WWDC2017之Core ML"
+                    data-url="http://localhost:4000/2017/06/26/WWDC2017%E4%B9%8BCore-ML/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="什么是Core ML
+
+​	Core ML是苹果新推出的，面向开发者的机器学习框架。开发者能够轻松实现实时物体识别、人脸特征点识别、跟踪运动中的物体、文本... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +383,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/" data-toggle="tooltip" data-placement="top" title="WWDC2017学习ARKit体验">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/07/19/iOS%E7%B1%BB%E4%BC%BC%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%E9%80%9A%E7%94%A8%E5%BA%93%E7%9A%84%E5%B0%81%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="iOS类似设置界面通用库的封装">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +398,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/06/26/WWDC2017之Core ML"
+                        data-title="WWDC2017之Core ML"
+                        data-url="http://localhost:4000/2017/06/26/WWDC2017%E4%B9%8BCore-ML/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

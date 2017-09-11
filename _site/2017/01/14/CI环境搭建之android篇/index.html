@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>[linux]CI环境搭建之android篇 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#android" title="android">android</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>[linux]CI环境搭建之android篇</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 李勇 on January 14, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,157 +243,125 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
-  </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
-</ul>
+				<h2 id="可持续集成ci之起源篇">可持续集成（CI）之起源篇</h2>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h3 id="背景介绍">背景介绍</h3>
+<p>随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的问题。尤其是近些年来，敏捷（Agile） 在软件工程领域越来越红火，如何能再不断变化的需求中快速适应和保证软件的质量也显得尤其的重要。 持续集成正是针对这一类问题的一种软件开发实践。</p>
 
-<h2 id="资料">资料</h2>
+<h3 id="what">What</h3>
+<p>它倡导团队开发成员必须经常集成他们的工作，甚至每天都可能发生多次集成。而每次的集成都是通过自动化的构建来验证，包括自动编译、发布和测试，从而尽快地发现集成错误，让团队能够更快的开发内聚的软件。</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<h2 id="可持续集成ci之搭建篇">可持续集成（CI）之搭建篇</h2>
+<p>CI环境采用jenkins+svn+jdk+sdk+gradle+fir搭建</p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
-</ul>
+<h3 id="jdk">jdk</h3>
 
-<h2 id="候选">候选</h2>
+<h4 id="安装">安装</h4>
+<p>通过官方下载安装<a href="http://java.com/">jdk</a></p>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<h4 id="配置">配置</h4>
+<p>jdk环境变量配置：</p>
+<ol>
+  <li>编辑文件<br />
+<code class="highlighter-rouge">vim /etc/profile</code></li>
+  <li>添加环境变量<br />
+<code class="highlighter-rouge">JAVA_HOME=/此处为jdk目录路径/jdk1.8.0_111</code><br />
+<code class="highlighter-rouge">JRE_HOME=/此处为jdk目录路径/jdk1.8.0_111/jre</code><br />
+<code class="highlighter-rouge">CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</code><br />
+<code class="highlighter-rouge">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</code><br />
+<code class="highlighter-rouge">export JAVA_HOME JRE_HOME CLASS_PATH PATH</code></li>
+  <li>退出（ESC）,并保存（：wq+Enter）</li>
+  <li>将配置文件刷入内存<br />
+<code class="highlighter-rouge">source /etc/profile</code></li>
+</ol>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
+<h3 id="jenkins">jenkins</h3>
 
-<h2 id="核心">核心</h2>
+<h4 id="安装-1">安装</h4>
+<p>从 Jenkins 的主页上下载最新的 jenkins.war 下载，命令：
+<code class="highlighter-rouge">wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war</code></p>
 
-<p>Beanstalkd设计里面的核心概念：</p>
+<h4 id="配置-1">配置</h4>
+<p>Jenkins默认端口为8080，易与其他服务端口冲突，此处改为8000作为jenkins访问端口（具体由情况而定），访问该端口，需要打开8000端口防火墙<br />
+<code class="highlighter-rouge">iptables -I INPUT -p tcp --dport 8000 -j ACCEPT</code></p>
 
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
+<h4 id="启动jenkins">启动jenkins</h4>
+<p>进入jenkins.war目录下，输入命令<br />
+<code class="highlighter-rouge">java -jar jenkins.war  --httpPort=8000</code></p>
 
-<h2 id="安装">安装</h2>
+<h4 id="访问jenkins">访问jenkins</h4>
+<p>http://locahost:8000,若非本机则将locahost替换为jenkins所在主机ip地址，效果如图</p>
 
-<h6 id="macos">MacOS</h6>
+<p><img src="/img/post/Jenkins_android/jenkins_longin.png" alt="" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
+<p>输入账号即可登录</p>
 
-<h6 id="linux-编译">Linux-编译</h6>
+<h3 id="svn">svn</h3>
+<p>登录jenkins，安装插件Subversion Plug-in</p>
 
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<h3 id="sdk">sdk</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
+<h4 id="安装-2">安装</h4>
+<p>通过官方下载安装<a href="https://developer.android.com/index.html">sdk</a></p>
 
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<h4 id="配置-2">配置</h4>
+<p>sdk环境变量配置：</p>
+<ol>
+  <li>编辑文件 
+<code class="highlighter-rouge">vim /etc/profile</code></li>
+  <li>添加环境变量<br />
+<code class="highlighter-rouge">export ANDROID_HOME=/此处为sdk目录路径/sdk</code><br />
+<code class="highlighter-rouge">export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH</code></li>
+  <li>退出（ESC）,并保存（：wq+Enter）</li>
+  <li>将配置文件刷入内存<br />
+<code class="highlighter-rouge">source /etc/profile</code></li>
+</ol>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
+<h3 id="gradle">gradle</h3>
 
-<h6 id="liunx-包安装">Liunx-包安装</h6>
+<h4 id="安装-3">安装</h4>
+<p>通过官方下载安装<a href="https://gradle.org/gradle-download/">gradle</a>,此处选择gradle-2.14.1</p>
 
-<p>1.centos</p>
+<h4 id="配置-3">配置</h4>
+<p>gradle环境变量配置：</p>
+<ol>
+  <li>编辑文件 
+<code class="highlighter-rouge">vim /etc/profile</code></li>
+  <li>添加环境变量<br />
+<code class="highlighter-rouge">export GRADLE_HOME=/此处为gradle目录路径/gradle-2.14.1</code><br />
+<code class="highlighter-rouge">export PATH=$GRADLE_HOME/bin:$PATH</code></li>
+  <li>退出（ESC）,并保存（：wq+Enter）</li>
+  <li>将配置文件刷入内存<br />
+<code class="highlighter-rouge">source /etc/profile</code></li>
+</ol>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
+<h3 id="fir">fir</h3>
+<p>通过 fir-cli 命令行的指令查看、上传、编译应用</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
+<h4 id="安装-4">安装</h4>
+<p>fir-cli 使用 Ruby 构建，只要安装相应 ruby gem 即可:<br />
+<code class="highlighter-rouge">sudo gem install fir-cli --no-ri --no-rdoc</code></p>
 
-<h6 id="windows">Windows</h6>
+<hr />
+<p>至此CI环境所需工具及插件安装配置完毕。</p>
 
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+<h2 id="可持续集成ci之应用篇">可持续集成（CI）之应用篇</h2>
+<p>1.登录进入jenkins主页，点击“新建”，创建项目</p>
 
-<h2 id="运行">运行</h2>
+<p><img src="/img/post/Jenkins_android/jenkins_create.png" alt="" /></p>
 
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
+<p>2.配置项目源码管理
+创建项目成功后，进入项目配置页面，配置项目源码管理参数</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
+<p><img src="/img/post/Jenkins_android/jenkins_svn.png" alt="" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
+<p>3.配置构建参数
+配置编译、打包、上传分发平台参数</p>
 
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
+<p><img src="/img/post/Jenkins_android/jenkins_build.png" alt="" /></p>
 
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
-</code></pre>
-</div>
+<hr />
+<p>至此项目基础配置完成，可实现项目构建，并分发。</p>
 
 
 				
@@ -410,19 +376,14 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/2017/01/14/CI环境搭建之android篇"
+                    data-title="[linux]CI环境搭建之android篇"
+                    data-url="http://localhost:4000/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="可持续集成（CI）之起源篇
+
+背景介绍
+随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +403,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/01/13/%E6%8E%8C%E9%BA%A6Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/" data-toggle="tooltip" data-placement="top" title="【Mysql】掌麦Mysql数据库设计规范文档x">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/02/05/git%E6%A6%82%E8%BF%B0/" data-toggle="tooltip" data-placement="top" title="git概述">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +418,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/01/14/CI环境搭建之android篇"
+                        data-title="[linux]CI环境搭建之android篇"
+                        data-url="http://localhost:4000/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

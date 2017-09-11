@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>【Docker】Docker简介与安装 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,21 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
+                        <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
                         
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#虚拟化" title="虚拟化">虚拟化</a>
+                        
+                        <a class="tag" href="/tags/#分布式" title="分布式">分布式</a>
+                        
+                        <a class="tag" href="/tags/#容器" title="容器">容器</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>【Docker】Docker简介与安装</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 胖纸囧 on January 12, 2017</span>
                 </div>
             </div>
         </div>
@@ -246,156 +250,119 @@
     </p>
 </div>
 				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
+  <li><a href="#简介" id="markdown-toc-简介">简介</a></li>
+  <li><a href="#核心组件" id="markdown-toc-核心组件">核心组件</a></li>
+  <li><a href="#作用" id="markdown-toc-作用">作用</a></li>
   <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
       <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
+      <li><a href="#liunx" id="markdown-toc-liunx">Liunx</a></li>
+      <li><a href="#windows" id="markdown-toc-windows">windows</a></li>
     </ul>
   </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a>    <ul>
+      <li><a href="#macos-1" id="markdown-toc-macos-1">MacOS</a></li>
+      <li><a href="#liunx-1" id="markdown-toc-liunx-1">Liunx</a></li>
+      <li><a href="#windows-1" id="markdown-toc-windows-1">windows</a></li>
+    </ul>
+  </li>
 </ul>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<p>记得2015年的某个夏天，那时候我还是个胖屌丝，拉着屌丝基友去参加开源中国的成都源创汇，碰到了张小龙，哦不，是张海龙大哥来推广Docker，那时候我怀着一颗敬畏的心满怀激情满脑懵逼的跟着海龙哥徜徉在Docker的海洋中，虽然直到听完我都不晓得Docker是个撒子。
+结果17年开头的胖屌丝就不得不入Docker的坑了，开始了苦逼的Docker踩坑之旅。</p>
 
-<h2 id="资料">资料</h2>
+<h2 id="简介">简介</h2>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<p>Docker是一个能够把开发的应用程序自动部署到容器的开源引擎。由Docker公司(<a href="http://www.docker.com">点击我</a>,前dotCloud公司，PaaS市场中的老牌提供商)的团队编写，基于Apache2.0开源协议发行。
+    相对于其他的容器呢，Docker有以下特点：</p>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+  <li>提供了一个简单、轻量的建模方式</li>
+  <li>职责的逻辑分离</li>
+  <li>快速、高效的开发生命周期</li>
+  <li>鼓励使用面向服务的架构</li>
 </ul>
 
-<h2 id="候选">候选</h2>
+<h2 id="核心组件">核心组件</h2>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<p>Docker有以下几个核心组建组成：</p>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
+  <li>Docker客户端和服务器</li>
+  <li>Docker镜像</li>
+  <li>Regstry</li>
+  <li>
+    <p>Docker容器</p>
+
+    <p>这些组件在下面使用的过程中基本上都会用到。</p>
+  </li>
 </ul>
 
-<h2 id="核心">核心</h2>
+<h2 id="作用">作用</h2>
 
-<p>Beanstalkd设计里面的核心概念：</p>
+<p>扯了这么多，我们到底能拿Docker来干撒:</p>
 
 <ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
+  <li>加快本地开发和构建流程，使其更加高效、更加轻量化。本地开发人员可以构建、运行并分享Docker容器。容器可以再开发环境中构建，然后轻松地提交到测试环境中，并最终进入生产环境。</li>
+  <li>能够让独立服务或应用程序在不同的环境中，得到相同的运行结果。这一点再面向服务的架构和重度依微型服务的部署中尤其实用。</li>
+  <li>用Docker创建的隔离环境来测试。例如，用Jenkins，CI这样的持续集成工具启动一个用于测试的容器。</li>
+  <li>Docker可以让开发者先在本机上构建一个复杂的程序或者架构来进行测试，而不是一开始就在生产环境部署，测试。</li>
+  <li>构建一个多用户的平台即服务（PaaS）基础设施。</li>
+  <li>为开发、测试提供一个轻量级的独立沙盒环境，或者将独立的沙盒环境用于技术教学，如Unix shell的使用、编程语言教学。</li>
+  <li>提供软件即服务（SaaS：掌麦正在做的这种）应用程序，如Memcached即服务。</li>
+  <li>
+    <p>高性能、超大规模的宿主机部署。</p>
+
+    <p>现阶段呢，我们只是拿Docker来统一开发测试环境，用prod环境的配置搭起dev，test，beta的开发环境。</p>
+  </li>
 </ul>
 
 <h2 id="安装">安装</h2>
 
 <h6 id="macos">MacOS</h6>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
+<p>下载安装包直接安装（<a href="https://download.docker.com/mac/stable/Docker.dmg">点击我</a>）</p>
 
-<h6 id="linux-编译">Linux-编译</h6>
-
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
-
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
-
-<h6 id="liunx-包安装">Liunx-包安装</h6>
+<h6 id="liunx">Liunx</h6>
 
 <p>1.centos</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
+<div class="highlighter-rouge"><pre class="highlight"><code>yum install docker
 </code></pre>
 </div>
+
 <p>2.ubuntu</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
+<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install docker
 </code></pre>
 </div>
 
-<h6 id="windows">Windows</h6>
+<h6 id="windows">windows</h6>
 
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+<p>下载安装包直接安装（<a href="https://download.docker.com/win/stable/InstallDocker.msi">点击我</a>）</p>
 
 <h2 id="运行">运行</h2>
 
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
+<h6 id="macos-1">MacOS</h6>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
+<p>点击Docker</p>
+
+<h6 id="liunx-1">Liunx</h6>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    service docker start
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
+<h6 id="windows-1">windows</h6>
 
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
+<p>双击Docker</p>
+
+<p>然后在命令行运行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    docker info
 </code></pre>
 </div>
-
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
-</code></pre>
-</div>
+<p>如果如下图所示的话，骚年，恭喜你，你的Docker安装成功了！！！
+<img src="/img/post/Docker/QQ20170112-0.png" alt="" /></p>
 
 
 				
@@ -410,19 +377,21 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/12/【Docker】Docker简介与安装"
+                    data-title="【Docker】Docker简介与安装"
+                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
                     data-content="
-  资料
-  候选
-  核心
+  简介
+  核心组件
+  作用
   安装    
       MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+      Liunx
+      windows
+    
+  
+  运行... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +411,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" data-toggle="tooltip" data-placement="top" title="【Queue】新手安装并使用Beanstalked">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="我的程序猿生存手册">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +426,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/12/【Docker】Docker简介与安装"
+                        data-title="【Docker】Docker简介与安装"
+                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

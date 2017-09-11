@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>git概述 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/02/05/git%E6%A6%82%E8%BF%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#版本管理" title="版本管理">版本管理</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>git概述</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 秦宇 on February 5, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,157 +243,251 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
-  </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
-</ul>
+				<h1 id="1安装与配置">1安装与配置</h1>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h2 id="git-for-windows">git for Windows</h2>
+<p>Windows上的一个git bash实现
+<a href="https://git-for-windows.github.io/">https://git-for-windows.github.io/</a></p>
 
-<h2 id="资料">资料</h2>
+<h2 id="tortoisegit">Tortoisegit</h2>
+<p>图形化的git管理工具，依赖于git bash
+<a href="https://tortoisegit.org/download/">https://tortoisegit.org/download/</a></p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<p>配置git提交的用户名和密码
+<em>git config –global user.name zhangsan</em>
+<em>git config –global user.email</em> <a href="mailto:zhangsan@qq.com"><em>zhangsan@qq.com</em></a>
+<em>git config –list查看git配置信息，–global是全局配置</em></p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
-</ul>
+<h2 id="生成ssh-key">生成ssh key</h2>
 
-<h2 id="候选">候选</h2>
+<p>Ssh key是为ssh方式连接授权的，当然也可以用http方式连接，这样每次在非开放下载和上传的仓库进行操作时，都会提示输入账号和密码进行单词操作授权。
+<em>ssh-keygen -t rsa -C "</em> <a href="mailto:zhangsan@qq.com"><em>zhangsan@qq.com</em></a><em>"</em>
+连续按三次回车，这里设置的密码就为空了，并且创建了key，目标目录是~/.ssh/。
+将~/.ssh/id_rsa.pub里的内容填写到中心仓库的ssh keys里进行授权，以后代码上传和下载都不需要输入账号和密码授权了。</p>
 
-<p>在当前的技术前景下，有以下几种队列选择：</p>
+<h2 id="忽略列表配置">忽略列表配置</h2>
+<p>以斜杠"/"开头表示目录；
+以星号"*"通配多个字符；
+以问号"?"通配单个字符；
+以方括号"[]"包含单个字符的匹配列表；
+以叹号"!"表示不忽略(跟踪)匹配到的文件或目录；
+.gitignore
+/build
+*.im
+!root.im</p>
 
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
+<h1 id="2原理介绍">2原理介绍</h1>
 
-<h2 id="核心">核心</h2>
+<p>git是分布式版本管理工具，每个终端同时也是服务端。这点在本质上不同于svn。
+被git版本管理的目录下，有个.git文件夹，这是git的版本控制信息和仓库配置信息。
+ <img src="/img/post/git功能介绍/仓库原理图.png" alt="" /></p>
 
-<p>Beanstalkd设计里面的核心概念：</p>
+<h1 id="3命令介绍">3命令介绍</h1>
+<h2 id="31帮助命令">3.1帮助命令</h2>
+<p>git help #git命令帮助信息
+_ git help -a #git命令帮助信息完整版_
+_ git help status #git status命令帮助信息_</p>
 
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
+<h2 id="32创建版本库">3.2创建版本库</h2>
+<p>git init  #初始化本地版本库
+git clone url  #克隆远程版本库</p>
 
-<h2 id="安装">安装</h2>
+<h2 id="33修改和提交">3.3修改和提交</h2>
+<p>git add</p>
 
-<h6 id="macos">MacOS</h6>
+<p>git add a.txt #添加一个文件到index</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
+<p>_ git add . #添加当前目录到index_</p>
 
-<h6 id="linux-编译">Linux-编译</h6>
+<p>_ git add –all #添加所有文件到index_</p>
 
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p>git commit #提交修改到本地仓库</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
+<p>_ git commit -m “comment” #提交修改到本地仓库，同时加入提交日志_</p>
 
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
+<p>_ git commit –amend -m “comment” #将修改合并到最近一次提交_</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
+<p>git status</p>
 
-<h6 id="liunx-包安装">Liunx-包安装</h6>
+<p>git diff #对比workspace与index</p>
 
-<p>1.centos</p>
+<p>_ git diff HEAD #对比workspace与index_</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
+<p>_ git difftool #以图形化方式展示对比_</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
+<p>git rm</p>
 
-<h6 id="windows">Windows</h6>
+<p>git mv</p>
 
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
+<p>git log</p>
 
-<h2 id="运行">运行</h2>
+<p>_ git log -3  #显示最近3条提交日志_</p>
 
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
+<p>_  git log 1.txt  #查看基于1.txt文件的修改提交记录_</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
+<p>_  git lg  #git log的一个带参命令别名，可以看到当前分支的分支关系和提交记录_</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
+<p>git whatchanged  #显示修改记录里修改了哪些文件</p>
 
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
+<p><em>git whatchanged -1 #显示最近1次修改文件</em></p>
 
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
+<p>git show  #查看最近一次提交内容</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
+<p><em>git show commit_id  #查看commit_id对应的提交内容</em></p>
 
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
+<p>_ git show -2  #查看最近2次的提交内容_</p>
 
-</code></pre>
-</div>
+<h2 id="34回退与撤销">3.4回退与撤销</h2>
+
+<p>git reset  #将当前未提交的修改回退到workspace,git add的逆向，不修改代码</p>
+
+<p><em>git reset –hard  #将当前未提交的修改删除</em></p>
+
+<p>_  git reset commit_id  #回退到日志commit_id对应的位置，不修改代码_</p>
+
+<p>_  git reset –soft commit_id  #效果等同于上一条命令加git add –all_</p>
+
+<p>_  git reset –hard commit_id  #回退到日志commit_id对应的位置，且修改代码_</p>
+
+<p>_  git reset HEAD^  #回退最近一次提交_</p>
+
+<p>_  git reset HEAD~2  #回退最近2次提交_</p>
+
+<p>git revert</p>
+
+<p><em>git revert commit_id  #撤销指定提交</em></p>
+
+<p>_  git revert HEAD  #撤销最近一次提交_</p>
+
+<h2 id="35分支与标签">3.5分支与标签</h2>
+
+<p>git branch  #查看分支</p>
+
+<p><em>git branch dev  #创建分支dev</em></p>
+
+<p>_  git branch -d dev  #删除分支dev_</p>
+
+<p>_  git branch -a  #查看所有分支，包括远程分支_</p>
+
+<p>_  git branch –set-upstream dev origin/dev  #新建一个新本地分支与远程分支对应_</p>
+
+<p>_  git branch –set-upstream-to=origin/&lt;branch&gt; fix  #设置本地分支与远程分支对应关系，也可切换到远程分支，然后用git checkout -b &lt;branch-name&gt;创建并切换分支_</p>
+
+<p>git checkout dev  #切换到分支dev</p>
+
+<p><em>git checkout -b test  #创建并切换到分支test</em></p>
+
+<p>git tag  #查看已创建的tag</p>
+
+<p><em>git tag tag_name  #创建tag</em></p>
+
+<p>_  git tad -d tag_name  #删除tag_</p>
+
+<h2 id="36合并与衍合">3.6合并与衍合</h2>
+
+<p>git merge dev  #合并dev分支到当前分支</p>
+
+<p>git rebase dev  #衍合指定分支到当前分支</p>
+
+<h2 id="37远程操作">3.7远程操作</h2>
+
+<p>git remote  #查看远程仓库</p>
+
+<p><em>git remote -v  #查看远程仓库详情</em></p>
+
+<p><em>git remote add name url  #添加一个远程</em></p>
+
+<p>_  git remote remove name  #删除一个远程_</p>
+
+<p>_  git remote prune origin  #远程被删除的分支，本地同步删除_</p>
+
+<p><em>git fetch  #从远程库获取提交</em></p>
+
+<p><em>git pull  #同步远程版本,git fetch + git merge FETCH_HEAD</em></p>
+
+<p>_  git pull origin dev  #同步远程分支origin/dev_</p>
+
+<p>git push  #提交到远程仓库</p>
+
+<p>_  git push origin master  #推送本地当前分支内容到远程remotes/origin/master_</p>
+
+<p><em>git</em> <em>push origin –delete &lt;branchName&gt;  #删除远程分支</em></p>
+
+<p>_ _ <em>git</em> <em>push origin –delete tag &lt;tagname&gt;  #删除远程tag</em></p>
+
+<h2 id="38其他">3.8其他</h2>
+
+<p>git clean</p>
+
+<p>Git clean -d  #清除文件</p>
+
+<p>Git clean -df  #清除文件和目录</p>
+
+<p>git apply 1.patch  #应用补丁包</p>
+
+<p>git blame 1.txt   #查看1.txt最近一次修改记录</p>
+
+<p>git grep  #版本库管理的文件中搜索内容</p>
+
+<p>git bisect  #二分法查找某一次提交</p>
+
+<p><em>git</em> <em>bisect start  #开始 bisect</em></p>
+
+<p>_ _ <em>git</em> <em>bisect good xxxxxx #录入正确的 commit</em></p>
+
+<p>_ _ <em>git</em> <em>bisect bad xxxxxx  #录入出错的 commit</em></p>
+
+<p>_ _ <em>git</em> <em>bisect bad  #标记错误，决定二分法的方向</em></p>
+
+<p>_ _ <em>git</em> <em>bisect good  #标记正确，决定二分法的方向</em></p>
+
+<p>_ _ <em>git</em> <em>bisect reset  #直到定位到出错的 commit，退出 bisect</em></p>
+
+<p>git stash  #暂存当前修改</p>
+
+<p>_  git stash list  #查看暂存列表_</p>
+
+<p>_ git stash apply  #恢复最近一次暂存内容_</p>
+
+<p>_ git stash apply stash@{1}  #恢复指定的某个暂存内容_</p>
+
+<p>_  git stash drop stash@{1}  #删除一个暂存内容_</p>
+
+<p>_ git stash clear  #清空暂存内容_</p>
+
+<p>git cherry-pick commit_id  #将其他分支的某次提交应用到当前分支</p>
+
+<p>gitk  #查看git分支关系等的一个图形化工具</p>
+
+<p>git gc  #版本库存储整理优化</p>
+
+<p>git gui  #以图形化界面展示git交互窗口</p>
+
+<h1 id="4案例演示">4案例演示</h1>
+
+<p><strong>分支管理</strong></p>
+
+<p>本地分支创建与删除</p>
+
+<p>远程分支创建与删除</p>
+
+<p><strong>代码修改与提交</strong></p>
+
+<p><img src="/img/post/git功能介绍/代码修改流程.png" alt="" /></p>
+
+<h1 id="5学习检查">5学习检查</h1>
+
+<p>1同步一个线上git仓库，并初始化本地的各个分支</p>
+
+<p>2一次典型的代码修改与提交</p>
+
+<p>3跟踪一个文件的修改提交记录</p>
+
+<p>4跟踪一个文件的每行最近修改记录</p>
+
+<p>5补丁制作与应用</p>
+
+<p>6有未提交的修改时，切换到其他分支处理问题</p>
 
 
 				
@@ -410,19 +502,15 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/2017/02/05/git概述"
+                    data-title="git概述"
+                    data-url="http://localhost:4000/2017/02/05/git%E6%A6%82%E8%BF%B0/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="1安装与配置
+
+git for Windows
+Windows上的一个git bash实现
+https://git-for-windows.github.... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +530,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/" data-toggle="tooltip" data-placement="top" title="[linux]CI环境搭建之android篇">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" data-toggle="tooltip" data-placement="top" title="iOS库的那些事">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +545,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/02/05/git概述"
+                        data-title="git概述"
+                        data-url="http://localhost:4000/2017/02/05/git%E6%A6%82%E8%BF%B0/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

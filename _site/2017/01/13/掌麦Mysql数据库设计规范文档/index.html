@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>【Mysql】掌麦Mysql数据库设计规范文档x - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/01/13/%E6%8E%8C%E9%BA%A6Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post/Github Pages notes/2016-12-29-bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/common/home-bg.jpg')
+        background-image: url('/img/post/Github Pages notes/2016-12-29-bg.jpg')
     }
 	
 	/*导航*/
@@ -204,17 +204,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
+                        <a class="tag" href="/tags/#规范" title="规范">规范</a>
                         
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#Mysql" title="Mysql">Mysql</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>【Mysql】掌麦Mysql数据库设计规范文档x</h1>
                     
                     
-                    <h2 class="subheading"></h2>
+                    <h2 class="subheading">Mysql设计规范</h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 胖纸囧，王林，黄宇 on January 13, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,158 +245,77 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
-  </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
-</ul>
+				<p>1.数据库表引擎使用InnoDB</p>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<p>2.数据库表名命名规则：
+	A.所有表名全部小写，单词与单词之间用下划线连接
+	B.所有表名尽量使用全英文，不得简写
+	C.所有表名必须加表前缀【比如：zm_】
+	D.所有表名要求能够直观反映表含义
+	E.所有表名必须写明注释</p>
 
-<h2 id="资料">资料</h2>
+<p>3.数据库字段命名规则：
+	A.所有字段名全部小写，单词与单词之间用下划线连接
+	B.所有字段名尽量使用全英文，不得简写
+	C.所有字段名要求能够直观反映字段含义
+	D.所有字段必须写明注释</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+<p>4.所有表的主键全部使用id作为自增长主键，并且为unsigned</p>
 
+<p>5.所有字段都不能为NULL</p>
+
+<p>6.类型字段使用tinyint【比如：<code class="highlighter-rouge">is_delete</code> tinyint(1) NOT NULL】</p>
+
+<p>7.所有浮点数一律使用decimal</p>
+
+<p>8.所有与价格相关的浮点数统一标定4位小数点</p>
+
+<p>9.除特定时间日期格式字段外，所有的时间相关字段都使用int(11)存入时间戳</p>
+
+<p>10.所有外键统一使用表名 + 字段名形式</p>
+
+<p>字段设计规范</p>
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+  <li>手机都使用<strong>mobile</strong>/电话用<strong>phone</strong></li>
+  <li>手机/电话号码都使用<strong>char</strong></li>
+  <li>有需要处理的字段加后缀<strong>xxx_str</strong></li>
+  <li>编号统一使用<strong>xxx_code</strong></li>
+  <li>名称统一使用<strong>xxx_name</strong></li>
+  <li>字符串<strong>var_char</strong>长度使用32的倍数如（32，64，128）</li>
+  <li>省、市、区都使用id来关联(<strong>province_id</strong>,<strong>city_id</strong>,<strong>area_id</strong>)</li>
+  <li>执照使用<strong>xxx_license</strong></li>
+  <li>姓名/实名使用<strong>fullname</strong></li>
+  <li>身份证号码：<strong>id_card_no</strong>,身份证复印件：<strong>id_card_img</strong></li>
+  <li>传真一律使用<strong>fax</strong></li>
+  <li>登录名称使用<strong>xxx_account</strong></li>
+  <li>密码使用<strong>xxx_passwd</strong></li>
+  <li>介绍使用<strong>xxx_introduce</strong></li>
+  <li>时间戳用<strong>xxx_time</strong>/日期用<strong>xxx_date</strong>(数据量大的表保存一个日期做索引筛选)</li>
+  <li>最后的XX使用<strong>last_xx</strong></li>
+  <li>次数使用<strong>count</strong>/数量用<strong>number</strong></li>
+  <li>开始<strong>start</strong>/结束<strong>end</strong></li>
+  <li>授权使用<strong>empower</strong></li>
+  <li>状态使用<strong>status</strong>（0和null弃用）</li>
+  <li>总量使用<strong>total_xxx</strong></li>
+  <li>金额统一使用<strong>amount  decimal(x,6)</strong>  x等于10W的10倍数</li>
+  <li>会员 <strong>user_xxx</strong>/员工<strong>member_xxx</strong></li>
+  <li>系统用户  <strong>system_id</strong></li>
+  <li>超市用户 <strong>xxx_user_id</strong></li>
+  <li>全拼 <strong>pinyin_full</strong>/简拼 <strong>pinyin_simple</strong></li>
+  <li>头像 <strong>avatar</strong></li>
+  <li>有删除的地方加个删除时间戳字段  <strong>delete</strong></li>
+  <li>自增主键统一使用<strong>id</strong></li>
+  <li>备注统一使用<strong>remark</strong></li>
+  <li>外联主键id的时候加前缀区分   <strong>xxxx_order_id</strong></li>
+  <li>内容统一是用<strong>content</strong></li>
+  <li>子级字段统一使用<strong>child_xxx</strong></li>
+  <li>性别字段使用<strong>gender</strong></li>
+  <li>实际金额字段改成<strong>real_amount</strong></li>
+  <li>联系人使用<strong>contact</strong></li>
+  <li>随机码一律使用<strong>salt</strong></li>
+  <li>头像使用<strong>avatar</strong></li>
+  <li>ip使用ip2long函数来转化成整数* 微信支付<strong>wechat_pay</strong>/支付宝支付<strong>ali_pay</strong></li>
 </ul>
-
-<h2 id="候选">候选</h2>
-
-<p>在当前的技术前景下，有以下几种队列选择：</p>
-
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
-
-<h2 id="核心">核心</h2>
-
-<p>Beanstalkd设计里面的核心概念：</p>
-
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
-
-<h2 id="安装">安装</h2>
-
-<h6 id="macos">MacOS</h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
-</code></pre>
-</div>
-
-<h6 id="linux-编译">Linux-编译</h6>
-
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
-
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
-
-<h6 id="liunx-包安装">Liunx-包安装</h6>
-
-<p>1.centos</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
-
-<h6 id="windows">Windows</h6>
-
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
-
-<h2 id="运行">运行</h2>
-
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
-
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
-
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
-    
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
-</code></pre>
-</div>
-
 
 				
 <!--协议说明 -->
@@ -410,19 +329,16 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
-                    data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-thread-key="/2017/01/13/掌麦Mysql数据库设计规范文档"
+                    data-title="【Mysql】掌麦Mysql数据库设计规范文档x"
+                    data-url="http://localhost:4000/2017/01/13/%E6%8E%8C%E9%BA%A6Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/"
+                    data-images="http://localhost:4000/img/post/Github Pages notes/2016-12-29-bg.jpg"
+                    data-content="1.数据库表引擎使用InnoDB
+
+2.数据库表名命名规则：
+	A.所有表名全部小写，单词与单词之间用下划线连接
+	B.所有表名尽量使用全英文，不得简写
+... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,12 +358,12 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="我的程序猿生存手册">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
+                        <a href="/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/" data-toggle="tooltip" data-placement="top" title="[linux]CI环境搭建之android篇">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -457,9 +373,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/01/13/掌麦Mysql数据库设计规范文档"
+                        data-title="【Mysql】掌麦Mysql数据库设计规范文档x"
+                        data-url="http://localhost:4000/2017/01/13/%E6%8E%8C%E9%BA%A6Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

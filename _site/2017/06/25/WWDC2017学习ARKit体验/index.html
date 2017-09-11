@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>git常用功能介绍 - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>WWDC2017学习ARKit体验 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/common/home-bg.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post/arkit/bg.jpg" width="0" height="0"> -->
 
 	
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/common/home-bg.jpg')
+        background-image: url('/img/post/arkit/bg.jpg')
     }
 	
 	/*导航*/
@@ -204,15 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#版本管理" title="版本管理">版本管理</a>
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
                     </div>
-                    <h1>git常用功能介绍</h1>
+                    <h1>WWDC2017学习ARKit体验</h1>
                     
                     
-                    <h2 class="subheading"></h2>
+                    <h2 class="subheading">iOS增强现实技术实践</h2>
                     
-                    <span class="meta">Posted by 秦宇 on January 6, 2017</span>
+                    <span class="meta">Posted by 戴伟来，李清发 on June 25, 2017</span>
                 </div>
             </div>
         </div>
@@ -243,43 +243,73 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<h1 id="git常用功能介绍">git常用功能介绍</h1>
+				<h1 id="wwdc2017学习arkit体验">WWDC2017学习ARKit体验</h1>
 
-<h2 id="1-搭建测试环境">1 搭建测试环境</h2>
+<h2 id="前言">前言</h2>
 
-<p>开源中国(https://git.oschina.net/)提供了一个免费的git server服务器，可以到那里注册账号并托管自己的项目，同时也是学习git很理想的一个环境。</p>
+<p>增强现实技术（Augmented Reality，简称 AR），就想Pokeman go的游戏那样，目标就是在屏幕上把虚拟世界整进现实世界中，并进行互动！</p>
 
-<h2 id="2-代码下载同步提交">2 代码下载/同步/提交</h2>
+<p>一般AR场景的实现一般有以下：
+1、扑捉现实世界呈现在屏幕
+2、给现实世界建模
+3、传感器追踪
+4、坐标识别及转换
+5、在建好模的现实世界中呈现虚拟世界的东西(图片、模型等)，或者与之交互</p>
 
-<p>下载：git clone https://git.oschina.net/brc/LfListView.git
-同步：git pull
-提交：git add –all;   git commit -m “xxx”;  git push;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/6271687-1e42f9d04c5deca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
 
-<h2 id="3-基本概念与文件目录结构">3 基本概念与文件目录结构</h2>
+<p>ARKit提供了3D场景、2D场景的增强现实，实际是依赖于使用对应的SceneKit、SpriteKit，之所以使用Apple的游戏引擎是因为需要游戏引擎加载物体模型到现实世界的建模中！</p>
 
-<p><img src="/img/post/Github Pages notes/git_common.png" alt="" /></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1455032-17c36e569476d9bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
 
-<ul>
-  <li>test/.git</li>
-  <li>test/xxx</li>
-</ul>
+<p>ARKit需要iOS10以上的操作系统，A9处理器以上的设备(也就是iPhone6、iPad Air2以上的设备)</p>
 
-<h2 id="4-其他常用命令">4 其他常用命令</h2>
+<h2 id="官方demo体验">官方demo体验</h2>
+<p><a href="https://developer.apple.com/sample-code/wwdc/2017/PlacingObjects.zip">ARKit Demo App: Placing Objects in Augmented Reality</a> 是官方放出的ARKit的demo，需要使用Xcode9以上的IDE才能玩！</p>
 
-<ul>
-  <li>git reset</li>
-  <li>git status</li>
-  <li>git diff</li>
-  <li>git log</li>
-  <li>gitk xxx</li>
-  <li>git blame</li>
-  <li>git branch</li>
-  <li>git checkout</li>
-</ul>
+<p>1、下载Xcode 9(截至文章完成，Xcode 9已经放出了beta2)
+自行到 <a href="https://developer.apple.com/download/">这里</a>下载Xcode9</p>
 
-<h2 id="5-git--svn的区别">5 Git &amp; Svn的区别</h2>
+<p><img src="http://upload-images.jianshu.io/upload_images/6230903-5c26d3dd85f2a1db?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
 
-<p>http://www.cnblogs.com/somethingWithiOS/p/5636356.html</p>
+<p>iPad上的演示效果</p>
+
+<h2 id="arkit原理">ARKit原理</h2>
+
+<p>上面说到ARKit需要SceneKit和SpriteKit的支持！所以ARKit的原理可以概括为：
+1、相机捕获现实世界，并实时给这个现实世界建模(ARKit实现)
+2、在捕获的图像中展示模型(SceneKit和SpriteKit实现)</p>
+
+<p>对的，原理就这么简单</p>
+
+<p>下图是ARKit和SceneKit的关系
+<img src="http://upload-images.jianshu.io/upload_images/6271687-34c56daea7207015.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p>接下来看看ARKit框架中类
+<img src="http://upload-images.jianshu.io/upload_images/6271687-67c0307d6f65392c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p>其中最重要的是
+ARSCNView
+ARSession
+ARSessionConfiguration
+ARCamera</p>
+
+<p>所以在代码层面(可以参阅上文中的官方demo)的具体工作流程可以概括为：
+0、使用ARSessionConfiguration创建一个ARSession
+1、ARSCNView加载SCNScene
+2、SCNScene启动ARCamera捕获场景
+3、捕获的场景交给ARSession(建立现实世界的模型)
+4、给ARSCNView添加各种节点(3D模型)</p>
+
+<p>如下图
+<img src="http://upload-images.jianshu.io/upload_images/6271687-5b2cea6f7131d32e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h2 id="结语">结语</h2>
+
+<p>这篇文章只是对于ARKit初体验的一点点感悟，深入使用的话还涉及到建模、材质渲染等设计方面的知识，游戏开发的各种坐标的转换与计算(难点！)，当然还有就是创意了！</p>
+
+<p>个人认为！ARKit是苹果开发的一个新方向！可预见的未来一定满大街的APP都有这个功能！iOS开发者必学技能系列！！！</p>
+
 
 				
 <!--协议说明 -->
@@ -293,15 +323,15 @@
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/2017/01/06/git常用功能介绍"
-                    data-title="git常用功能介绍"
-                    data-url="http://localhost:4000/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/"
-                    data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="git常用功能介绍
+                    data-thread-key="/2017/06/25/WWDC2017学习ARKit体验"
+                    data-title="WWDC2017学习ARKit体验"
+                    data-url="http://localhost:4000/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/"
+                    data-images="http://localhost:4000/img/post/arkit/bg.jpg"
+                    data-content="WWDC2017学习ARKit体验
 
-1 搭建测试环境
+前言
 
-开源中国(https://git.oschina.net/)提供了一个免费的git server服务器，可以到那... | zmai掌麦技术团队博客|zmai's Blog " >
+增强现实技术（Augmented Reality，简称 AR），就想Pokeman go的游戏那样，目标就是... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -321,12 +351,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/12/29/Github-Pages-notes/" data-toggle="tooltip" data-placement="top" title="Github Pages notes">&larr; Previous Post</a>
+                        <a href="/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" data-toggle="tooltip" data-placement="top" title="iOS库的那些事">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/" data-toggle="tooltip" data-placement="top" title="【Docker】安装并运行nginx">Next Post &rarr;</a>
+                        <a href="/2017/06/26/WWDC2017%E4%B9%8BCore-ML/" data-toggle="tooltip" data-placement="top" title="WWDC2017之Core ML">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -336,9 +366,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/2017/01/06/git常用功能介绍"
-                        data-title="git常用功能介绍"
-                        data-url="http://localhost:4000/2017/01/06/git%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" >
+                        data-thread-key="/2017/06/25/WWDC2017学习ARKit体验"
+                        data-title="WWDC2017学习ARKit体验"
+                        data-url="http://localhost:4000/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -372,13 +402,7 @@
                             
         				
                             
-                				<a href="/tags/#版本管理" title="版本管理" rel="1">
-                                    版本管理
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#Docker" title="Docker" rel="1">
+                				<a href="/tags/#Docker" title="Docker" rel="2">
                                     Docker
                                 </a>
                             
@@ -390,7 +414,7 @@
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="2">
+                				<a href="/tags/#iOS" title="iOS" rel="4">
                                     iOS
                                 </a>
                             
@@ -420,8 +444,56 @@
                             
         				
                             
+                				<a href="/tags/#虚拟化" title="虚拟化" rel="1">
+                                    虚拟化
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#分布式" title="分布式" rel="1">
+                                    分布式
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#容器" title="容器" rel="1">
+                                    容器
+                                </a>
+                            
+        				
+                            
                 				<a href="/tags/#生活" title="生活" rel="1">
                                     生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#规范" title="规范" rel="1">
+                                    规范
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Mysql" title="Mysql" rel="1">
+                                    Mysql
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#android" title="android" rel="1">
+                                    android
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#版本管理" title="版本管理" rel="1">
+                                    版本管理
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="2">
+                                    技术
                                 </a>
                             
         				

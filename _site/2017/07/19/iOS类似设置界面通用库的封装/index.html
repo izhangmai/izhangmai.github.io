@@ -13,9 +13,9 @@
 	<link href="/css/prism.css" rel="stylesheet" />
 	<script src="/js/prism.js"></script>
 	
-    <title>【Queue】新手安装并使用Beanstalked - zmai掌麦技术团队博客|zmai's Blog</title>
+    <title>iOS类似设置界面通用库的封装 - zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <link rel="canonical" href="http://localhost:4000/2017/07/19/iOS%E7%B1%BB%E4%BC%BC%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%E9%80%9A%E7%94%A8%E5%BA%93%E7%9A%84%E5%B0%81%E8%A3%85/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,17 +204,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Queue" title="Queue">Queue</a>
-                        
-                        <a class="tag" href="/tags/#Beanstalked" title="Beanstalked">Beanstalked</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>【Queue】新手安装并使用Beanstalked</h1>
+                    <h1>iOS类似设置界面通用库的封装</h1>
                     
                     
                     <h2 class="subheading"></h2>
                     
-                    <span class="meta">Posted by 胖纸囧 on January 11, 2017</span>
+                    <span class="meta">Posted by 胡绍辉 on July 19, 2017</span>
                 </div>
             </div>
         </div>
@@ -245,158 +243,98 @@
         <b id="ScrollTopToggle" title="顶部" style="cursor:pointer;">Top</b>
     </p>
 </div>
-				<ul id="markdown-toc">
-  <li><a href="#资料" id="markdown-toc-资料">资料</a></li>
-  <li><a href="#候选" id="markdown-toc-候选">候选</a></li>
-  <li><a href="#核心" id="markdown-toc-核心">核心</a></li>
-  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
-      <li><a href="#macos" id="markdown-toc-macos">MacOS</a></li>
-      <li><a href="#linux-编译" id="markdown-toc-linux-编译">Linux-编译</a></li>
-      <li><a href="#liunx-包安装" id="markdown-toc-liunx-包安装">Liunx-包安装</a></li>
-      <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
-    </ul>
+				<h2 id="想法和由来">想法和由来</h2>
+<p>基本每个App都有设置界面,设置一些常见的功能，头像、昵称、个人签名等等。常规的设置界面比如微信设置界面，个人资料界面，复杂的设置界面比如含有IM的群设置界面，知乎App的设置界面。当设置界面设置的功能太多，或者设置界面在App中有太多的地方都需要使用时，对我们开发者来说，就是一件痛苦的事，只是换了数据源而已。通用做法写一个tableView各种判断。其实仔细一想这种类似界面其实跟IM聊天的会话界面类似，消息会话界面一般包含文本​消息、图片消息、语言消息、自定义消息。鉴于之前IM的UI逻辑，于是封装的想法油然而生，封装后大家和自己用起来都很方便了。</p>
+<h2 id="技术选择">技术选择</h2>
+<ul>
+  <li>
+    <p>a.设计模式 -&gt; MVC</p>
   </li>
-  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
-  <li><a href="#demo点击我" id="markdown-toc-demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</a></li>
+  <li>
+    <p>b.界面布局 -&gt; 代码AutoLayout,包括适配ipad</p>
+  </li>
+  <li>
+    <p>c.图片下载 -&gt; 依赖SDWebImage</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>​
+</code></pre>
+    </div>
+  </li>
+  <li>关于设计模式，经典的设计模式比如MVC。其它的设计模式MVVM、MVP、MVCS可以阅读<a href="http://www.cocoachina.com/ios/20150525/11919.html">这篇文章</a>
+  因为涉及到的内容没有IM复杂，只是对界面进行简单的逻辑封装和UI处理，所以这里并没有使用其它设计模式所以采用了MVC。对于一个复杂的即时通讯UI的话，应该是多种模式的结合处理会更好，这里推荐一个网易的<a href="https://github.com/netease-im/NIM_iOS_UIKit">开源UI组件</a>参考学习</li>
+  <li>
+    <p>关于布局，本库关于界面的控件并不是太多。参考环信库，UI也是用NSLayoutConstraint布局。减少依赖，自定义cell你可以使用自带布局或者第三方库布局，由于本库采用了很多继承关系，暂不支持xib/storyBoard。需要代码实现界面布局。</p>
+  </li>
+  <li>关于图片下载，做好一个完整的图片下载并不是一件容易的事,既然有成熟第三方库SDWebImage,何不站在巨人肩膀上依赖下呢？</li>
 </ul>
 
-<p>因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。</p>
+<h2 id="架构图">架构图</h2>
+<p><img src="https://raw.githubusercontent.com/wiki/shaohuihu/HSSettableViewController/Architecture.png" alt="" /></p>
 
-<h2 id="资料">资料</h2>
+<h2 id="内容分析">内容分析</h2>
+<p>由于只是对UI界面的简单封装，本库并不涉及太多很深奥的知识，仅仅只是在细节上有很多处理。下面就几个方面介绍本库的一些小优势。</p>
+<ul>
+  <li>
+    <p>配置属性完善。满足基本上所有app的类似界面，箭头，分割线，字体大小，颜色，文本位置等等都可以配置。这些属性可以在HSBaseCellModel、HSTitleCellModel、HSImageCellModel、HSSwitchCellModel等类里面找到。</p>
+  </li>
+  <li>
+    <p>耦合性特别低。每一种模型对应一种cell，逻辑处理层次明确，从扩展到定位bug都是特别容易，由于有继承关系，每个类处理自己的业务，如果需要自己处理，则需要拦截其业务。</p>
+  </li>
+  <li>
+    <p>断言处理。如果由于使用者外部没有按照库的某些规则组装和使用，用断言提醒使用者就比较友好，相关一些代码如下演示：</p>
 
-<p>在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用：</p>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="o">-</span> <span class="p">(</span><span class="kt">CGFloat</span><span class="p">)</span><span class="nv">tableView</span><span class="p">:(</span><span class="kt">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nv">heightForRowAtIndexPath</span><span class="p">:(</span><span class="kt">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="n">indexPath</span>
+<span class="p">{</span>
+       
+  <span class="kt">NSMutableArray</span> <span class="o">*</span><span class="n">sections</span> <span class="o">=</span> <span class="p">[</span><span class="k">self</span><span class="o">.</span><span class="n">hs_dataArry</span> <span class="nv">hs_objectWithIndex</span><span class="p">:</span><span class="n">indexPath</span><span class="o">.</span><span class="n">section</span><span class="p">];</span>
+  <span class="kt">NSAssert</span><span class="p">([</span><span class="n">sections</span> <span class="nv">isKindOfClass</span><span class="p">:[</span><span class="kt">NSMutableArray</span> <span class="kd">class</span><span class="p">]],</span> <span class="s">@"此对象必须为一个可变数组,请检查数据源组装方式是否正确!"</span><span class="p">);</span>
+  <span class="kt">HSBaseCellModel</span> <span class="o">*</span><span class="n">cellModel</span> <span class="o">=</span> <span class="p">(</span><span class="kt">HSBaseCellModel</span> <span class="o">*</span><span class="p">)[</span><span class="n">sections</span> <span class="nv">hs_objectWithIndex</span><span class="p">:</span><span class="n">indexPath</span><span class="o">.</span><span class="n">row</span><span class="p">];</span>
+
+  <span class="kt">Class</span> <span class="kd">class</span> <span class="o">=</span>  <span class="kt">NSClassFromString</span><span class="p">(</span><span class="n">cellModel</span><span class="o">.</span><span class="n">cellClass</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">[</span><span class="kd">class</span> <span class="nv">getCellHeight</span><span class="p">:</span><span class="n">cellModel</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre>
+    </div>
+    <p>以上所示，如果外部传的数组不是可变数组，而是不可变数组，这样就会崩溃该断言！</p>
+  </li>
+  <li>
+    <p>个别属性内部保护。如果由于外部胡乱更改一些内部十分重要的属性导致崩溃，那这个库是不完美的。而HSBaseCellModel中的identifier和cellClass分别是模型唯一标识符和寻找cell类名的重要属性，一旦初始化，就不可更改。即使尝试用kvc修改，也应该崩溃。所以它的定义应该是这样：</p>
+  </li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>  <span class="kd">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span>  <span class="n">copy</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span><span class="kt">NSString</span>   <span class="o">*</span><span class="n">identifier</span><span class="p">;</span>  <span class="c1">///&lt;唯一标识符(更新会用到)</span>
+
+  <span class="kd">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span>  <span class="n">copy</span><span class="p">,</span><span class="n">readonly</span><span class="p">)</span><span class="kt">NSString</span>   <span class="o">*</span><span class="n">cellClass</span><span class="p">;</span>  <span class="c1">///&lt;该模型绑定的cell类名</span>
+</code></pre>
+</div>
 
 <ul>
-  <li><a href="http://baike.baidu.com/link?url=JOv29wGjBmYc32hlY9v8yAfcs925V0mA5n-ZBVUcNu_JMSr1Xkd0I4t6Uby0us5y_JFAU4a71QWUf16QyOv4SzIidc1YZ2G7ho5GO0u-42WnCMS--rflOrw4nZlS4zUX">消息队列</a></li>
-  <li><a href="https://segmentfault.com/q/1010000005780973">消息队列有什么用？</a></li>
-  <li><a href="http://www.phpddt.com/php/queue.html">PHP实现队列及队列原理</a></li>
-  <li><a href="http://blog.csdn.net/shaobingj126/article/details/50585035">大型网站架构之分布式消息队列</a></li>
+  <li>唯一标识符的设定。每一个模型初始化完成后都应该有一个自己的唯一标识符，因为动态更新视图内部原理就是通过唯一标识符找到模型然后替换，再刷新表格。所以这个唯一标识符是必须唯一，那么怎么才能让这个唯一标识符唯一呢？我最开始是用获取当前时间：</li>
 </ul>
 
-<h2 id="候选">候选</h2>
-
-<p>在当前的技术前景下，有以下几种队列选择：</p>
-
-<ul>
-  <li><a href="http://baike.baidu.com/link?url=U2WYoeoyDZ1UdtsINkRQObR9rrDRviRDI9gfMpZ1QWl8mhAz5b20FfsYYyFEqF1Y2we9KJ4VMCso4uYziIVn_K">JMS</a></li>
-  <li><a href="http://www.rabbitmq.com">RabbitMQ</a></li>
-  <li><a href="http://www.zeromq.org">ZeroMQ</a></li>
-  <li><a href="http://kafka.apache.org">Kafka</a></li>
-  <li><a href="http://kr.github.io/beanstalkd/">beanstakd</a></li>
-</ul>
-
-<h2 id="核心">核心</h2>
-
-<p>Beanstalkd设计里面的核心概念：</p>
-
-<ul>
-  <li>job</li>
-  <li>tube</li>
-  <li>producer</li>
-  <li>consumer</li>
-</ul>
-
-<h2 id="安装">安装</h2>
-
-<h6 id="macos">MacOS</h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>`brew install beanstalkd`
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kt">CFAbsoluteTime</span> <span class="n">now</span> <span class="o">=</span> <span class="kt">CFAbsoluteTimeGetCurrent</span><span class="p">()</span>
 </code></pre>
 </div>
+<p>​这样看起来没什么大问题，每个模型都是按照顺序初始化，大多数情况下不会出问题。因为模型就是界面的数据源，这种数据源一般不得超过20条，但是理论上是存在bug的，下面情况我自己测试过，如果我同时并发线程，创建大量的模型，不同线程有时会同一时间创建，即使这个时间已经十分十分细了。但是同一线程肯定肯定有时间差，由此我的唯一标示符由：当前时间+当前线程ID组成。相关代码如下：</p>
 
-<h6 id="linux-编译">Linux-编译</h6>
-
-<p>1.安装libevent（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>wget http://cloud.github.com/downloads/libevent/libevent/libevent-1.4.14b-stable.tar.gz
-cp libevent-1.4.14b-stable.tar.gz /usr/local/src/ 
-tar zxvf libevent-1.4.14b-stable.tar.gz 
-cd  libevent-1.4.14b-stable 
-./configure --prefix=/usr/local/libevent 
-make 
-make install 
-</code></pre>
-</div>
-
-<p>2.安装beanstalkd（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/package/beanstalkd-1.10.tar">点击我</a>）</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cp beanstalkd-1.4.6.tar.gz /usr/local/src/ 
-tar zxvf beanstalkd-1.4.6.tar.gz 
-cd  beanstalkd-1.4.6 
-./configure --prefix=/usr/local/beanstalkd 
-make 
-make install 
-./beanstalkd -d -l 127.0.0.1 -p 11300 
-</code></pre>
-</div>
-
-<h6 id="liunx-包安装">Liunx-包安装</h6>
-
-<p>1.centos</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>yum install beanstalkd
-</code></pre>
-</div>
-<p>2.ubuntu</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install beanstalkd
-</code></pre>
-</div>
-
-<h6 id="windows">Windows</h6>
-
-<p>Windows果然是后娘养的，暂时没有官方提供的安装包只有国人修改的客户端，大家有兴趣的可以看看：<a href="https://git.oschina.net/lomox/beanstalkd-win">点击我</a></p>
-
-<h2 id="运行">运行</h2>
-
-<p>1.首先cd到Beanstalkd目录(配好环境变量的哥子除外)
-2.后台启动</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>beanstalkd -l 地址 -p 端口号 -z 最大的任务大小(byte) -c &amp;
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
--b DIR   wal directory
-
--f MS    fsync at most once every MS milliseconds (use -f0 for “always fsync”)
--F       never fsync (default)
--l ADDR  listen on address (default is 0.0.0.0)
--p PORT  listen on port (default is 11300)
--u USER  become user and group
--z BYTES set the maximum job size in bytes (default is 65535)
--s BYTES set the size of each wal file (default is 10485760)
-(will be rounded up to a multiple of 512 bytes)
--c       compact the binlog (default)
--n       do not compact the binlog
--v       show version information
--V       increase verbosity
--h       show this help
-</code></pre>
-</div>
-
-<h2 id="demo点击我">Demo（<a href="https://github.com/izhangmai/queue/blob/master/beanstalkd/index.php">点击我</a>）</h2>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
-    // 引入BeanStalk客户端类
-    require('BeanStalk.class.php');
-
-    $beanstalk = BeanStalk::open(array(
-        'servers'       =&gt; array( '127.0.0.1:11300' ),
-        'select'        =&gt; 'random peek'
-    ));
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="kd">init</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">self</span> <span class="o">=</span> <span class="p">[</span><span class="k">super</span> <span class="kd">init</span><span class="p">]){</span>
+        <span class="c1">//获取当前时间</span>
+        <span class="kt">CFAbsoluteTime</span> <span class="n">now</span> <span class="o">=</span> <span class="kt">CFAbsoluteTimeGetCurrent</span><span class="p">();</span>
+        <span class="c1">//获取当前线程id</span>
+        <span class="kt">NSString</span> <span class="o">*</span><span class="n">threadNumber</span> <span class="o">=</span> <span class="p">[[[</span><span class="kt">NSString</span> <span class="nv">stringWithFormat</span><span class="p">:</span><span class="s">@"%@"</span><span class="p">,[</span><span class="kt">NSThread</span> <span class="n">currentThread</span><span class="p">]]</span> <span class="nv">componentsSeparatedByString</span><span class="p">:</span><span class="s">@"number = "</span><span class="p">]</span><span class="o">.</span><span class="n">lastObject</span> <span class="nv">componentsSeparatedByString</span><span class="p">:</span><span class="s">@","</span><span class="p">]</span><span class="o">.</span><span class="n">firstObject</span><span class="p">;</span>
+        <span class="n">privateCellModelIdentifier</span> <span class="o">=</span> <span class="p">[</span><span class="kt">NSString</span> <span class="nv">stringWithFormat</span><span class="p">:</span><span class="s">@"%lf%@"</span><span class="p">,</span><span class="n">now</span><span class="p">,</span><span class="n">threadNumber</span><span class="p">];</span>
+    <span class="p">}</span>
     
-    $beanstalk-&gt;use_tube('foo');
-    
-    $beanstalk-&gt;put(0, 0, 120, 'say hello world');
-     $beanstalk-&gt;watch('foo'); 
-    $job = $beanstalk-&gt;reserve_with_timeout(); 
-    echo $job-&gt;get();
-    Beanstalk::delete($job);
-
+    <span class="k">return</span> <span class="k">self</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre>
 </div>
-
+<h2 id="相关链接">相关链接</h2>
+<p>​
+<a href="https://github.com/shaohuihu/HSSetTableViewController">Github源码地址</a>
+做一个东西不难，做好一个东西还是很难，即使看起来很简单的。81个commits和16个release!任然需要不停改善和优化。</p>
 
 				
 <!--协议说明 -->
@@ -410,19 +348,12 @@ make install
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                    data-title="【Queue】新手安装并使用Beanstalked"
-                    data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/"
+                    data-thread-key="/2017/07/19/iOS类似设置界面通用库的封装"
+                    data-title="iOS类似设置界面通用库的封装"
+                    data-url="http://localhost:4000/2017/07/19/iOS%E7%B1%BB%E4%BC%BC%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%E9%80%9A%E7%94%A8%E5%BA%93%E7%9A%84%E5%B0%81%E8%A3%85/"
                     data-images="http://localhost:4000/img/common/home-bg.jpg"
-                    data-content="
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Win... | zmai掌麦技术团队博客|zmai's Blog " >
+                    data-content="想法和由来
+基本每个App都有设置界面,设置一些常见的功能，头像、昵称、个人签名等等。常规的设置界面比如微信设置界面，个人资料界面，复杂的设置界面比如含有... | zmai掌麦技术团队博客|zmai's Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -442,13 +373,9 @@ make install
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="Swift 3 更新了啥?[译]">&larr; Previous Post</a>
+                        <a href="/2017/06/26/WWDC2017%E4%B9%8BCore-ML/" data-toggle="tooltip" data-placement="top" title="WWDC2017之Core ML">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" data-toggle="tooltip" data-placement="top" title="【Docker】Docker简介与安装">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -457,9 +384,9 @@ make install
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/%E6%8A%80%E6%9C%AF/2017/01/11/【Queue】新手安装并使用Beanstalked"
-                        data-title="【Queue】新手安装并使用Beanstalked"
-                        data-url="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/" >
+                        data-thread-key="/2017/07/19/iOS类似设置界面通用库的封装"
+                        data-title="iOS类似设置界面通用库的封装"
+                        data-url="http://localhost:4000/2017/07/19/iOS%E7%B1%BB%E4%BC%BC%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%E9%80%9A%E7%94%A8%E5%BA%93%E7%9A%84%E5%B0%81%E8%A3%85/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->

@@ -15,7 +15,7 @@
 	
     <title>zmai掌麦技术团队博客|zmai's Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="canonical" href="http://localhost:4000/page2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -157,290 +157,104 @@
             ">
     			
 <div class="post-preview">
-    <a href="/2017/07/19/iOS%E7%B1%BB%E4%BC%BC%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2%E9%80%9A%E7%94%A8%E5%BA%93%E7%9A%84%E5%B0%81%E8%A3%85/">
+    <a href="/2017/01/10/Swift-3%E6%9B%B4%E6%96%B0%E4%BA%86%E5%95%A5-%E8%AF%91/">
         <h2 class="post-title">
-            iOS类似设置界面通用库的封装
-        </h2>
-        
-        <div class="post-content-preview">
-            想法和由来
-基本每个App都有设置界面,设置一些常见的功能，头像、昵称、个人签名等等。常规的设置界面比如微信设置界面，个人资料界面，复杂的设置界面比如含有IM的群设置界面，知乎App的设置界面。当设置界面设置的功能太多，或者设置界面在App中有太多的地方都需要使用时，对我们开发者来说，就是一件痛苦的事，只是换了数据源而已。通用做法写一个tableView各种判断。其实仔细一想这种类似界面其实...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 胡绍辉 on July 19, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/06/26/WWDC2017%E4%B9%8BCore-ML/">
-        <h2 class="post-title">
-            WWDC2017之Core ML
-        </h2>
-        
-        <div class="post-content-preview">
-            什么是Core ML
-
-​	Core ML是苹果新推出的，面向开发者的机器学习框架。开发者能够轻松实现实时物体识别、人脸特征点识别、跟踪运动中的物体、文本分析等。
-
-
-
-​	Core ML 让你将很多机器学习模型集成到你的app中。除了支持层数超过30层的深度学习之外，还支持决策树的融合，SVM（支持向量机），线性模型。由于其底层建立在Metal 和Accelerate等技术上，所以可以最大...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 李清发 & 戴伟来 on June 26, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/06/25/WWDC2017%E5%AD%A6%E4%B9%A0ARKit%E4%BD%93%E9%AA%8C/">
-        <h2 class="post-title">
-            WWDC2017学习ARKit体验
+            Swift 3 更新了啥?[译]
         </h2>
         
         <h3 class="post-subtitle">
-            iOS增强现实技术实践
+            Swift 3的新特性！！
         </h3>
         
         <div class="post-content-preview">
-            WWDC2017学习ARKit体验
+            Swift 3更新了啥?[译]
 
-前言
+原文地址
 
-增强现实技术（Augmented Reality，简称 AR），就想Pokeman go的游戏那样，目标就是在屏幕上把虚拟世界整进现实世界中，并进行互动！
+Swift 3在2016年10月13日正式发布，并且为Swift开发者带来了大量的代码更新。
 
-一般AR场景的实现一般有以下：
-1、扑捉现实世界呈现在屏幕
-2、给现实世界建模
-3、传感器追踪
-4、坐标识别及转换
-5、在建好模的现实世界中呈现虚拟世界的东西(图片、模型等)，或者与之交互
-...
+如果你还没有紧密的关注这个项目Swift Evolution(来哥注:这个是Swift的开源项目仓库，里面有所有的Swift更新动态)，那么你很可能想知道Swift3中有哪些变化？这些变化是否影响你的编码方式？以及你是否应该考虑开始使用Swift 3进...
         </div>
     </a>
     <p class="post-meta">
-        Posted by 戴伟来，李清发 on June 25, 2017
+        Posted by 戴伟来 on January 10, 2017
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2017/05/30/iOS%E5%BA%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/">
+    <a href="/2017/01/09/WWDC2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         <h2 class="post-title">
-            iOS库的那些事
+            WWDC2016新技术盘点
+        </h2>
+        
+        <div class="post-content-preview">
+            新的API
+
+SFSpeechRecognizer框架
+
+全新的SFSpeechRecognizer框架的到来彻底改变了在以前我们处理语音识别非常的繁琐甚至很多时候可能需要借助于第三方框架处理的情况
+
+
+  可以实现连续的语音识别
+  可以对语 音文件或者语音流进行识别
+  最佳化自由格式的听写(可理解为多语言支持)和搜索式的字符串
+
+
+示例：读取一段语音文件输出文字内容
+
+#import ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 李清发 on January 9, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/01/07/Docker-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8Cnginx/">
+        <h2 class="post-title">
+            【Docker】安装并运行nginx
         </h2>
         
         <h3 class="post-subtitle">
-            库的封装与使用
+            在docker容器中初步搭建和运行nginx服务器
         </h3>
-        
-        <div class="post-content-preview">
-            iOS库的那些事
-
-前言
-
-1、减少编译时间
-
-2、模块封装，项目结构优化
-
-3、保护源码
-
-4、提供轮子
-
-5、……
-
-所以我们需要学习库的使用和封装的技术！！
-
-iOS开发中库分两种：
-
-
-  静态库：以.a 和 .framework为文件后缀名。
-动态库：以.tbd(之前叫.dylib) 和 .framework 为文件后缀名。
-
-
-静态库与动态库的区别
-
-
-  静态库：链接时会被完整...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 戴伟来，李清发 on May 30, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/02/05/git%E6%A6%82%E8%BF%B0/">
-        <h2 class="post-title">
-            git概述
-        </h2>
-        
-        <div class="post-content-preview">
-            1安装与配置
-
-git for Windows
-Windows上的一个git bash实现
-https://git-for-windows.github.io/
-
-Tortoisegit
-图形化的git管理工具，依赖于git bash
-https://tortoisegit.org/download/
-
-配置git提交的用户名和密码
-git config –global user.name ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 秦宇 on February 5, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/01/14/CI%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8Bandroid%E7%AF%87/">
-        <h2 class="post-title">
-            [linux]CI环境搭建之android篇
-        </h2>
-        
-        <div class="post-content-preview">
-            可持续集成（CI）之起源篇
-
-背景介绍
-随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的问题。尤其是近些年来，敏捷（Agile） 在软件工程领域越来越红火，如何能再不断变化的需求中快速适应和保证软件的质量也显得尤其的重要。 持续集成正是针对这一类问题的一种软件开发实践。
-
-What
-它倡导团队开发成员必须经常集成他们的工作，甚...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 李勇 on January 14, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/01/13/%E6%8E%8C%E9%BA%A6Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/">
-        <h2 class="post-title">
-            【Mysql】掌麦Mysql数据库设计规范文档x
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Mysql设计规范
-        </h3>
-        
-        <div class="post-content-preview">
-            1.数据库表引擎使用InnoDB
-
-2.数据库表名命名规则：
-	A.所有表名全部小写，单词与单词之间用下划线连接
-	B.所有表名尽量使用全英文，不得简写
-	C.所有表名必须加表前缀【比如：zm_】
-	D.所有表名要求能够直观反映表含义
-	E.所有表名必须写明注释
-
-3.数据库字段命名规则：
-	A.所有字段名全部小写，单词与单词之间用下划线连接
-	B.所有字段名尽量使用全英文，不得简写
-	C....
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 胖纸囧，王林，黄宇 on January 13, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/01/12/%E6%88%91%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%94%9F%E5%AD%98%E6%89%8B%E5%86%8C/">
-        <h2 class="post-title">
-            我的程序猿生存手册
-        </h2>
-        
-        <h3 class="post-subtitle">
-            代码与生活
-        </h3>
-        
-        <div class="post-content-preview">
-            我的程序猿生存手册
-
-在高考大军中拼杀过，也在大学校园中荒芜过，曾经低迷消沉，也常满怀壮志…… 但是最多的还是被称为小伙子以及自称为iOS工程师！博主就是这种喜闻乐见的这类人，实习一年后在毕业季顺利拿到了我们公司的offer，也许相比很多毕业季的同学职场上顺利许多，但当深夜来临，显示器熄灭后望着荧幕出神的时候，毕业季我错过了很多也许一辈子都不会再相见的同学们的合影。这两年里真正领略到了企业项...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 戴伟来 on January 12, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/%E6%8A%80%E6%9C%AF/2017/01/12/Docker-Docker%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/">
-        <h2 class="post-title">
-            【Docker】Docker简介与安装
-        </h2>
         
         <div class="post-content-preview">
             
-  简介
-  核心组件
-  作用
-  安装    
-      MacOS
-      Liunx
-      windows
-    
-  
-  运行    
-      MacOS
-      Liunx
-      windows
-    
-  
 
-
-记得2015年的某个夏天，那时候我还是个胖屌丝，拉着屌丝基友去参加开源中国的成都源创汇，碰到了张小龙，哦不，是张海龙大哥来推广Dock...
         </div>
     </a>
     <p class="post-meta">
-        Posted by 胖纸囧 on January 12, 2017
+        Posted by 胖纸囧 on January 7, 2017
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/%E6%8A%80%E6%9C%AF/2017/01/11/Queue-%E6%96%B0%E6%89%8B%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8Beanstalked/">
+    <a href="/2016/12/29/Github-Pages-notes/">
         <h2 class="post-title">
-            【Queue】新手安装并使用Beanstalked
+            Github Pages notes
         </h2>
         
+        <h3 class="post-subtitle">
+            技术文章编撰的相关说明
+        </h3>
+        
         <div class="post-content-preview">
-            
-  资料
-  候选
-  核心
-  安装    
-      MacOS
-      Linux-编译
-      Liunx-包安装
-      Windows
-    
-  
-  运行
-  Demo（点击我）
+            Github Pages notes
 
+前言
 
-因为公司项目准备要重构，根据当前业务的复杂度，为了降低系统业务耦合程度，需要在项目中引入消息队列机制。
+Github是目前(2016年12月30日)世界上最大的开源项目托管中心，在这里能够了解到最新的开源技术、能够认识最顶尖的开发者；对于一个技术爱好者以及开发者而言，这个社区是一个结合你的兴趣以及提升能力最佳的地方！
 
-资料
-
-在使用之前先来点资料普及下什么是消息队列，还有消息队列有什么用...
+整个互联网世界的发展离不开开源力量的贡献，互联网的发展带给我们的社会以及文明的飞速发展，使得每一个人都获益良多！所以我们选择在这...
         </div>
     </a>
     <p class="post-meta">
-        Posted by 胖纸囧 on January 11, 2017
+        Posted by 戴伟来 on December 29, 2016
     </p>
 </div>
 <hr>
@@ -450,10 +264,10 @@ What
 
 <ul class="pager">
     
-    
-    <li class="next">
-        <a href="/page2">Older Posts &rarr;</a>
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
     </li>
+    
     
 </ul>
 
